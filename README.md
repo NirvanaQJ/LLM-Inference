@@ -10,6 +10,7 @@
 | --- | --- |
 | [交互式学习路线图](LLM-Inference-GPU-Systems-Roadmap-2026-2028.html) | 2026—2028 时间线、逐日任务、阶段验收、项目与求职里程碑；下载后可直接用浏览器打开。 |
 | [路线图审核记录](Red-Team-Audit-2026-10-03.md) | 2026-10-03 的计划审核与网页功能验证记录；其中硬件信息相关限制是当日快照。 |
+| [基线技能记录](baseline-skills.md) | 2026-10-04 已核验的工具版本、终端及最小 C++ 程序结果。 |
 | [日记说明与索引](日记/README.md) | 按日期记录实际完成的成果，并链接到相应文件。 |
 | [2026-10-03 日记](日记/2026-10-03.md) · [2026-10-04 日记](日记/2026-10-04.md) | 已有的每日成果记录。 |
 
@@ -31,6 +32,7 @@
 | `llm-inference-lab/source-maps/` | vLLM / SGLang 的源码阅读笔记、调用图及固定的版本信息。 |
 | `llm-inference-lab/communication/` | NCCL、Tensor Parallel 通信与推理性能的关联分析；无多卡硬件时明确标记未实测。 |
 | `gpu-kernel-lab/cuda/` · `gpu-kernel-lab/triton/` | CUDA 与 Triton 的 Kernel 实现及优化版本。 |
+| `gpu-kernel-lab/cpp-basics/` | C++ 入门程序和基础练习。 |
 | `gpu-kernel-lab/tests/` | 正确性、边界形状和数值误差验证。 |
 | `gpu-kernel-lab/bench/` | PyTorch / CUDA / Triton 基准测试脚本。 |
 | `gpu-kernel-lab/results/raw/` · `gpu-kernel-lab/results/figures/` | 原始计时数据与图表。 |
