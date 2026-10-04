@@ -1,0 +1,7 @@
+career-private/
+work/
+llm-inference-lab/configs/hardware.json
+.agents/
+.codex/
+*.nsys-rep
+*.ncu-rep
