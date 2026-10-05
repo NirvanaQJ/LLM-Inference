@@ -2,7 +2,7 @@
 
 这是我从 2026 年 10 月开始，面向 **LLM Inference Systems / GPU Systems** 岗位的学习、实验与求职工作区。主线是 C++ / Linux → CUDA / Triton → 大模型推理 → vLLM / SGLang → GPU 性能分析；NCCL 与集群通信作为与推理性能相连接的扩展方向。
 
-> 当前状态：学习路线和项目目录已建立，CUDA Kernel、推理性能及通信实验尚未在本仓库形成可复现结果。以下项目目录是放置未来产出的约定，不代表实验已经完成。
+> 当前状态：学习路线和项目目录已建立。2026-10-05 的 Python token 累加器通过了 6 组输入对照；循环口述与周一数组遍历模板也已记录，因此当天 P0、P1 和固定练习按现有证据验收通过。哈希表仍是本周后续学习主题；练习时长依据本人报告，未单独计时。CUDA Kernel、推理性能及通信实验尚未在本仓库形成可复现结果。以下项目目录的约定不代表相应实验已经完成。
 
 ## 从这里开始
 
@@ -12,13 +12,14 @@
 | [路线图审核记录](Red-Team-Audit-2026-10-03.md) | 2026-10-03 的计划审核与网页功能验证记录；其中硬件信息相关限制是当日快照。 |
 | [基线技能记录](baseline-skills.md) | 2026-10-04 已核验的工具版本、终端及最小 C++ 程序结果。 |
 | [日记说明与索引](日记/README.md) | 按日期记录实际完成的成果，并链接到相应文件。 |
-| [2026-10-03 日记](日记/2026-10-03.md) · [2026-10-04 日记](日记/2026-10-04.md) | 已有的每日成果记录。 |
+| [2026-10-03 日记](日记/2026-10-03.md) · [2026-10-04 日记](日记/2026-10-04.md) · [2026-10-05 日记](日记/2026-10-05.md) | 已有的每日成果与待验证事项记录。 |
+| [Python 累加器](gpu-kernel-lab/python-basics/basics.py) · [6 组输入对照](gpu-kernel-lab/tests/2026-10-05-basics-cases.md) | 已保存的代码与 expected/actual；当前脚本默认输入为 `[1.5]`。 |
 
 路线图中的勾选、周记录和岗位信息保存在**当前浏览器的本地存储**中；仓库不会自动同步这些数据。每周从页面导出一次 JSON 备份，并放在本地私有目录。更换浏览器、设备或文件路径后，使用页面的导入功能恢复。
 
 ## 项目目录与每日产出
 
-两个实验区分别是 [`llm-inference-lab/`](llm-inference-lab/) 和 [`gpu-kernel-lab/`](gpu-kernel-lab/)。子目录目前用于整理后续任务产出；空目录通过 `.gitkeep` 保留在 Git 中。
+两个实验区分别是 [`llm-inference-lab/`](llm-inference-lab/) 和 [`gpu-kernel-lab/`](gpu-kernel-lab/)。部分目录已放入基础练习，其余子目录用于整理后续任务产出；空目录通过 `.gitkeep` 保留在 Git 中。
 
 | 目录 | 放什么 |
 | --- | --- |
@@ -33,7 +34,8 @@
 | `llm-inference-lab/communication/` | NCCL、Tensor Parallel 通信与推理性能的关联分析；无多卡硬件时明确标记未实测。 |
 | `gpu-kernel-lab/cuda/` · `gpu-kernel-lab/triton/` | CUDA 与 Triton 的 Kernel 实现及优化版本。 |
 | `gpu-kernel-lab/cpp-basics/` | C++ 入门程序和基础练习。 |
-| `gpu-kernel-lab/tests/` | 正确性、边界形状和数值误差验证。 |
+| `gpu-kernel-lab/python-basics/` | Python 入门程序，目前包含 token 数量累加器。 |
+| `gpu-kernel-lab/tests/` | 正确性、边界形状和数值误差验证；目前保存累加器的 6 组输入对照。 |
 | `gpu-kernel-lab/bench/` | PyTorch / CUDA / Triton 基准测试脚本。 |
 | `gpu-kernel-lab/results/raw/` · `gpu-kernel-lab/results/figures/` | 原始计时数据与图表。 |
 | `gpu-kernel-lab/profiles/` | Nsight Systems / Nsight Compute 的分析记录与结论。 |
