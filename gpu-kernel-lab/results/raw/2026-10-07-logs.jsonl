@@ -1,0 +1,10 @@
+{"request_id":"A","latency_ms":10}
+{"request_id":"B","latency_ms":11}
+{"request_id":"C","latency_ms":20}
+{"request_id":"D","latency_ms":11}
+{"request_id":"A","latency_ms":12}
+{"request_id":"E","latency_ms":13}
+{"request_id":"B","latency_ms":14}
+{"request_id":"F","latency_ms":11}
+{"request_id":"G","latency_ms":12}
+{"request_id":"A","latency_ms":11}
