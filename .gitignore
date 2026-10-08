@@ -3,5 +3,6 @@ work/
 llm-inference-lab/configs/hardware.json
 .agents/
 .codex/
+.venv/
 *.nsys-rep
 *.ncu-rep
