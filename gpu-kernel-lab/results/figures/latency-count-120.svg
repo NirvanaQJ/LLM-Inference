@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="340" viewBox="0 0 720 340">
+<rect width="720" height="340" fill="white"/>
+<text x="360" y="30" text-anchor="middle" font-size="20">模拟延迟分布（非 GPU 实测）</text>
+<line x1="55" y1="255" x2="690" y2="255" stroke="black"/>
+<text x="20" y="60" font-size="14">样本数</text>
+<text x="360" y="320" text-anchor="middle" font-size="14">延迟区间 (ms)</text>
+<rect x="65" y="135" width="45" height="120" fill="#4472c4"/>
+<text x="87" y="130" text-anchor="middle" font-size="12">12</text>
+<text x="87" y="276" text-anchor="middle" font-size="11">5–10</text>
+<rect x="134" y="135" width="45" height="120" fill="#4472c4"/>
+<text x="156" y="130" text-anchor="middle" font-size="12">12</text>
+<text x="156" y="276" text-anchor="middle" font-size="11">10–15</text>
+<rect x="203" y="125" width="45" height="130" fill="#4472c4"/>
+<text x="225" y="120" text-anchor="middle" font-size="12">13</text>
+<text x="225" y="276" text-anchor="middle" font-size="11">15–20</text>
+<rect x="272" y="125" width="45" height="130" fill="#4472c4"/>
+<text x="294" y="120" text-anchor="middle" font-size="12">13</text>
+<text x="294" y="276" text-anchor="middle" font-size="11">20–25</text>
+<rect x="341" y="125" width="45" height="130" fill="#4472c4"/>
+<text x="363" y="120" text-anchor="middle" font-size="12">13</text>
+<text x="363" y="276" text-anchor="middle" font-size="11">25–30</text>
+<rect x="410" y="135" width="45" height="120" fill="#4472c4"/>
+<text x="432" y="130" text-anchor="middle" font-size="12">12</text>
+<text x="432" y="276" text-anchor="middle" font-size="11">30–35</text>
+<rect x="479" y="95" width="45" height="160" fill="#4472c4"/>
+<text x="501" y="90" text-anchor="middle" font-size="12">16</text>
+<text x="501" y="276" text-anchor="middle" font-size="11">35–40</text>
+<rect x="548" y="95" width="45" height="160" fill="#4472c4"/>
+<text x="570" y="90" text-anchor="middle" font-size="12">16</text>
+<text x="570" y="276" text-anchor="middle" font-size="11">40–45</text>
+<rect x="617" y="125" width="45" height="130" fill="#4472c4"/>
+<text x="639" y="120" text-anchor="middle" font-size="12">13</text>
+<text x="639" y="276" text-anchor="middle" font-size="11">45–50</text>
+</svg>
