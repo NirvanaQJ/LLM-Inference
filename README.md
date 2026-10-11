@@ -2,14 +2,14 @@
 
 这是我从 2026 年 10 月开始，面向 **LLM Inference Systems / GPU Systems** 岗位的学习、实验与求职工作区。学习主线为 Python / C++ / Linux → CUDA / Triton → 大模型推理 → vLLM / SGLang → GPU 性能分析；NCCL 与集群通信是与推理性能相连接的扩展方向。
 
-> **截至 2026-10-10：**10 月 5—8 日和 10 日的 P0、P1 与固定练习均有验收证据；9 日的 P0 已通过，P1 与岗位核查固定项仍待验证。当前可复现成果主要是基础编程、日志统计和**模拟**延迟分析，尚无 CUDA、Triton、模型推理或通信性能实测。练习时长依据本人报告，未单独计时。
+> **截至 2026-10-11：**10 月 5—8 日和 10—11 日的 P0、P1 与固定练习均有验收证据；9 日的 P0 已通过，P1 与岗位核查固定项仍待验证。当前可复现成果主要是基础编程、日志统计和**模拟**延迟分析，尚无 CUDA、Triton、模型推理或通信性能实测。练习时长依据本人报告，未单独计时。
 
 ## 从哪里开始
 
 | 想找什么 | 入口 |
 | --- | --- |
 | 每天的任务、阶段目标和验收标准 | [交互式学习路线图](LLM-Inference-GPU-Systems-Roadmap-2026-2028.html) |
-| 实际完成情况、未通过项和完整证据链 | [日记索引](日记/README.md)；最近记录：[10 月 9 日](日记/2026-10-09.md)、[10 月 10 日](日记/2026-10-10.md) |
+| 实际完成情况、未通过项和完整证据链 | [日记索引](日记/README.md)；最近记录：[10 月 10 日](日记/2026-10-10.md)、[10 月 11 日](日记/2026-10-11.md) |
 | 两个实验项目的目标、目录及现状 | [LLM 推理实验](llm-inference-lab/README.md) · [GPU 算子实验](gpu-kernel-lab/README.md) |
 | 起点与路线图审核 | [基线技能记录](baseline-skills.md) · [路线图审核记录](Red-Team-Audit-2026-10-03.md) |
 
@@ -25,6 +25,7 @@
 | 日志统计与保留末次请求变式 | [运行说明](gpu-kernel-lab/python-basics/README.md) · [统计脚本](gpu-kernel-lab/python-basics/stats.py) · [变式脚本](gpu-kernel-lab/python-basics/requests_last.py) | [统计验收](gpu-kernel-lab/tests/2026-10-08-stats-cases.md) · [10 月 8 日日记](日记/2026-10-08.md) |
 | Git 与越界调试 | [推理项目说明](llm-inference-lab/README.md) · [算子项目说明](gpu-kernel-lab/README.md) · [调试脚本](gpu-kernel-lab/python-basics/index_debug.py) | [失败、断点与修复记录](gpu-kernel-lab/python-basics/debug.md) · [10 月 9 日日记](日记/2026-10-09.md) |
 | 固定种子的模拟延迟分析 | [分析脚本](gpu-kernel-lab/python-basics/analyze.py) · [100 条 CSV](gpu-kernel-lab/results/raw/latency.csv) / [分布图](gpu-kernel-lab/results/figures/latency.svg) · [120 条 CSV](gpu-kernel-lab/results/raw/latency-count-120.csv) / [分布图](gpu-kernel-lab/results/figures/latency-count-120.svg) | [统计与排序核对](gpu-kernel-lab/tests/2026-10-10-latency-cases.md) · [10 月 10 日日记](日记/2026-10-10.md) |
+| W01 周验收与旧题复做 | [保留首次请求](gpu-kernel-lab/python-basics/requests_week01.py) · [空日志统计保护](gpu-kernel-lab/python-basics/stats_week01.py) | [周验收](week-01-review.md) · [错题记录](gpu-kernel-lab/tests/algorithm-errors.md) · [10 月 11 日日记](日记/2026-10-11.md) |
 
 10 月 3—4 日的路线图、审核、环境及最小 C++ 结果，见[日记索引](日记/README.md)和上方基线入口。表中 10 月 10 日的延迟由固定种子的随机数生成，**不是 GPU 测量结果**；两组数据的差异不代表性能变化。
 
