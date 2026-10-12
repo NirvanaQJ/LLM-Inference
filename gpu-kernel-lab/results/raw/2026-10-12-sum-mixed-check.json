@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-12",
+  "operator": "assistant",
+  "path_redaction": "Public copy prepared on 2026-10-12: local project prefixes removed; temporary build directories replaced by <temporary-directory>. Original records are retained locally outside version control. Inputs, outputs, exit codes and source hashes are preserved.",
+  "source": "gpu-kernel-lab/cpp-basics/sum.cpp",
+  "source_sha256": "d9630d91a3b7365f65ea725959e5e18ae50a5e026aef2af6f5bed54b1f0eaa00",
+  "tests": [
+    {
+      "name": "mixed_spaces",
+      "input": "4 -7 2\n",
+      "expected_stdout": "-1\n",
+      "actual_stdout": "-1\n",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "mixed_newlines",
+      "input": "4\n-7\n2\n",
+      "expected_stdout": "-1\n",
+      "actual_stdout": "-1\n",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true
+    }
+  ],
+  "build": {
+    "command": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "gpu-kernel-lab/cpp-basics/sum.cpp",
+      "-o",
+      "<temporary-directory>/sum"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

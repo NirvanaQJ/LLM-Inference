@@ -1,0 +1,112 @@
+{
+  "verification_date_asia_shanghai": "2026-10-12",
+  "executor": "assistant",
+  "source": "gpu-kernel-lab/python-basics/two_sum_sorted.py",
+  "source_sha256": "ddbe5d960a7dc5ac1c0f1137bf1f1eb025404d9c2565e8dc304e28ed2d9ce10f",
+  "python_version": "3.14.4",
+  "method": "Run saved script with captured stdout, then call its function for six independently hand-calculated cases; compare input before and after each call. Verification snapshots are outside the algorithm.",
+  "saved_script_stdout": "(1, 3)\nempty: None\nsingle: None\nduplicate: (0, 1)\nno_solution: None\nnegative: (1, 2)\n",
+  "results": [
+    {
+      "case": "normal",
+      "input_before": [
+        1,
+        2,
+        4,
+        7,
+        11
+      ],
+      "target": 9,
+      "expected_repr": "(1, 3)",
+      "actual_repr": "(1, 3)",
+      "input_after": [
+        1,
+        2,
+        4,
+        7,
+        11
+      ],
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "case": "empty",
+      "input_before": [],
+      "target": 9,
+      "expected_repr": "None",
+      "actual_repr": "None",
+      "input_after": [],
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "case": "single",
+      "input_before": [
+        4
+      ],
+      "target": 8,
+      "expected_repr": "None",
+      "actual_repr": "None",
+      "input_after": [
+        4
+      ],
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "case": "duplicate",
+      "input_before": [
+        4,
+        4
+      ],
+      "target": 8,
+      "expected_repr": "(0, 1)",
+      "actual_repr": "(0, 1)",
+      "input_after": [
+        4,
+        4
+      ],
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "case": "no_solution",
+      "input_before": [
+        1,
+        2,
+        4
+      ],
+      "target": 10,
+      "expected_repr": "None",
+      "actual_repr": "None",
+      "input_after": [
+        1,
+        2,
+        4
+      ],
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "case": "negative",
+      "input_before": [
+        -5,
+        -1,
+        2,
+        7
+      ],
+      "target": 1,
+      "expected_repr": "(1, 2)",
+      "actual_repr": "(1, 2)",
+      "input_after": [
+        -5,
+        -1,
+        2,
+        7
+      ],
+      "input_unchanged": true,
+      "passed": true
+    }
+  ],
+  "all_passed": true
+}

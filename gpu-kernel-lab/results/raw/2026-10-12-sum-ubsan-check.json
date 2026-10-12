@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-12",
+  "operator": "assistant",
+  "path_redaction": "Public copy prepared on 2026-10-12: local project prefixes removed, including diagnostic path prefixes; temporary build directories replaced by <temporary-directory>. Original records are retained locally outside version control. Inputs, diagnostic body, exit codes and source hashes are preserved.",
+  "purpose": "Verify the valid upper boundary and diagnose the extra out-of-range addition without changing the learner source or executable.",
+  "source": "gpu-kernel-lab/cpp-basics/sum.cpp",
+  "source_sha256": "d9630d91a3b7365f65ea725959e5e18ae50a5e026aef2af6f5bed54b1f0eaa00",
+  "tests": [
+    {
+      "name": "valid_upper_boundary",
+      "input": "9223372036854775807 0\n",
+      "actual_stdout": "9223372036854775807\n",
+      "stderr": "",
+      "returncode": 0,
+      "expected_stdout": "9223372036854775807\n",
+      "passed": true
+    },
+    {
+      "name": "extra_signed_overflow",
+      "input": "9223372036854775807 1\n",
+      "actual_stdout": "",
+      "stderr": "gpu-kernel-lab/cpp-basics/sum.cpp:7:15: runtime error: signed integer overflow: 9223372036854775807 + 1 cannot be represented in type 'long long int'\n",
+      "returncode": 1,
+      "mathematical_sum": "9223372036854775808",
+      "scope": "Outside the agreed cumulative range; C++ has no required ordinary output. This is an external diagnostic demonstration, not learner error-handling implementation.",
+      "expected_diagnostic": "signed integer overflow",
+      "diagnostic_confirmed": true
+    }
+  ],
+  "build": {
+    "command": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "-fsanitize=undefined",
+      "-fno-sanitize-recover=undefined",
+      "gpu-kernel-lab/cpp-basics/sum.cpp",
+      "-o",
+      "<temporary-directory>/sum_checked"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}
