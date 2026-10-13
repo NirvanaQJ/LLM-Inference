@@ -1,0 +1,163 @@
+{
+  "date": "2026-10-13",
+  "actor": "assistant",
+  "workdir": "project root",
+  "source": "gpu-kernel-lab/cpp-basics/pointers.cpp",
+  "source_sha256": "1a554fefff7c88af4ff423bd9904d65caab8d12355d350a9413eee0e8e4dfaab",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "expected_basis": "Explicit hand-computed table saved before execution in tests/2026-10-13-pointers-cases.md; cases are independent calls.",
+  "test_source": "#include <iostream>\n\nvoid swap_value(int x, int y) {\n    std::cout << \"inside: &x=\" << &x << \", &y=\" << &y << '\\n';\n\n    int temp = x;\n    x = y;\n    y = temp;\n\n    std::cout << \"inside: x=\" << x << \", y=\" << y << '\\n';\n}\n\n\nvoid swap_pointer(int* x, int* y) {\n    std::cout << \"pointer: x=\" << x << \", y=\" << y << '\\n';\n    std::cout << \"pointer: &x=\" << &x << \", &y=\" << &y << '\\n';\n\n    int temp = *x;\n    *x = *y;\n    *y = temp;\n\n    std::cout << \"pointer: *x=\" << *x << \", *y=\" << *y << '\\n';\n}\n\nvoid swap_reference(int& x, int& y) {\n    std::cout << \"reference: &x=\" << &x << \", &y=\" << &y << '\\n';\n\n    int temp = x;\n    x = y;\n    y = temp;\n\n    std::cout << \"reference: x=\" << x << \", y=\" << y << '\\n';\n}\n\nint main() {\n{ int a = -4; int b = 0; swap_value(a, b); std::cout << \"CHECK|negative_zero_value|\" << a << \"|\" << b << \"\\n\"; }\n{ int a = -4; int b = 0; swap_pointer(&a, &b); std::cout << \"CHECK|negative_zero_pointer|\" << a << \"|\" << b << \"\\n\"; }\n{ int a = -4; int b = 0; swap_reference(a, b); std::cout << \"CHECK|negative_zero_reference|\" << a << \"|\" << b << \"\\n\"; }\n{ int a = 5; int b = 5; swap_value(a, b); std::cout << \"CHECK|equal_value|\" << a << \"|\" << b << \"\\n\"; }\n{ int a = 5; int b = 5; swap_pointer(&a, &b); std::cout << \"CHECK|equal_pointer|\" << a << \"|\" << b << \"\\n\"; }\n{ int a = 5; int b = 5; swap_reference(a, b); std::cout << \"CHECK|equal_reference|\" << a << \"|\" << b << \"\\n\"; }\n{ int a = 7; swap_pointer(&a, &a); std::cout << \"CHECK|alias_pointer|\" << a << \"\\n\"; }\n{ int a = 7; swap_reference(a, a); std::cout << \"CHECK|alias_reference|\" << a << \"\\n\"; }\nreturn 0;\n}\n",
+  "compile_command": [
+    "g++",
+    "-std=c++17",
+    "-Wall",
+    "-Wextra",
+    "<temporary-directory>/pointers-boundary.cpp",
+    "-o",
+    "<temporary-directory>/pointers-boundary"
+  ],
+  "build": {
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "run": {
+    "command": "<temporary-directory>/pointers-boundary",
+    "exit_code": 0,
+    "stdout": "inside: &x=0x7ffeebbf396c, &y=0x7ffeebbf3968\ninside: x=0, y=-4\nCHECK|negative_zero_value|-4|0\npointer: x=0x7ffeebbf3990, y=0x7ffeebbf3994\npointer: &x=0x7ffeebbf3968, &y=0x7ffeebbf3960\npointer: *x=0, *y=-4\nCHECK|negative_zero_pointer|0|-4\nreference: &x=0x7ffeebbf3990, &y=0x7ffeebbf3994\nreference: x=0, y=-4\nCHECK|negative_zero_reference|0|-4\ninside: &x=0x7ffeebbf396c, &y=0x7ffeebbf3968\ninside: x=5, y=5\nCHECK|equal_value|5|5\npointer: x=0x7ffeebbf3990, y=0x7ffeebbf3994\npointer: &x=0x7ffeebbf3968, &y=0x7ffeebbf3960\npointer: *x=5, *y=5\nCHECK|equal_pointer|5|5\nreference: &x=0x7ffeebbf3990, &y=0x7ffeebbf3994\nreference: x=5, y=5\nCHECK|equal_reference|5|5\npointer: x=0x7ffeebbf3994, y=0x7ffeebbf3994\npointer: &x=0x7ffeebbf3968, &y=0x7ffeebbf3960\npointer: *x=7, *y=7\nCHECK|alias_pointer|7\nreference: &x=0x7ffeebbf3994, &y=0x7ffeebbf3994\nreference: x=7, y=7\nCHECK|alias_reference|7\n",
+    "stderr": ""
+  },
+  "cases": [
+    {
+      "id": "negative_zero_value",
+      "initial": [
+        -4,
+        0
+      ],
+      "call": "swap_value(a, b);",
+      "expected": [
+        -4,
+        0
+      ],
+      "actual": [
+        -4,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "id": "negative_zero_pointer",
+      "initial": [
+        -4,
+        0
+      ],
+      "call": "swap_pointer(&a, &b);",
+      "expected": [
+        0,
+        -4
+      ],
+      "actual": [
+        0,
+        -4
+      ],
+      "passed": true
+    },
+    {
+      "id": "negative_zero_reference",
+      "initial": [
+        -4,
+        0
+      ],
+      "call": "swap_reference(a, b);",
+      "expected": [
+        0,
+        -4
+      ],
+      "actual": [
+        0,
+        -4
+      ],
+      "passed": true
+    },
+    {
+      "id": "equal_value",
+      "initial": [
+        5,
+        5
+      ],
+      "call": "swap_value(a, b);",
+      "expected": [
+        5,
+        5
+      ],
+      "actual": [
+        5,
+        5
+      ],
+      "passed": true
+    },
+    {
+      "id": "equal_pointer",
+      "initial": [
+        5,
+        5
+      ],
+      "call": "swap_pointer(&a, &b);",
+      "expected": [
+        5,
+        5
+      ],
+      "actual": [
+        5,
+        5
+      ],
+      "passed": true
+    },
+    {
+      "id": "equal_reference",
+      "initial": [
+        5,
+        5
+      ],
+      "call": "swap_reference(a, b);",
+      "expected": [
+        5,
+        5
+      ],
+      "actual": [
+        5,
+        5
+      ],
+      "passed": true
+    },
+    {
+      "id": "alias_pointer",
+      "initial": [
+        7
+      ],
+      "call": "swap_pointer(&a, &a);",
+      "expected": [
+        7
+      ],
+      "actual": [
+        7
+      ],
+      "passed": true
+    },
+    {
+      "id": "alias_reference",
+      "initial": [
+        7
+      ],
+      "call": "swap_reference(a, a);",
+      "expected": [
+        7
+      ],
+      "actual": [
+        7
+      ],
+      "passed": true
+    }
+  ],
+  "all_passed": true
+}

@@ -113,3 +113,76 @@ expected/actual：6 / 6。
 当日总验收与可移植复现命令：../../日记/2026-10-12.md
 当日数组、双指针固定练习另有代码、六组测试和复杂度记录，亦已通过。
 sum 与 *.o 为本地构建产物，由本目录 .gitignore 管理；源码与本构建记录纳入归档。
+
+2026-10-13 — 检查点 1：最小指针示例
+
+工作目录：gpu-kernel-lab/cpp-basics（相对于项目根目录）
+源文件：pointers.cpp（本人保存；助手只读核对）
+源文件摘要 SHA-256：75f326f4707dff42884b9f7de789f5a5afb467b85092e04cc944858d8d74d9e7
+编译器：g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0（今日助手只读版本检查）。
+本人截图中的编译命令：g++ -std=c++17 -Wall -Wextra pointers.cpp -o pointers
+编译诊断：截图未显示错误或警告；未单独采集构建退出码。
+本人运行命令：./pointers
+输入：无外部输入，源代码固定 a=10，通过 *p=20 修改。
+expected：修改前 a=10、*p=10；修改后均为 20；同一次运行中 p 与 &a 相等且前后不变。
+actual：before: a=10, *p=10；after: a=20, *p=20。
+actual 地址：修改前后均为 &a=0x7ffeca16850c, p=0x7ffeca16850c。
+退出码：本人截图未单独采集；不填写推测值。
+证据来源：本次学习聊天中本人提供的终端截图，未另存本地图片；本段由助手整理，不是原始终端重定向日志。助手未独立复跑。
+结果：最小指针示例通过。值、指针、引用三种交换、内存图、const、P1 与固定练习仍待完成。
+测试记录：../tests/2026-10-13-pointers-cases.md
+
+2026-10-13 — 检查点 2：按值交换与参数地址
+
+工作目录：gpu-kernel-lab/cpp-basics（相对于项目根目录）
+源文件：pointers.cpp（本人更新；助手只读核对）
+源文件摘要 SHA-256：65733a78ddfda7c3303c9d73dd94d140e5202e4eaee8a1251620bf29b201d8b0
+本人截图中的编译命令：g++ -std=c++17 -Wall -Wextra pointers.cpp -o pointers
+编译诊断：截图未显示错误或警告；未单独采集构建退出码。
+本人运行命令：./pointers
+输入：无外部输入，main 内固定 a=3、b=8，调用 swap_value(a, b)。
+expected：before a=3、b=8；inside x=8、y=3；after a=3、b=8；参数与调用者原变量的地址不同。数值预期来自本人运行前推导。
+actual：before: a=3, b=8；inside: x=8, y=3；after: a=3, b=8。
+actual 地址：main: &a=0x7ffc27db7220, &b=0x7ffc27db7224；inside: &x=0x7ffc27db71fc, &y=0x7ffc27db71f8。
+退出码：本人截图未单独采集；不填写推测值。
+证据来源：本人在本次聊天中提供的最新终端截图下半部分，未另存本地图片；本段由助手整理，不是原始终端日志。助手未独立复跑。
+结果：按值交换的运行与地址输出通过，指针与引用版本等后续任务仍待完成。
+测试记录：../tests/2026-10-13-pointers-cases.md
+
+2026-10-13 — 检查点 3：保留按值版本并加入指针交换
+
+工作目录：gpu-kernel-lab/cpp-basics（相对于项目根目录）
+源文件：pointers.cpp（本人更新；助手只读核对）
+源文件摘要 SHA-256：5b8bd776a8bbf3ba851bb14df64f2830075e48cdf677237d3368088a54e21981
+本人截图中的编译命令：g++ -std=c++17 -Wall -Wextra pointers.cpp -o pointers
+编译诊断：截图未显示错误或警告；未单独采集构建退出码。
+本人运行命令：./pointers
+输入：无外部输入；main 内固定 a=3、b=8，先调用 swap_value(a, b)，再调用 swap_pointer(&a, &b)。
+expected：按值调用后 a=3、b=8，指针调用后 a=8、b=3；指针参数保存的地址分别等于调用者的 &a、&b。数值预期来自本人运行前推导。
+actual：after value: a=3, b=8；pointer: *x=8, *y=3；after pointer: a=8, b=3。
+actual 原变量地址：main: &a=0x7ffe5e229690, &b=0x7ffe5e229694。
+actual 指针参数保存的地址：pointer: x=0x7ffe5e229690, y=0x7ffe5e229694。
+actual 指针参数自身的地址：pointer: &x=0x7ffe5e229668, &y=0x7ffe5e229660。
+退出码：本人截图未单独采集；不填写推测值。
+证据来源：本次聊天中本人最新终端截图的下半部分新编译运行，未另存本地图片；本段由助手整理，不是重定向原始日志。助手未独立复跑。
+结果：指针交换本次运行与地址输出通过；指针参数变式、引用版本、内存图、const、固定练习与 P1 仍待完成。
+测试记录：../tests/2026-10-13-pointers-cases.md
+
+2026-10-13 — 检查点 4：三种交换连续调用与引用地址
+
+工作目录：gpu-kernel-lab/cpp-basics（相对于项目根目录）
+源文件：pointers.cpp（本人更新；助手只读核对）
+源文件摘要 SHA-256：1a554fefff7c88af4ff423bd9904d65caab8d12355d350a9413eee0e8e4dfaab
+本人截图中的编译命令：g++ -std=c++17 -Wall -Wextra pointers.cpp -o pointers
+编译诊断：截图未显示错误或警告；未单独采集构建退出码。
+本人运行命令：./pointers
+输入：无外部输入；main 初始 a=3、b=8，依次调用按值、指针、引用版本，不重置变量。
+expected（助手运行前独立推导）：after value 为 3、8；after pointer 为 8、3；after reference 为 3、8。引用参数的地址与原变量相同。
+本人本轮预测：a=8,b=3。该预测与引用调用后的预期和实际不符，不作为正确 expected。
+actual：after value: a=3, b=8；after pointer: a=8, b=3；reference: x=3, y=8；after reference: a=3, b=8。
+actual main 地址：&a=0x7fff9cc51b10, &b=0x7fff9cc51b14。
+actual reference 地址：&x=0x7fff9cc51b10, &y=0x7fff9cc51b14。
+退出码：本人截图未单独采集；不填写推测值。
+证据来源：本次聊天中本人最新终端截图下方的新增完整运行，未另存本地图片；本段由助手整理，不是重定向原始日志。助手未独立复跑。
+结果：该组程序运行与引用地址输出通过；本人连续调用后的数值预测未通过，需逐行纠错。内存图、const、必要边界、固定练习与 P1 仍待完成。
+测试记录：../tests/2026-10-13-pointers-cases.md

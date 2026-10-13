@@ -1,0 +1,186 @@
+{
+  "date": "2026-10-13",
+  "actor": "assistant",
+  "workdir": "project root",
+  "command": ".venv/bin/python <inline verifier>",
+  "python_version": "3.14.4",
+  "source_path": "gpu-kernel-lab/python-basics/move_zeros.py",
+  "source_sha256": "b593d2d01336e1affada22df824efaa6b5660c7e126825dd8c7d98729febd454",
+  "source_snapshot": "def move_zeros(nums):\n    write = 0\n\n    for read in range(len(nums)):\n        if nums[read] != 0:\n            nums[write] = nums[read]\n            write += 1\n\n    for index in range(write, len(nums)):\n        nums[index] = 0\n\n\nnums = [0, 1, 0, 3, 12]\nmove_zeros(nums)\nprint(nums)\n\ncases = [\n    (\"empty\", []),\n    (\"single_zero\", [0]),\n    (\"single_nonzero\", [5]),\n    (\"all_zero\", [0, 0, 0]),\n    (\"no_zero\", [1, 2, 3]),\n    (\"negative_duplicate\", [0, -1, 0, -1, 2]),\n]\n\nfor name, values in cases:\n    result = move_zeros(values)\n    print(name, values, \"return:\", result)",
+  "function_snapshot": "def move_zeros(nums):\n    write = 0\n\n    for read in range(len(nums)):\n        if nums[read] != 0:\n            nums[write] = nums[read]\n            write += 1\n\n    for index in range(write, len(nums)):\n        nums[index] = 0",
+  "method": "Execute only the unchanged move_zeros function extracted with AST; do not execute module-level demonstrations. Each test inspects the originally supplied list via an alias.",
+  "expected_basis": "Independent literal hand-computed expectations saved before execution in tests/2026-10-13-move-zeros-cases.md.",
+  "cases": [
+    {
+      "name": "normal",
+      "input": [
+        0,
+        1,
+        0,
+        3,
+        12
+      ],
+      "expected": [
+        1,
+        3,
+        12,
+        0,
+        0
+      ],
+      "actual_original_list": [
+        1,
+        3,
+        12,
+        0,
+        0
+      ],
+      "expected_return": null,
+      "actual_return": null,
+      "length_before": 5,
+      "length_after": 5,
+      "original_list_matches_expected": true,
+      "length_unchanged": true,
+      "returns_none": true,
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "input": [],
+      "expected": [],
+      "actual_original_list": [],
+      "expected_return": null,
+      "actual_return": null,
+      "length_before": 0,
+      "length_after": 0,
+      "original_list_matches_expected": true,
+      "length_unchanged": true,
+      "returns_none": true,
+      "passed": true
+    },
+    {
+      "name": "single_zero",
+      "input": [
+        0
+      ],
+      "expected": [
+        0
+      ],
+      "actual_original_list": [
+        0
+      ],
+      "expected_return": null,
+      "actual_return": null,
+      "length_before": 1,
+      "length_after": 1,
+      "original_list_matches_expected": true,
+      "length_unchanged": true,
+      "returns_none": true,
+      "passed": true
+    },
+    {
+      "name": "single_nonzero",
+      "input": [
+        5
+      ],
+      "expected": [
+        5
+      ],
+      "actual_original_list": [
+        5
+      ],
+      "expected_return": null,
+      "actual_return": null,
+      "length_before": 1,
+      "length_after": 1,
+      "original_list_matches_expected": true,
+      "length_unchanged": true,
+      "returns_none": true,
+      "passed": true
+    },
+    {
+      "name": "all_zero",
+      "input": [
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ],
+      "actual_original_list": [
+        0,
+        0,
+        0
+      ],
+      "expected_return": null,
+      "actual_return": null,
+      "length_before": 3,
+      "length_after": 3,
+      "original_list_matches_expected": true,
+      "length_unchanged": true,
+      "returns_none": true,
+      "passed": true
+    },
+    {
+      "name": "no_zero",
+      "input": [
+        1,
+        2,
+        3
+      ],
+      "expected": [
+        1,
+        2,
+        3
+      ],
+      "actual_original_list": [
+        1,
+        2,
+        3
+      ],
+      "expected_return": null,
+      "actual_return": null,
+      "length_before": 3,
+      "length_after": 3,
+      "original_list_matches_expected": true,
+      "length_unchanged": true,
+      "returns_none": true,
+      "passed": true
+    },
+    {
+      "name": "negative_duplicate",
+      "input": [
+        0,
+        -1,
+        0,
+        -1,
+        2
+      ],
+      "expected": [
+        -1,
+        -1,
+        2,
+        0,
+        0
+      ],
+      "actual_original_list": [
+        -1,
+        -1,
+        2,
+        0,
+        0
+      ],
+      "expected_return": null,
+      "actual_return": null,
+      "length_before": 5,
+      "length_after": 5,
+      "original_list_matches_expected": true,
+      "length_unchanged": true,
+      "returns_none": true,
+      "passed": true
+    }
+  ],
+  "all_passed": true
+}
