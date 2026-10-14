@@ -1,0 +1,196 @@
+{
+  "date": "2026-10-14",
+  "actor": "assistant independent verification; learner three-case screenshots recorded separately",
+  "source": "gpu-kernel-lab/python-basics/move_zeros_redo.py",
+  "source_sha256": "dbb06e69e0490adc95556e204c17bfcd25b9199af78374109563c8a383bd765d",
+  "function_source_snapshot": "def move_zeros(nums):\n    write = 0\n    for read in range(len(nums)):\n        if nums[read]!=0:\n            nums[write]=nums[read]\n            write +=1\n    for index in range(write,len(nums)):\n        nums[index]=0\n",
+  "python_version": "3.14.4",
+  "expected_method": "seven arrays hand-derived before execution from nonzero relative order and zero count",
+  "module_stdout_expected": "[4, -1, 4, 0, 0]\nNone\nempty: [] return: None\nall_zero: [0, 0, 0] return: None\n",
+  "module_stdout_actual": "[4, -1, 4, 0, 0]\nNone\nempty: [] return: None\nall_zero: [0, 0, 0] return: None\n",
+  "module_stdout_passed": true,
+  "cases": [
+    {
+      "name": "normal",
+      "input": [
+        0,
+        4,
+        0,
+        -1,
+        4
+      ],
+      "expected_original_list": [
+        4,
+        -1,
+        4,
+        0,
+        0
+      ],
+      "expected_return": null,
+      "actual_original_list_via_alias": [
+        4,
+        -1,
+        4,
+        0,
+        0
+      ],
+      "actual_return": null,
+      "properties": {
+        "content_matches": true,
+        "length_unchanged": true,
+        "returns_none": true,
+        "original_observed_via_alias": true
+      },
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "input": [],
+      "expected_original_list": [],
+      "expected_return": null,
+      "actual_original_list_via_alias": [],
+      "actual_return": null,
+      "properties": {
+        "content_matches": true,
+        "length_unchanged": true,
+        "returns_none": true,
+        "original_observed_via_alias": true
+      },
+      "passed": true
+    },
+    {
+      "name": "all_zero",
+      "input": [
+        0,
+        0,
+        0
+      ],
+      "expected_original_list": [
+        0,
+        0,
+        0
+      ],
+      "expected_return": null,
+      "actual_original_list_via_alias": [
+        0,
+        0,
+        0
+      ],
+      "actual_return": null,
+      "properties": {
+        "content_matches": true,
+        "length_unchanged": true,
+        "returns_none": true,
+        "original_observed_via_alias": true
+      },
+      "passed": true
+    },
+    {
+      "name": "single_zero",
+      "input": [
+        0
+      ],
+      "expected_original_list": [
+        0
+      ],
+      "expected_return": null,
+      "actual_original_list_via_alias": [
+        0
+      ],
+      "actual_return": null,
+      "properties": {
+        "content_matches": true,
+        "length_unchanged": true,
+        "returns_none": true,
+        "original_observed_via_alias": true
+      },
+      "passed": true
+    },
+    {
+      "name": "single_nonzero",
+      "input": [
+        -3
+      ],
+      "expected_original_list": [
+        -3
+      ],
+      "expected_return": null,
+      "actual_original_list_via_alias": [
+        -3
+      ],
+      "actual_return": null,
+      "properties": {
+        "content_matches": true,
+        "length_unchanged": true,
+        "returns_none": true,
+        "original_observed_via_alias": true
+      },
+      "passed": true
+    },
+    {
+      "name": "no_zero",
+      "input": [
+        2,
+        -1,
+        2
+      ],
+      "expected_original_list": [
+        2,
+        -1,
+        2
+      ],
+      "expected_return": null,
+      "actual_original_list_via_alias": [
+        2,
+        -1,
+        2
+      ],
+      "actual_return": null,
+      "properties": {
+        "content_matches": true,
+        "length_unchanged": true,
+        "returns_none": true,
+        "original_observed_via_alias": true
+      },
+      "passed": true
+    },
+    {
+      "name": "leading_and_trailing_zero",
+      "input": [
+        0,
+        0,
+        -2,
+        0,
+        3,
+        0
+      ],
+      "expected_original_list": [
+        -2,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_return": null,
+      "actual_original_list_via_alias": [
+        -2,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "actual_return": null,
+      "properties": {
+        "content_matches": true,
+        "length_unchanged": true,
+        "returns_none": true,
+        "original_observed_via_alias": true
+      },
+      "passed": true
+    }
+  ],
+  "source_unchanged": true,
+  "all_passed": true
+}

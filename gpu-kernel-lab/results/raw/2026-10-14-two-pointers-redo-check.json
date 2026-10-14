@@ -1,0 +1,145 @@
+{
+  "date": "2026-10-14",
+  "actor": "assistant independent check; learner screenshots recorded separately",
+  "source": "gpu-kernel-lab/python-basics/two_sum_sorted_redo.py",
+  "source_sha256": "d726ada9c9addc7077c4fc090c35b22401393a9c5a6794343b9e8c51a134fccc",
+  "python_version": "3.14.4",
+  "expected_method": "six input/output pairs determined by hand before learner implementation; tuple type and input unchanged checked explicitly",
+  "module_stdout_expected": "(1, 3)\nempty: None\nsingle: None\nduplicate: (0, 1)\nno_solution: None\nnegative: (1, 2)\n",
+  "module_stdout_actual": "(1, 3)\nempty: None\nsingle: None\nduplicate: (0, 1)\nno_solution: None\nnegative: (1, 2)\n",
+  "module_stdout_passed": true,
+  "cases": [
+    {
+      "name": "normal",
+      "nums_before": [
+        1,
+        3,
+        4,
+        6,
+        10
+      ],
+      "target": 9,
+      "expected": [
+        1,
+        3
+      ],
+      "expected_type": "tuple",
+      "actual": [
+        1,
+        3
+      ],
+      "actual_type": "tuple",
+      "nums_after": [
+        1,
+        3,
+        4,
+        6,
+        10
+      ],
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "nums_before": [],
+      "target": 9,
+      "expected": null,
+      "expected_type": "NoneType",
+      "actual": null,
+      "actual_type": "NoneType",
+      "nums_after": [],
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "single",
+      "nums_before": [
+        5
+      ],
+      "target": 10,
+      "expected": null,
+      "expected_type": "NoneType",
+      "actual": null,
+      "actual_type": "NoneType",
+      "nums_after": [
+        5
+      ],
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "duplicate",
+      "nums_before": [
+        5,
+        5
+      ],
+      "target": 10,
+      "expected": [
+        0,
+        1
+      ],
+      "expected_type": "tuple",
+      "actual": [
+        0,
+        1
+      ],
+      "actual_type": "tuple",
+      "nums_after": [
+        5,
+        5
+      ],
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "no_solution",
+      "nums_before": [
+        1,
+        2,
+        4
+      ],
+      "target": 20,
+      "expected": null,
+      "expected_type": "NoneType",
+      "actual": null,
+      "actual_type": "NoneType",
+      "nums_after": [
+        1,
+        2,
+        4
+      ],
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "negative",
+      "nums_before": [
+        -6,
+        -2,
+        3,
+        9
+      ],
+      "target": 1,
+      "expected": [
+        1,
+        2
+      ],
+      "expected_type": "tuple",
+      "actual": [
+        1,
+        2
+      ],
+      "actual_type": "tuple",
+      "nums_after": [
+        -6,
+        -2,
+        3,
+        9
+      ],
+      "input_unchanged": true,
+      "passed": true
+    }
+  ],
+  "source_unchanged": true,
+  "all_passed": true
+}
