@@ -2,14 +2,16 @@
 
 这是我从 2026 年 10 月开始，面向 **LLM Inference Systems / GPU Systems** 岗位的学习、实验与求职工作区。学习主线为 Python / C++ / Linux → CUDA / Triton → 大模型推理 → vLLM / SGLang → GPU 性能分析；NCCL 与集群通信是与推理性能相连接的扩展方向。
 
-> **截至 2026-10-14：**14 日 C++「数组与字符串」去重主任务、固定练习“两数求和复做”和 P1“移动零复做”全部验收通过；13 日 P1 的三题次日复答及遗漏记录也已于 14 日完成，13 日全部任务验收通过。10 月 5—8 日和 10—12 日的 P0、P1 与固定练习均有验收证据；9 日的 P0 已通过，P1 与岗位核查固定项仍待验证。当前可复现成果主要是基础编程、日志统计和**模拟**延迟分析，尚无 CUDA、Triton、模型推理或通信性能实测。练习时长依据本人估计，未单独计时；14 日固定练习约 30 分钟、P1 约 20 分钟，全天累计尚未报告。
+> **截至 2026-10-15：**当天 P0、固定练习和 P1 全部验收通过，成果已整理到[10 月 15 日日记](日记/2026-10-15.md)：C++ 请求解析/统计拆分、指定值移动变式、重复编号的统计适用范围。本人编译运行与理解验收分别留有记录，助手另复核 C++ 23 组、算法八组。本人估计固定项约 20 分钟、P1 约 15 分钟、全天约 130 分钟，未独立计时。
+
+此前 14 日任务全部通过，13 日次日复答已于 14 日完成；10 月 5—8 日和 10—12 日均有 P0、P1 与固定练习证据。9 日 P0 已通过，P1 与岗位核查固定项仍待验证。当前成果主要是基础编程、日志统计和**模拟**延迟分析，尚无 CUDA、Triton、模型推理或通信性能实测。
 
 ## 从哪里开始
 
 | 想找什么 | 入口 |
 | --- | --- |
 | 每天的任务、阶段目标和验收标准 | [交互式学习路线图](LLM-Inference-GPU-Systems-Roadmap-2026-2028.html) |
-| 实际完成情况、未通过项和完整证据链 | [日记索引](日记/README.md)；最近记录：[10 月 13 日](日记/2026-10-13.md)、[10 月 14 日](日记/2026-10-14.md) |
+| 实际完成情况、未通过项和完整证据链 | [日记索引](日记/README.md)；最近记录：[10 月 14 日](日记/2026-10-14.md)、[10 月 15 日](日记/2026-10-15.md) |
 | 两个实验项目的目标、目录及现状 | [LLM 推理实验](llm-inference-lab/README.md) · [GPU 算子实验](gpu-kernel-lab/README.md) |
 | 起点与路线图审核 | [基线技能记录](baseline-skills.md) · [路线图审核记录](Red-Team-Audit-2026-10-03.md) |
 
@@ -33,6 +35,9 @@
 | C++ vector、string 与严格整数去重 | [读取一行并保留首次整数](gpu-kernel-lab/cpp-basics/dedup.cpp) · [构建记录](gpu-kernel-lab/cpp-basics/build.txt) | [本人运行、理解纠错与边界验收](gpu-kernel-lab/tests/2026-10-14-dedup-cases.md) · [66 组助手独立复核](gpu-kernel-lab/results/raw/2026-10-14-dedup-check.json) · [10 月 14 日日记](日记/2026-10-14.md) |
 | 有序两数求和复做 | [新文件复做函数](gpu-kernel-lab/python-basics/two_sum_sorted_redo.py) | [六组边界、类型纠错与复杂度](gpu-kernel-lab/tests/2026-10-14-two-pointers-redo-cases.md) · [输入不变复核](gpu-kernel-lab/results/raw/2026-10-14-two-pointers-redo-check.json) · [10 月 14 日日记](日记/2026-10-14.md) |
 | 移动零从空文件复做 | [P1 新文件实现](gpu-kernel-lab/python-basics/move_zeros_redo.py) | [两组本人边界、复杂度与计数纠错](gpu-kernel-lab/tests/2026-10-14-move-zeros-redo-cases.md) · [七组原列表/长度/返回值复核](gpu-kernel-lab/results/raw/2026-10-14-move-zeros-redo-check.json) · [10 月 14 日日记](日记/2026-10-14.md) |
+| C++ 函数、结构体与双源文件解析/统计 | [共享头文件](gpu-kernel-lab/cpp-basics/request.hpp) · [解析函数](gpu-kernel-lab/cpp-basics/request.cpp) · [统计入口](gpu-kernel-lab/cpp-basics/stats.cpp) | [编译链接、本人运行与理解验收](gpu-kernel-lab/tests/2026-10-15-request-stats-cases.md) · [23 组边界复核](gpu-kernel-lab/results/raw/2026-10-15-request-stats-check.json) · [10 月 15 日日记](日记/2026-10-15.md) |
+| 移动零的指定值变式 | [原地移动指定值](gpu-kernel-lab/python-basics/move_value_to_end.py) | [本人三组运行、复杂度与顺序解释](gpu-kernel-lab/tests/2026-10-15-move-value-cases.md) · [八组原列表/长度/返回复核](gpu-kernel-lab/results/raw/2026-10-15-move-value-check.json) · [10 月 15 日日记](日记/2026-10-15.md) |
+| 重复编号与统计适用范围 | [三行输入](gpu-kernel-lab/tests/2026-10-15-duplicate-requests.txt) · [限制条件分析](gpu-kernel-lab/tests/2026-10-15-request-stats-limits.md) | [两种规则手算、本人运行及适用范围](gpu-kernel-lab/tests/2026-10-15-request-stats-limits.md) · [10 月 15 日日记](日记/2026-10-15.md) |
 
 10 月 3—4 日的路线图、审核、环境及最小 C++ 结果，见[日记索引](日记/README.md)和上方基线入口。表中 10 月 10 日的延迟由固定种子的随机数生成，**不是 GPU 测量结果**；两组数据的差异不代表性能变化。
 

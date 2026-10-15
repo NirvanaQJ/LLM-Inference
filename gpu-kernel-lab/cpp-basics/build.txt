@@ -274,3 +274,115 @@ actual：五行依次为 [3]、[-2]、[abc]、8、[3 -2 abc]。
 助手原始结果：../results/raw/2026-10-14-dedup-check.json
 来源：本人截图与助手独立复核分别记录；本人截图未另存图片，本段不是原始终端日志。
 结果：正式程序及原文运行验收通过；最终理解复查、固定练习和 P1 尚待完成。
+
+2026-10-15 — 检查点 1：struct 最小程序本人编译与运行
+
+工作目录：gpu-kernel-lab/cpp-basics（相对于项目根目录）
+源文件：stats.cpp（本人保存教学示例；助手只读核对）
+源文件摘要 SHA-256：f43207752ade501762bbfe5aa40c2da49805bbe05aaf2a2b6d94649ec03c9796
+编译器版本：助手课程开始时查询为 g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0。
+本人截图下半部分的新一轮编译命令：g++ -std=c++17 -Wall -Wextra stats.cpp -o stats
+本轮编译诊断：未显示错误或警告；未单独采集构建退出码。
+本人运行命令：./stats
+输入：无外部输入；源码固定 a 为 A/10.0，b 为 B/20.0，随后将 b.latency_ms 改为 25.0。
+expected：两行 A 10、B 25（助手在运行前纠正默认浮点输出格式后给出；本人此前数值与独立性判断正确）。
+actual：两行 A 10、B 25。
+运行退出码：截图未单独采集，不填写推测值。
+旧失败保留：截图上半部分为 undefined reference to main、链接器返回 1，随后 ./stats 报没有该文件；该轮完整构建命令和对应源文件未提供，不推定具体原因。
+来源：本人聊天终端截图，未另存为本地图片；本段为助手整理，不是原始终端日志。助手未修改代码、未独立编译或复跑。
+结果：struct 教学示例本人保存、编译和运行通过；完整多文件编译链接及其余任务仍待验证。
+测试记录：../tests/2026-10-15-request-stats-cases.md
+
+2026-10-15 — 检查点 2：total_latency 函数本人编译与普通/空容器运行
+
+工作目录：gpu-kernel-lab/cpp-basics（相对于项目根目录）
+源文件：stats.cpp（本人更新教学示例；助手只读核对）
+源文件摘要 SHA-256：cf07a3a1f195844a3ca10ffbb1c6c6c2fb3899684fb5d43d547b296654182873
+本人截图下半部分的新一轮编译命令：g++ -std=c++17 -Wall -Wextra stats.cpp -o stats
+编译诊断：本轮未显示错误或警告；构建退出码未单独采集。
+本人运行命令：./stats
+输入：无外部输入；源码内分别调用 A/10.0、B/25.0 组成的 vector 与空 vector。
+expected：两行 35、0（本人在运行前手算，亦正确判断空容器循环执行 0 次）。
+actual：两行 35、0。
+运行退出码：截图未单独采集，不填写推测值。
+来源：本人聊天终端截图，未另存为本地图片；截图上半部分是先前结构体版本的输出。本段为助手整理，不是原始终端日志。助手未修改代码、未独立编译或复跑。
+结果：单文件函数教学版本保存、编译及两组运行通过；头文件、完整多文件编译链接及解析功能仍待实现。
+测试记录：../tests/2026-10-15-request-stats-cases.md
+
+2026-10-15 — 检查点 3：引入 request.hpp 后本人重新编译与运行
+
+工作目录：gpu-kernel-lab/cpp-basics（相对于项目根目录）
+本人更新文件：request.hpp、stats.cpp（助手只读核对）
+request.hpp SHA-256：a1f344c54331f68c1eddc748252dfa60caaf2b1d395f208903714dc5f1e1a0fd
+stats.cpp SHA-256：307f0043cfef6ddf8f2b6b52430fe326bf648338caf88731dd81333f3f732434
+构建命令：g++ -std=c++17 -Wall -Wextra stats.cpp -o stats
+本轮编译诊断：截图下半部分未显示错误或警告；构建退出码未单独采集。
+本人运行命令：./stats
+输入：源码内固定普通两条请求与空 vector，与上一步相同。
+expected：两行 35、0（修改头文件前已经确定）。
+actual：两行 35、0。
+运行退出码：未单独采集，不填写推测值。
+来源：本人最新聊天终端截图与助手只读核对；截图未另存，本段为整理记录，不是原始终端日志。助手未修改代码或独立复跑。
+结果：共享头文件教学版本人编译运行通过；request.cpp 仍为空，完整两个 cpp 的解析/统计拆分尚待实现。
+测试记录：../tests/2026-10-15-request-stats-cases.md
+
+2026-10-15 — 检查点 4：两个 cpp 教学版本人编译链接与解析运行
+
+工作目录：gpu-kernel-lab/cpp-basics（相对于项目根目录）
+request.hpp SHA-256：4f578ba1be3279286330ee67c5110e9c582857188b93809d26838a81a59fc8de
+request.cpp SHA-256：1f07dd165380be837a4479c9742efbac6f443d08a632c770240715562cadc9bb
+stats.cpp SHA-256：b1dc3d6d4cd8691b82f59d8064071e5471c6d15a454b4d603f99f43c1c15aa80
+本人编译命令：g++ -std=c++17 -Wall -Wextra stats.cpp request.cpp -o stats
+本轮编译诊断：截图未显示错误或警告；构建退出码未单独采集。
+本人运行命令：./stats
+输入：源码中两次独立调用 A 12.5 与 B -3，每条输出记录分别从 old/99.0 开始。
+expected：两行 1 A 12.5、0 old 99（运行前本人手算已确认成员值与成败，助手说明默认 bool 输出 1/0）。
+actual：两行 1 A 12.5、0 old 99。
+运行退出码：未单独采集，不填写推测值。
+来源：本人聊天截图，未另存；助手只读核对三个文件，未修改或独立复跑。本段为整理记录，不是原始终端日志。
+结果：两个源文件教学版编译链接与解析两组运行通过；完整逐行读取统计入口及其余边界尚未实现验收。
+测试记录：../tests/2026-10-15-request-stats-cases.md
+
+2026-10-15 — 检查点 5：完整统计程序本人普通输入与助手边界复核
+
+工作目录：gpu-kernel-lab/cpp-basics（本人）；项目根目录（助手）。
+request.hpp SHA-256：4f578ba1be3279286330ee67c5110e9c582857188b93809d26838a81a59fc8de
+request.cpp SHA-256：1f07dd165380be837a4479c9742efbac6f443d08a632c770240715562cadc9bb
+stats.cpp SHA-256：7fd71de1e5b7d4e3a8987214b0f9d27ea25f4435a10a6a64a658983457099bc0
+本人编译命令：g++ -std=c++17 -Wall -Wextra stats.cpp request.cpp -o stats
+本人本轮编译诊断：截图未显示错误或警告，构建退出码未单独采集。
+本人运行：printf '%s\n' 'A 10' 'B 25' | ./stats，紧接 echo $?
+expected 与 actual：count=2, total_ms=35, avg_ms=17.5；运行状态 0。
+助手独立构建模板：g++ -std=c++17 -Wall -Wextra -Wpedantic -D_GLIBCXX_DEBUG -fsanitize=undefined -fno-sanitize-recover=all gpu-kernel-lab/cpp-basics/stats.cpp gpu-kernel-lab/cpp-basics/request.cpp -o <temporary>/stats-check
+助手构建：状态 0，stdout/stderr 为空；临时目录实际路径未作为固定复现位置，已清理。
+助手环境辅助查询：double 最大有限值为 1.7976931348623157e+308，用于在测试前确定单值与总和溢出的 expected。
+助手实际复核：23/23 组通过，含空输入、格式错误、负数、非有限、范围及总和溢出、重复编号、零、末行无换行等；每组输出和状态均按预先规格检查，无运行时诊断。
+原始输入、expected/actual、命令模板、环境与摘要：../results/raw/2026-10-15-request-stats-check.json
+证据边界：本人普通输入来自聊天截图，未另存；助手独立复核来自原始 JSON。源码与本人可执行文件未改。本段为整理记录，不冒充终端原始日志。
+结果：完整程序运行与编译链接通过；本人边界实跑及必要流程理解尚待完成，不将助手操作视作本人独立掌握。
+测试记录：../tests/2026-10-15-request-stats-cases.md
+
+2026-10-15 — 检查点 6：本人空输入与坏输入实跑
+
+工作目录：gpu-kernel-lab/cpp-basics（相对于项目根目录）
+源文件摘要与检查点 5 相同，助手只读确认，未重新构建或扩大自动测试。
+本人用例 1：printf '' | ./stats，紧接 echo $?
+expected 与 actual：count=0, total_ms=0, avg_ms=N/A；状态 0。
+本人用例 2：printf '%s\n' 'A 10' 'B -3' | ./stats，紧接 echo $?
+expected 与 actual：无效请求记录；状态 1；该轮无 count/total/avg 部分统计输出。
+来源：本人最新聊天终端截图，未另存；本段为助手整理，不是原始终端日志。无新构建过程，不新增本轮编译诊断结论。
+结果：本人两组边界与退出状态均通过，C++ 主任务尚待最后退出/输出流程解释；固定练习与 P1 仍未完成。
+测试记录：../tests/2026-10-15-request-stats-cases.md
+
+2026-10-15 — 检查点 7：P1 重复编号与统计范围本人运行
+
+工作目录：项目根目录。
+源码与检查点 5 相同；本轮不重新编译，不新增编译诊断结论。
+本人命令：gpu-kernel-lab/cpp-basics/stats < gpu-kernel-lab/tests/2026-10-15-duplicate-requests.txt，紧接 echo $?
+输入文件：../tests/2026-10-15-duplicate-requests.txt（三行 A 10、A 90、B 20）。
+expected（本人运行前手算）与 actual：count=3, total_ms=120, avg_ms=40；状态 0。
+参考需求：每编号仅保留首次时 count=2、total_ms=30、avg_ms=15，仅为本人手算，未另行实现或宣称去重程序运行。
+本人说明现有程序适用于全部记录统计，相同编号也会保留，不能直接用于每编号只保留首次的需求；精确措辞和统计前去重建议由助手补充。
+来源：本人聊天截图及文字回答，截图未另存；本段为整理记录，不是原始终端日志。
+结果：P1 限制条件、实际运行与适用范围说明通过；结合主任务和固定练习证据，今日全部学习任务通过。
+P1 记录：../tests/2026-10-15-request-stats-limits.md

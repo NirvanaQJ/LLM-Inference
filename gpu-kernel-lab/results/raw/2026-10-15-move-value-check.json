@@ -1,0 +1,237 @@
+{
+  "task_date": "2026-10-15",
+  "checked_at": "2026-10-15T20:55:29.594859+08:00",
+  "source": "assistant_independent_verification",
+  "working_directory": "project root",
+  "command": ".venv/bin/python <verification helper supplied on stdin>",
+  "python": "3.14.4",
+  "source_file": "gpu-kernel-lab/python-basics/move_value_to_end.py",
+  "source_sha256": "c0a4420c814bd73f1db5ec5181dbc3699c903e4d50ecae5bdae42d3d7d1e150f",
+  "source_snapshot": "def move_value_to_end(nums, target):\n    write=0\n    for read in range(len(nums)):\n        if nums[read]!=target:\n            nums[write]=nums[read]\n            write+=1\n    for index in range(write,len(nums)):\n        nums[index]=target\n\n\n\nnums = [3, 0, 3, -2, 5, 3]\nresult = move_value_to_end(nums, 3)\n\nprint(nums)\nprint(result)\n\nempty = []\nresult = move_value_to_end(empty, 3)\nprint(\"empty:\", empty, \"return:\", result)\n\nall_target = [3, 3, 3]\nresult = move_value_to_end(all_target, 3)\nprint(\"all_target:\", all_target, \"return:\", result)",
+  "module_stdout": "[0, -2, 5, 3, 3, 3]\nNone\nempty: [] return: None\nall_target: [3, 3, 3] return: None\n",
+  "expectation_basis": "Literal expected lists recorded from input specification before execution; preserve non-target order and fill the remaining target count. Original alias, length, and None return independently checked.",
+  "cases": [
+    {
+      "name": "mixed",
+      "input": [
+        3,
+        0,
+        3,
+        -2,
+        5,
+        3
+      ],
+      "target": 3,
+      "expected": {
+        "original_list": [
+          0,
+          -2,
+          5,
+          3,
+          3,
+          3
+        ],
+        "length": 6,
+        "return": null
+      },
+      "actual": {
+        "original_list_observed_by_alias": [
+          0,
+          -2,
+          5,
+          3,
+          3,
+          3
+        ],
+        "length": 6,
+        "return_repr": "None"
+      },
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "input": [],
+      "target": 3,
+      "expected": {
+        "original_list": [],
+        "length": 0,
+        "return": null
+      },
+      "actual": {
+        "original_list_observed_by_alias": [],
+        "length": 0,
+        "return_repr": "None"
+      },
+      "passed": true
+    },
+    {
+      "name": "all_target",
+      "input": [
+        3,
+        3,
+        3
+      ],
+      "target": 3,
+      "expected": {
+        "original_list": [
+          3,
+          3,
+          3
+        ],
+        "length": 3,
+        "return": null
+      },
+      "actual": {
+        "original_list_observed_by_alias": [
+          3,
+          3,
+          3
+        ],
+        "length": 3,
+        "return_repr": "None"
+      },
+      "passed": true
+    },
+    {
+      "name": "no_target",
+      "input": [
+        0,
+        -2,
+        5
+      ],
+      "target": 3,
+      "expected": {
+        "original_list": [
+          0,
+          -2,
+          5
+        ],
+        "length": 3,
+        "return": null
+      },
+      "actual": {
+        "original_list_observed_by_alias": [
+          0,
+          -2,
+          5
+        ],
+        "length": 3,
+        "return_repr": "None"
+      },
+      "passed": true
+    },
+    {
+      "name": "negative_target",
+      "input": [
+        -2,
+        4,
+        -2,
+        0
+      ],
+      "target": -2,
+      "expected": {
+        "original_list": [
+          4,
+          0,
+          -2,
+          -2
+        ],
+        "length": 4,
+        "return": null
+      },
+      "actual": {
+        "original_list_observed_by_alias": [
+          4,
+          0,
+          -2,
+          -2
+        ],
+        "length": 4,
+        "return_repr": "None"
+      },
+      "passed": true
+    },
+    {
+      "name": "zero_target",
+      "input": [
+        0,
+        4,
+        0,
+        -1,
+        4
+      ],
+      "target": 0,
+      "expected": {
+        "original_list": [
+          4,
+          -1,
+          4,
+          0,
+          0
+        ],
+        "length": 5,
+        "return": null
+      },
+      "actual": {
+        "original_list_observed_by_alias": [
+          4,
+          -1,
+          4,
+          0,
+          0
+        ],
+        "length": 5,
+        "return_repr": "None"
+      },
+      "passed": true
+    },
+    {
+      "name": "one_target",
+      "input": [
+        3
+      ],
+      "target": 3,
+      "expected": {
+        "original_list": [
+          3
+        ],
+        "length": 1,
+        "return": null
+      },
+      "actual": {
+        "original_list_observed_by_alias": [
+          3
+        ],
+        "length": 1,
+        "return_repr": "None"
+      },
+      "passed": true
+    },
+    {
+      "name": "one_other",
+      "input": [
+        -2
+      ],
+      "target": 3,
+      "expected": {
+        "original_list": [
+          -2
+        ],
+        "length": 1,
+        "return": null
+      },
+      "actual": {
+        "original_list_observed_by_alias": [
+          -2
+        ],
+        "length": 1,
+        "return_repr": "None"
+      },
+      "passed": true
+    }
+  ],
+  "passed": 8,
+  "total": 8,
+  "source_unchanged": true,
+  "evidence_boundary": "Assistant execution checks behavior, not learner independent explanation. No source changes or timing claims."
+}

@@ -1,4 +1,5 @@
 /sum
 /pointers
 /dedup
+/stats
 *.o

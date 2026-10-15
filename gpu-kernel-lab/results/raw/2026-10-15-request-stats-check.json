@@ -1,0 +1,396 @@
+{
+  "task_date": "2026-10-15",
+  "checked_at": "2026-10-15T20:27:41.321063+08:00",
+  "source": "assistant_independent_verification",
+  "working_directory": "project root",
+  "environment": {
+    "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "python": "3.14.4"
+  },
+  "source_sha256": {
+    "gpu-kernel-lab/cpp-basics/request.hpp": "4f578ba1be3279286330ee67c5110e9c582857188b93809d26838a81a59fc8de",
+    "gpu-kernel-lab/cpp-basics/request.cpp": "1f07dd165380be837a4479c9742efbac6f443d08a632c770240715562cadc9bb",
+    "gpu-kernel-lab/cpp-basics/stats.cpp": "7fd71de1e5b7d4e3a8987214b0f9d27ea25f4435a10a6a64a658983457099bc0"
+  },
+  "evidence_boundary": "Checks run by assistant against learner-saved files; not evidence of learner independent understanding. Temporary binaries removed; learner source and executable unchanged.",
+  "double_limits_build": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "double_max": {
+    "actual": "1.7976931348623157e+308",
+    "returncode": 0,
+    "stderr": ""
+  },
+  "expectation_basis": "Pre-confirmed input/output specification; small sums and averages hand-calculated before execution. Overflow cases use queried double maximum: 1e309 exceeds it and max+max is greater than max. Error text is not prescribed; require nonempty stderr, nonzero exit, empty stdout.",
+  "build": {
+    "command_template": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-D_GLIBCXX_DEBUG",
+      "-fsanitize=undefined",
+      "-fno-sanitize-recover=all",
+      "gpu-kernel-lab/cpp-basics/stats.cpp",
+      "gpu-kernel-lab/cpp-basics/request.cpp",
+      "-o",
+      "<temporary>/stats-check"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "cases": [
+    {
+      "name": "empty_input",
+      "input": "",
+      "expected": {
+        "stdout": "count=0, total_ms=0, avg_ms=N/A\n",
+        "stderr": "empty",
+        "returncode": 0
+      },
+      "actual": {
+        "stdout": "count=0, total_ms=0, avg_ms=N/A\n",
+        "stderr": "",
+        "returncode": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "single_decimal",
+      "input": "A 12.5\n",
+      "expected": {
+        "stdout": "count=1, total_ms=12.5, avg_ms=12.5\n",
+        "stderr": "empty",
+        "returncode": 0
+      },
+      "actual": {
+        "stdout": "count=1, total_ms=12.5, avg_ms=12.5\n",
+        "stderr": "",
+        "returncode": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "two_records",
+      "input": "A 10\nB 25\n",
+      "expected": {
+        "stdout": "count=2, total_ms=35, avg_ms=17.5\n",
+        "stderr": "empty",
+        "returncode": 0
+      },
+      "actual": {
+        "stdout": "count=2, total_ms=35, avg_ms=17.5\n",
+        "stderr": "",
+        "returncode": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "duplicate_id",
+      "input": "A 10\nA 30\n",
+      "expected": {
+        "stdout": "count=2, total_ms=40, avg_ms=20\n",
+        "stderr": "empty",
+        "returncode": 0
+      },
+      "actual": {
+        "stdout": "count=2, total_ms=40, avg_ms=20\n",
+        "stderr": "",
+        "returncode": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "zero",
+      "input": "A 0\n",
+      "expected": {
+        "stdout": "count=1, total_ms=0, avg_ms=0\n",
+        "stderr": "empty",
+        "returncode": 0
+      },
+      "actual": {
+        "stdout": "count=1, total_ms=0, avg_ms=0\n",
+        "stderr": "",
+        "returncode": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "surrounding_whitespace",
+      "input": " \tA\t12.5 \t\n",
+      "expected": {
+        "stdout": "count=1, total_ms=12.5, avg_ms=12.5\n",
+        "stderr": "empty",
+        "returncode": 0
+      },
+      "actual": {
+        "stdout": "count=1, total_ms=12.5, avg_ms=12.5\n",
+        "stderr": "",
+        "returncode": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "no_final_newline",
+      "input": "A 10\nB 25",
+      "expected": {
+        "stdout": "count=2, total_ms=35, avg_ms=17.5\n",
+        "stderr": "empty",
+        "returncode": 0
+      },
+      "actual": {
+        "stdout": "count=2, total_ms=35, avg_ms=17.5\n",
+        "stderr": "",
+        "returncode": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "scientific_notation",
+      "input": "A 1e2\nB 2.5e1\n",
+      "expected": {
+        "stdout": "count=2, total_ms=125, avg_ms=62.5\n",
+        "stderr": "empty",
+        "returncode": 0
+      },
+      "actual": {
+        "stdout": "count=2, total_ms=125, avg_ms=62.5\n",
+        "stderr": "",
+        "returncode": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "large_finite",
+      "input": "A 1e308\n",
+      "expected": {
+        "stdout": "count=1, total_ms=1e+308, avg_ms=1e+308\n",
+        "stderr": "empty",
+        "returncode": 0
+      },
+      "actual": {
+        "stdout": "count=1, total_ms=1e+308, avg_ms=1e+308\n",
+        "stderr": "",
+        "returncode": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "blank_line",
+      "input": "\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "无效请求记录\n",
+        "returncode": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "whitespace_line",
+      "input": " \t\r\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "无效请求记录\n",
+        "returncode": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "missing_latency",
+      "input": "A\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "无效请求记录\n",
+        "returncode": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "non_numeric",
+      "input": "A abc\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "无效请求记录\n",
+        "returncode": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "numeric_suffix",
+      "input": "A 12.5x\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "无效请求记录\n",
+        "returncode": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "extra_field",
+      "input": "A 10 extra\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "无效请求记录\n",
+        "returncode": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "negative_latency",
+      "input": "B -3\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "无效请求记录\n",
+        "returncode": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "nan",
+      "input": "A nan\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "无效请求记录\n",
+        "returncode": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "infinity",
+      "input": "A inf\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "无效请求记录\n",
+        "returncode": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "negative_infinity",
+      "input": "A -inf\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "无效请求记录\n",
+        "returncode": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "individual_overflow",
+      "input": "A 1e309\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "无效请求记录\n",
+        "returncode": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "valid_then_bad",
+      "input": "A 10\nB -3\nC 25\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "无效请求记录\n",
+        "returncode": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "valid_then_blank",
+      "input": "A 10\n\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "无效请求记录\n",
+        "returncode": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "sum_overflow",
+      "input": "A 1.7976931348623157e+308\nB 1.7976931348623157e+308\n",
+      "expected": {
+        "stdout": "",
+        "stderr": "nonempty error message",
+        "returncode": "nonzero"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "总延迟超出可表示范围\n",
+        "returncode": 1
+      },
+      "passed": true
+    }
+  ],
+  "passed": 23,
+  "total": 23,
+  "source_unchanged": true
+}
