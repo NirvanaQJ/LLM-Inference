@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-16",
+  "operator": "assistant",
+  "purpose": "Check initial condition of learner-proposed i <= nums.size()-1 for nonempty and empty vectors; no element access performed",
+  "source": "#include <iostream>\n#include <vector>\nint main() {\n    for (std::size_t count : {std::size_t{3}, std::size_t{0}}) {\n        std::vector<int> nums(count);\n        std::cout << nums.size() << \" \" << nums.size() - 1 << \" \"\n                  << (std::size_t{0} <= nums.size() - 1) << \"\\n\";\n    }\n}\n",
+  "build_command": "g++ -std=c++17 -Wall -Wextra <temporary-directory>/condition.cpp -o <temporary-directory>/condition",
+  "build_returncode": 0,
+  "build_stdout": "",
+  "build_stderr": "<temporary-directory>/condition.cpp: In function ‘int main()’:\n<temporary-directory>/condition.cpp:7:38: warning: comparison of unsigned expression in ‘>= 0’ is always true [-Wtype-limits]\n    7 |                   << (std::size_t{0} <= nums.size() - 1) << \"\\n\";\n      |                            ~~~~~~~~~~^~~~~~~~~~~~~~~~~~\n",
+  "run_stdout": "3 2 1\n0 18446744073709551615 1\n",
+  "run_stderr": "",
+  "run_returncode": 0,
+  "cases": [
+    {
+      "nums_size": 3,
+      "expected_enter_loop": true,
+      "actual_size_minus_one": 2,
+      "actual_enter_loop": true,
+      "passed": true
+    },
+    {
+      "nums_size": 0,
+      "expected_enter_loop": false,
+      "actual_size_minus_one": 18446744073709551615,
+      "actual_enter_loop": true,
+      "passed": false
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-16",
+  "operator": "assistant",
+  "scope": "Independent function checks; learner original-main compilation and run are separately evidenced by chat screenshots",
+  "source_path": "gpu-kernel-lab/cpp-basics/gdb_demo.cpp",
+  "source_sha256": "6480e559f382966c2e1a926ca91eff0f234ba49352df0d1484014c85a568fb35",
+  "source": "#include <iostream>\n#include <vector>\n\nvoid print_values(const std::vector<int>& nums) {\n    for (std::size_t i = 0; i < nums.size(); ++i) {\n        std::cout << nums.at(i) << '\\n';\n    }\n}\n\nint main() {\n    std::vector<int> nums{4, 7, 9};\n    print_values(nums);\n    return 0;\n}",
+  "harness": "#include <string>\n#define main gdb_demo_original_main\n#include \"gdb_demo.cpp\"\n#undef main\nint main(int argc, char** argv) {\n    if (argc != 2) return 2;\n    std::string mode = argv[1];\n    std::vector<int> nums;\n    if (mode == \"original\") nums = {4, 7, 9};\n    else if (mode == \"single\") nums = {4};\n    else if (mode != \"empty\") return 2;\n    print_values(nums);\n    return 0;\n}\n",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "build_command": "g++ -std=c++17 -Wall -Wextra -g -O0 -I gpu-kernel-lab/cpp-basics <temporary-directory>/check.cpp -o <temporary-directory>/check",
+  "build_returncode": 0,
+  "build_stdout": "",
+  "build_stderr": "",
+  "cases": [
+    {
+      "name": "original",
+      "nums": [
+        4,
+        7,
+        9
+      ],
+      "expected_stdout": "4\n7\n9\n",
+      "actual_stdout": "4\n7\n9\n",
+      "expected_stderr": "",
+      "actual_stderr": "",
+      "expected_returncode": 0,
+      "actual_returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "nums": [],
+      "expected_stdout": "",
+      "actual_stdout": "",
+      "expected_stderr": "",
+      "actual_stderr": "",
+      "expected_returncode": 0,
+      "actual_returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "single",
+      "nums": [
+        4
+      ],
+      "expected_stdout": "4\n",
+      "actual_stdout": "4\n",
+      "expected_stderr": "",
+      "actual_stderr": "",
+      "expected_returncode": 0,
+      "actual_returncode": 0,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

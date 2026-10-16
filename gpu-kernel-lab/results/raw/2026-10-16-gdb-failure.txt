@@ -1,0 +1,56 @@
+Breakpoint 1 at 0x12b9: file gdb_demo.cpp, line 5.
+Starting program: gpu-kernel-lab/cpp-basics/gdb_demo
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Debuginfod has been enabled.
+To make this setting permanent, add 'set debuginfod enabled on' to .gdbinit.
+Downloading separate debug info for system-supplied DSO at 0x7ffff7fbe000
+[###                                                                                                                              ]Breakpoint 1 at 0x12b9: file gdb_demo.cpp, line 5.
+Starting program: gpu-kernel-lab/cpp-basics/gdb_demo
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/usr/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, print_values (nums=std::vector of length 3, capacity 3 = {...}) at gdb_demo.cpp:5
+5	    for (std::size_t i = 0; i <= nums.size(); ++i) {
+Download failed: 连接被对方重置.  Continuing without separate debug info for system-supplied DSO at 0x7ffff7fbe000.
+❌️ Quit
+6	        std::cout << nums.at(i) << '\n';
+$1 = 0
+$2 = std::vector of length 3, capacity 3 = {4, 7, 9}
+std::vector<int, std::allocator<int> >::at (this=0x7fffffffd640, __n=0) at /usr/include/c++/15/bits/stl_vector.h:1334
+1334		_M_range_check(__n);
+this = 0x7fffffffd640
+__n = 0
+#0  std::vector<int, std::allocator<int> >::at (this=0x7fffffffd640, __n=0) at /usr/include/c++/15/bits/stl_vector.h:1334
+#1  0x00005555555552d6 in print_values (nums=std::vector of length 3, capacity 3 = {...}) at gdb_demo.cpp:6
+#2  0x0000555555555374 in main () at gdb_demo.cpp:12
+Run till exit from #0  std::vector<int, std::allocator<int> >::at (this=0x7fffffffd640, __n=0) at /usr/include/c++/15/bits/stl_vector.h:1334
+0x00005555555552d6 in print_values (nums=std::vector of length 3, capacity 3 = {...}) at gdb_demo.cpp:6
+6	        std::cout << nums.at(i) << '\n';
+Value returned is $3 = (const __gnu_cxx::__alloc_traits<std::allocator<int>, int>::value_type &) @0x55555556b020: 4
+Breakpoint 2 at 0x5555555552c3: file gdb_demo.cpp, line 6.
+Continuing.
+
+Breakpoint 2, print_values (nums=std::vector of length 3, capacity 3 = {...}) at gdb_demo.cpp:6
+6	        std::cout << nums.at(i) << '\n';
+$4 = 3
+$5 = std::vector of length 3, capacity 3 = {4, 7, 9}
+
+Program received signal SIGABRT, Aborted.
+__pthread_kill_implementation (threadid=<optimized out>, signo=6, no_tid=0) at ./nptl/pthread_kill.c:44
+⚠️ warning: 44	./nptl/pthread_kill.c: 没有那个文件或目录
+#0  __pthread_kill_implementation (threadid=<optimized out>, signo=6, no_tid=0) at ./nptl/pthread_kill.c:44
+#1  __pthread_kill_internal (threadid=<optimized out>, signo=6) at ./nptl/pthread_kill.c:89
+#2  __GI___pthread_kill (threadid=<optimized out>, signo=signo@entry=6) at ./nptl/pthread_kill.c:100
+#3  0x00007ffff7845b7e in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+#4  0x00007ffff78288ec in __GI_abort () at ./stdlib/abort.c:77
+#5  0x00007ffff7cac275 in ?? () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x00007ffff7cc364a in ?? () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#7  0x00007ffff7cabc6c in std::terminate() () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#8  0x00007ffff7cc3901 in __cxa_throw () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#9  0x00007ffff7cb0239 in std::__throw_out_of_range_fmt(char const*, ...) () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#10 0x00005555555555d3 in std::vector<int, std::allocator<int> >::_M_range_check (this=0x7fffffffd640, __n=3) at /usr/include/c++/15/bits/stl_vector.h:1293
+#11 0x0000555555555463 in std::vector<int, std::allocator<int> >::at (this=0x7fffffffd640, __n=3) at /usr/include/c++/15/bits/stl_vector.h:1334
+#12 0x00005555555552d6 in print_values (nums=std::vector of length 3, capacity 3 = {...}) at gdb_demo.cpp:6
+#13 0x0000555555555374 in main () at gdb_demo.cpp:12

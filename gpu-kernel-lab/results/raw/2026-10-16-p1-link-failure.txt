@@ -1,0 +1,11 @@
+/usr/bin/x86_64-linux-gnu-ld.bfd: p1_sum.o: warning: relocation against `_ZSt4cout' in read-only section `.text'
+/usr/bin/x86_64-linux-gnu-ld.bfd: p1_sum.o: in function `main':
+sum.cpp:(.text+0x3c): undefined reference to `std::cin'
+/usr/bin/x86_64-linux-gnu-ld.bfd: sum.cpp:(.text+0x47): undefined reference to `std::istream::operator>>(long long&)'
+/usr/bin/x86_64-linux-gnu-ld.bfd: sum.cpp:(.text+0x5c): undefined reference to `std::basic_ios<char, std::char_traits<char> >::operator bool() const'
+/usr/bin/x86_64-linux-gnu-ld.bfd: sum.cpp:(.text+0x6b): undefined reference to `std::cout'
+/usr/bin/x86_64-linux-gnu-ld.bfd: sum.cpp:(.text+0x76): undefined reference to `std::ostream::operator<<(long long)'
+/usr/bin/x86_64-linux-gnu-ld.bfd: sum.cpp:(.text+0x7d): undefined reference to `std::basic_ostream<char, std::char_traits<char> >& std::endl<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&)'
+/usr/bin/x86_64-linux-gnu-ld.bfd: sum.cpp:(.text+0x88): undefined reference to `std::ostream::operator<<(std::ostream& (*)(std::ostream&))'
+/usr/bin/x86_64-linux-gnu-ld.bfd: warning: creating DT_TEXTREL in a PIE
+collect2: error: ld returned 1 exit status
