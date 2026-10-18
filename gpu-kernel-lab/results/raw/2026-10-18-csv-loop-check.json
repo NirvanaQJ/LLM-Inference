@@ -1,0 +1,46 @@
+{
+  "task_date": "2026-10-17",
+  "actual_learning_date": "2026-10-18",
+  "operator": "assistant",
+  "scope": "Single valid CSV, loop teaching version; not learner independent execution or final P0 acceptance",
+  "cwd": "/home/bestqjj/桌面/LLM Inference",
+  "source": "gpu-kernel-lab/cpp-basics/stats_cli.cpp",
+  "source_sha256": "39e79b01775357c87cc7be9f9e67a9451d5f2aa84de61029175d7efb7c062934",
+  "input": "gpu-kernel-lab/results/raw/latency.csv",
+  "input_sha256": "869331b7e118bda23c75754fb33ecd6ecc5ea1c7fdaca32bf387000903f8a2b9",
+  "reference_method": "csv.DictReader + Decimal on input text, independent of C++ actual",
+  "expected": {
+    "header": "latency_ms",
+    "count": 100,
+    "total_ms": "2744.892"
+  },
+  "build": {
+    "command": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/cpp-basics/stats_cli.cpp",
+      "-o",
+      "/tmp/csv-loop-check-ckem0h20/stats_cli"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "run": {
+    "command": [
+      "/tmp/csv-loop-check-ckem0h20/stats_cli"
+    ],
+    "returncode": 0,
+    "stdout": "header=latency_ms\ncount=100\ntotal_ms=2744.892\n",
+    "stderr": ""
+  },
+  "checks": {
+    "successful_exit": true,
+    "header": true,
+    "count": true,
+    "total_ms": true
+  },
+  "passed": true
+}

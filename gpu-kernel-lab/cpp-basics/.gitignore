@@ -2,6 +2,7 @@
 /pointers
 /dedup
 /stats
+/stats_cli
 /gdb_demo
 /p1_sum
 *.o

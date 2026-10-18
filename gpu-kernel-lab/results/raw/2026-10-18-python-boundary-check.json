@@ -1,0 +1,530 @@
+{
+  "task_date": "2026-10-17",
+  "actual_learning_date": "2026-10-18",
+  "operator": "assistant",
+  "scope": "Python validation version; automatic C++ comparison not yet implemented",
+  "cwd": "/home/bestqjj/桌面/LLM Inference",
+  "source": "gpu-kernel-lab/python-basics/compare.py",
+  "source_sha256": "e861beaa94d63dba5e63f2b7a56725dcc69dd2e9a470feaf364cff7cb0f9c28c",
+  "python_version": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "python_executable": "/usr/bin/python3",
+  "independent_expected_source": "gpu-kernel-lab/results/raw/2026-10-18-csv-boundary-check.json",
+  "reference_method": "Normal file: csv + Decimal. Small inputs: prior hand calculation. Invalid inputs: stated contract; require exit 1 and no stdout.",
+  "cases": [
+    {
+      "name": "normal_100",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "input_text": "latency_ms\n20.759\n34.794\n6.898\n42.421\n16.57\n23.063\n21.05\n33.214\n12.813\n22.673\n25.393\n40.361\n28.092\n19.741\n32.22\n12.668\n20.53\n18.457\n39.092\n35.585\n8.831\n19.338\n43.81\n22.721\n35.295\n25.447\n11.115\n38.207\n30.246\n49.094\n29.572\n13.095\n32.096\n40.517\n41.159\n20.101\n44.61\n32.331\n44.303\n35.509\n23.807\n14.446\n29.223\n23.112\n9.508\n5.527\n26.836\n37.773\n17.594\n6.192\n37.464\n8.678\n11.865\n29.361\n37.882\n30.527\n29.762\n31.522\n23.462\n18.477\n15.913\n41.831\n17.084\n16.82\n48.426\n28.718\n11.816\n33.645\n16.673\n6.832\n14.753\n43.593\n44.501\n45.702\n28.683\n10.077\n42.266\n6.65\n40.711\n15.031\n22.848\n39.759\n37.314\n30.546\n16.196\n6.63\n46.914\n45.666\n41.665\n49.139\n40.042\n23.012\n9.858\n48.894\n11.284\n5.14\n39.364\n40.139\n37.382\n46.566\n",
+      "input_sha256": "869331b7e118bda23c75754fb33ecd6ecc5ea1c7fdaca32bf387000903f8a2b9",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 0,
+        "stdout": "header=latency_ms\ncount=100\ntotal_ms=2744.892\navg_ms=27.44892\n",
+        "stderr": ""
+      },
+      "expected": {
+        "returncode": 0,
+        "stats": {
+          "count": 100,
+          "total_ms": "2744.892",
+          "avg_ms": "27.44892"
+        },
+        "stderr": ""
+      },
+      "checks": {
+        "exit_zero": true,
+        "stderr_empty": true,
+        "four_fields": true,
+        "header": true,
+        "count": true,
+        "total_ms": true,
+        "avg_ms": true
+      },
+      "passed": true
+    },
+    {
+      "name": "hand_three",
+      "input_text": "latency_ms\n2.5\n5.0\n7.5\n",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/hand_three.csv"
+        ],
+        "returncode": 0,
+        "stdout": "header=latency_ms\ncount=3\ntotal_ms=15\navg_ms=5\n",
+        "stderr": ""
+      },
+      "expected": {
+        "returncode": 0,
+        "stats": {
+          "count": 3,
+          "total_ms": "15",
+          "avg_ms": "5"
+        },
+        "stderr": ""
+      },
+      "checks": {
+        "exit_zero": true,
+        "stderr_empty": true,
+        "four_fields": true,
+        "header": true,
+        "count": true,
+        "total_ms": true,
+        "avg_ms": true
+      },
+      "passed": true
+    },
+    {
+      "name": "header_only",
+      "input": "gpu-kernel-lab/tests/2026-10-17-csv-header-only.csv",
+      "input_text": "latency_ms\n",
+      "input_sha256": "1e7da8f66a8d3bc9def1fe2aed892d86d33635484e2dc3defdaa1f70b2b3f472",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/tests/2026-10-17-csv-header-only.csv"
+        ],
+        "returncode": 0,
+        "stdout": "header=latency_ms\ncount=0\ntotal_ms=0\navg_ms=N/A\n",
+        "stderr": ""
+      },
+      "expected": {
+        "returncode": 0,
+        "stats": {
+          "count": 0,
+          "total_ms": "0",
+          "avg_ms": "N/A"
+        },
+        "stderr": ""
+      },
+      "checks": {
+        "exit_zero": true,
+        "stderr_empty": true,
+        "four_fields": true,
+        "header": true,
+        "count": true,
+        "total_ms": true,
+        "avg_ms": true
+      },
+      "passed": true
+    },
+    {
+      "name": "surrounding_whitespace",
+      "input_text": "latency_ms\n 2.5\t\n7.5 \n",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/surrounding_whitespace.csv"
+        ],
+        "returncode": 0,
+        "stdout": "header=latency_ms\ncount=2\ntotal_ms=10\navg_ms=5\n",
+        "stderr": ""
+      },
+      "expected": {
+        "returncode": 0,
+        "stats": {
+          "count": 2,
+          "total_ms": "10",
+          "avg_ms": "5"
+        },
+        "stderr": ""
+      },
+      "checks": {
+        "exit_zero": true,
+        "stderr_empty": true,
+        "four_fields": true,
+        "header": true,
+        "count": true,
+        "total_ms": true,
+        "avg_ms": true
+      },
+      "passed": true
+    },
+    {
+      "name": "wrong_header",
+      "input": "gpu-kernel-lab/tests/2026-10-17-csv-wrong-header.csv",
+      "input_text": "tokens\n10\n20\n",
+      "input_sha256": "2a6de7d53675c9c011914b41a8afc1293eb6c73d02f50b0ef8541d59aa8538a7",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/tests/2026-10-17-csv-wrong-header.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：表头必须为 latency_ms\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "extra_text",
+      "input": "gpu-kernel-lab/tests/2026-10-17-csv-bad-value.csv",
+      "input_text": "latency_ms\n2.5\n7.5ms\n",
+      "input_sha256": "b20105253366acb96cf457c86ab24a07431f56c0443e2c7c89be43c8a89fa82e",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/tests/2026-10-17-csv-bad-value.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：could not convert string to float: '7.5ms\\n'\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "blank_row_after_valid",
+      "input_text": "latency_ms\n2.5\n\n",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/blank_row_after_valid.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：could not convert string to float: '\\n'\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "negative_after_valid",
+      "input_text": "latency_ms\n2.5\n-3\n",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/negative_after_valid.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：无效延迟数据\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "nan",
+      "input_text": "latency_ms\nnan\n",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/nan.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：无效延迟数据\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "infinity",
+      "input_text": "latency_ms\ninf\n",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/infinity.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：无效延迟数据\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "number_overflow",
+      "input_text": "latency_ms\n1e309\n",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/number_overflow.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：无效延迟数据\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "sum_overflow",
+      "input_text": "latency_ms\n1e308\n1e308\n",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/sum_overflow.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：无效延迟数据\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "two_numbers_in_row",
+      "input_text": "latency_ms\n2.5 7.5\n",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/two_numbers_in_row.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：could not convert string to float: '2.5 7.5\\n'\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "empty_file",
+      "input_text": "",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/empty_file.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：表头必须为 latency_ms\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "missing_header",
+      "input_text": "2.5\n7.5\n",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/missing_header.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：表头必须为 latency_ms\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "no_path_argument",
+      "input_condition": "no path argument",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "用法：compare.py CSV路径\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "missing_file",
+      "input_condition": "path does not exist",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/does-not-exist.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：[Errno 2] No such file or directory: '/tmp/python-csv-boundaries-u4f8tfpf/does-not-exist.csv'\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "underscore_numeric_extension",
+      "input_text": "latency_ms\n1_0\n",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/underscore_numeric_extension.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：无效延迟数据\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    },
+    {
+      "name": "non_ascii_digits",
+      "input_text": "latency_ms\n١٢.٥\n",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/tmp/python-csv-boundaries-u4f8tfpf/non_ascii_digits.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "输入错误：无效延迟数据\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "nonempty error; wording may differ from C++"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}

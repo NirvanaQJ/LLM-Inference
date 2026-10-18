@@ -1,0 +1,26 @@
+{
+  "operator": "assistant",
+  "task_date": "2026-10-17",
+  "actual_learning_date": "2026-10-18",
+  "case": "controlled empty C++ stdout with exit 0",
+  "source_sha256": "639a152b65e94732c9a5035d6103b6540aac30c42d348671428cfabec901227a",
+  "expected": {
+    "returncode": 1,
+    "stdout": "",
+    "stderr_prefix": "对照错误：",
+    "no_traceback": true
+  },
+  "cwd": "/home/bestqjj/桌面/LLM Inference",
+  "simulation_source": "#!/usr/bin/env python3\nraise SystemExit(0)\n",
+  "actual": {
+    "command": [
+      "/usr/bin/python3",
+      "/tmp/compare-empty-output-cy4jq026/gpu-kernel-lab/python-basics/compare.py",
+      "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+    ],
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/tmp/compare-empty-output-cy4jq026/gpu-kernel-lab/python-basics/compare.py\", line 60, in <module>\n    if set(cpp) != expected_keys or cpp[\"header\"] != \"latency_ms\":\n                   ^^^^^^^^^^^^^\nNameError: name 'expected_keys' is not defined\n"
+  },
+  "passed": false
+}

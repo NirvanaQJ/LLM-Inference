@@ -1,0 +1,408 @@
+{
+  "task_date": "2026-10-17",
+  "actual_learning_date": "2026-10-18",
+  "operator": "assistant",
+  "scope": "C++ boundary verification only; Python comparison and learner independent mastery are not claimed",
+  "cwd": "/home/bestqjj/桌面/LLM Inference",
+  "source": "gpu-kernel-lab/cpp-basics/stats_cli.cpp",
+  "source_sha256": "d2121743e5056b62e42b7181a01bfeb027f46ee0ba24cbf76f5c90be31b12c8e",
+  "compiler_version": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "reference_method": "Normal file: csv + Decimal. Small inputs: prior hand calculation. Invalid inputs: stated contract; require exit 1 and no stdout.",
+  "numeric_check": "Exact Decimal equality of displayed numeric fields for these chosen references.",
+  "cases": [
+    {
+      "name": "normal_100",
+      "existing": "gpu-kernel-lab/results/raw/latency.csv",
+      "expected_stats": {
+        "count": 100,
+        "total_ms": "2744.892",
+        "avg_ms": "27.44892"
+      },
+      "input_sha256": "869331b7e118bda23c75754fb33ecd6ecc5ea1c7fdaca32bf387000903f8a2b9",
+      "input_text": "latency_ms\n20.759\n34.794\n6.898\n42.421\n16.57\n23.063\n21.05\n33.214\n12.813\n22.673\n25.393\n40.361\n28.092\n19.741\n32.22\n12.668\n20.53\n18.457\n39.092\n35.585\n8.831\n19.338\n43.81\n22.721\n35.295\n25.447\n11.115\n38.207\n30.246\n49.094\n29.572\n13.095\n32.096\n40.517\n41.159\n20.101\n44.61\n32.331\n44.303\n35.509\n23.807\n14.446\n29.223\n23.112\n9.508\n5.527\n26.836\n37.773\n17.594\n6.192\n37.464\n8.678\n11.865\n29.361\n37.882\n30.527\n29.762\n31.522\n23.462\n18.477\n15.913\n41.831\n17.084\n16.82\n48.426\n28.718\n11.816\n33.645\n16.673\n6.832\n14.753\n43.593\n44.501\n45.702\n28.683\n10.077\n42.266\n6.65\n40.711\n15.031\n22.848\n39.759\n37.314\n30.546\n16.196\n6.63\n46.914\n45.666\n41.665\n49.139\n40.042\n23.012\n9.858\n48.894\n11.284\n5.14\n39.364\n40.139\n37.382\n46.566\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 0,
+        "stdout": "header=latency_ms\ncount=100\ntotal_ms=2744.892\navg_ms=27.44892\n",
+        "stderr": ""
+      },
+      "checks": {
+        "exit_zero": true,
+        "stderr_empty": true,
+        "four_fields": true,
+        "header": true,
+        "count": true,
+        "total_ms": true,
+        "avg_ms": true
+      },
+      "passed": true
+    },
+    {
+      "name": "hand_three",
+      "text": "latency_ms\n2.5\n5.0\n7.5\n",
+      "expected_stats": {
+        "count": 3,
+        "total_ms": "15",
+        "avg_ms": "5"
+      },
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/tmp/csv-boundary-check-hdflu81p/hand_three.csv"
+        ],
+        "returncode": 0,
+        "stdout": "header=latency_ms\ncount=3\ntotal_ms=15\navg_ms=5\n",
+        "stderr": ""
+      },
+      "checks": {
+        "exit_zero": true,
+        "stderr_empty": true,
+        "four_fields": true,
+        "header": true,
+        "count": true,
+        "total_ms": true,
+        "avg_ms": true
+      },
+      "passed": true
+    },
+    {
+      "name": "header_only",
+      "existing": "gpu-kernel-lab/tests/2026-10-17-csv-header-only.csv",
+      "expected_stats": {
+        "count": 0,
+        "total_ms": "0",
+        "avg_ms": "N/A"
+      },
+      "input_sha256": "1e7da8f66a8d3bc9def1fe2aed892d86d33635484e2dc3defdaa1f70b2b3f472",
+      "input_text": "latency_ms\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/tests/2026-10-17-csv-header-only.csv"
+        ],
+        "returncode": 0,
+        "stdout": "header=latency_ms\ncount=0\ntotal_ms=0\navg_ms=N/A\n",
+        "stderr": ""
+      },
+      "checks": {
+        "exit_zero": true,
+        "stderr_empty": true,
+        "four_fields": true,
+        "header": true,
+        "count": true,
+        "total_ms": true,
+        "avg_ms": true
+      },
+      "passed": true
+    },
+    {
+      "name": "surrounding_whitespace",
+      "text": "latency_ms\n 2.5\t\n7.5 \n",
+      "expected_stats": {
+        "count": 2,
+        "total_ms": "10",
+        "avg_ms": "5"
+      },
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/tmp/csv-boundary-check-hdflu81p/surrounding_whitespace.csv"
+        ],
+        "returncode": 0,
+        "stdout": "header=latency_ms\ncount=2\ntotal_ms=10\navg_ms=5\n",
+        "stderr": ""
+      },
+      "checks": {
+        "exit_zero": true,
+        "stderr_empty": true,
+        "four_fields": true,
+        "header": true,
+        "count": true,
+        "total_ms": true,
+        "avg_ms": true
+      },
+      "passed": true
+    },
+    {
+      "name": "wrong_header",
+      "existing": "gpu-kernel-lab/tests/2026-10-17-csv-wrong-header.csv",
+      "expected_error": "表头必须为 latency_ms\n",
+      "input_sha256": "2a6de7d53675c9c011914b41a8afc1293eb6c73d02f50b0ef8541d59aa8538a7",
+      "input_text": "tokens\n10\n20\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/tests/2026-10-17-csv-wrong-header.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "表头必须为 latency_ms\n"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_message": true
+      },
+      "passed": true
+    },
+    {
+      "name": "extra_text",
+      "existing": "gpu-kernel-lab/tests/2026-10-17-csv-bad-value.csv",
+      "expected_error": "无效延迟数据\n",
+      "input_sha256": "b20105253366acb96cf457c86ab24a07431f56c0443e2c7c89be43c8a89fa82e",
+      "input_text": "latency_ms\n2.5\n7.5ms\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/tests/2026-10-17-csv-bad-value.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "无效延迟数据\n"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_message": true
+      },
+      "passed": true
+    },
+    {
+      "name": "blank_row_after_valid",
+      "text": "latency_ms\n2.5\n\n",
+      "expected_error": "无效延迟数据\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/tmp/csv-boundary-check-hdflu81p/blank_row_after_valid.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "无效延迟数据\n"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_message": true
+      },
+      "passed": true
+    },
+    {
+      "name": "negative_after_valid",
+      "text": "latency_ms\n2.5\n-3\n",
+      "expected_error": "无效延迟数据\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/tmp/csv-boundary-check-hdflu81p/negative_after_valid.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "无效延迟数据\n"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_message": true
+      },
+      "passed": true
+    },
+    {
+      "name": "nan",
+      "text": "latency_ms\nnan\n",
+      "expected_error": "无效延迟数据\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/tmp/csv-boundary-check-hdflu81p/nan.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "无效延迟数据\n"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_message": true
+      },
+      "passed": true
+    },
+    {
+      "name": "infinity",
+      "text": "latency_ms\ninf\n",
+      "expected_error": "无效延迟数据\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/tmp/csv-boundary-check-hdflu81p/infinity.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "无效延迟数据\n"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_message": true
+      },
+      "passed": true
+    },
+    {
+      "name": "number_overflow",
+      "text": "latency_ms\n1e309\n",
+      "expected_error": "无效延迟数据\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/tmp/csv-boundary-check-hdflu81p/number_overflow.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "无效延迟数据\n"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_message": true
+      },
+      "passed": true
+    },
+    {
+      "name": "sum_overflow",
+      "text": "latency_ms\n1e308\n1e308\n",
+      "expected_error": "无效延迟数据\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/tmp/csv-boundary-check-hdflu81p/sum_overflow.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "无效延迟数据\n"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_message": true
+      },
+      "passed": true
+    },
+    {
+      "name": "two_numbers_in_row",
+      "text": "latency_ms\n2.5 7.5\n",
+      "expected_error": "无效延迟数据\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/tmp/csv-boundary-check-hdflu81p/two_numbers_in_row.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "无效延迟数据\n"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_message": true
+      },
+      "passed": true
+    },
+    {
+      "name": "empty_file",
+      "text": "",
+      "expected_error": "",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/tmp/csv-boundary-check-hdflu81p/empty_file.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_message": true
+      },
+      "passed": true
+    },
+    {
+      "name": "missing_header",
+      "text": "2.5\n7.5\n",
+      "expected_error": "表头必须为 latency_ms\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/tmp/csv-boundary-check-hdflu81p/missing_header.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "表头必须为 latency_ms\n"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_message": true
+      },
+      "passed": true
+    },
+    {
+      "name": "no_path_argument",
+      "args": [],
+      "expected_error": "用法：stats_cli CSV路径\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "用法：stats_cli CSV路径\n"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_message": true
+      },
+      "passed": true
+    },
+    {
+      "name": "missing_file",
+      "missing": true,
+      "expected_error": "无法打开文件\n",
+      "actual": {
+        "command": [
+          "/tmp/csv-boundary-check-hdflu81p/stats_cli",
+          "/tmp/csv-boundary-check-hdflu81p/does-not-exist.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "无法打开文件\n"
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_message": true
+      },
+      "passed": true
+    }
+  ],
+  "build": {
+    "command": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/cpp-basics/stats_cli.cpp",
+      "-o",
+      "/tmp/csv-boundary-check-hdflu81p/stats_cli"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "passed": true
+}

@@ -1,0 +1,28 @@
+{
+  "task_date": "2026-10-17",
+  "actual_learning_date": "2026-10-18",
+  "execution_operator": "learner",
+  "verification_operator": "assistant read-only file check",
+  "expected_source": "gpu-kernel-lab/results/raw/2026-10-18-csv-120-expectation.json",
+  "raw_actual_source": "gpu-kernel-lab/results/raw/2026-10-18-csv-120-output.txt",
+  "raw_actual_sha256": "3d3fbe49132c90082086b1e34803426bcb948c8060f1be5972a1684dfc201eed",
+  "actual_combined_output": "header=latency_ms\ncount=120\ntotal_ms=3392.04\navg_ms=28.267\ncompare=PASS\n",
+  "observed_returncode": 0,
+  "returncode_evidence": "User-provided screenshot: echo $? immediately after the 120-row compare.py command, before cat.",
+  "checks": {
+    "same_input": true,
+    "same_python_source": true,
+    "same_cpp_source": true,
+    "five_fields": true,
+    "header": true,
+    "count": true,
+    "total_ms": true,
+    "avg_ms": true,
+    "compare_pass": true,
+    "exact_expected_display": true
+  },
+  "passed": true,
+  "learner_limitation": "不能，因为这只是模拟，真实情况受很多因素限制",
+  "assistant_clarification": "PASS establishes statistics agreement for the given simulated input. No execution-time measurement or GPU/model experiment was performed; speed and real GPU latency cannot be inferred.",
+  "note": "No repeated 120-row target-program run was performed for this verification."
+}

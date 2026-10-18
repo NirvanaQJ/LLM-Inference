@@ -1,0 +1,5 @@
+header=latency_ms
+count=120
+total_ms=3392.04
+avg_ms=28.267
+compare=PASS

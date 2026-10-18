@@ -1,0 +1,22 @@
+{
+  "task_date": "2026-10-17",
+  "actual_learning_date": "2026-10-18",
+  "operator": "assistant reference preparation",
+  "status": "expected saved before learner run; actual not yet available",
+  "p1_change": "Only input row count changes from 100 to 120; same column, unit, first 100 rows, algorithms and comparison tolerances.",
+  "input": "gpu-kernel-lab/results/raw/latency-count-120.csv",
+  "input_sha256": "4b2cf14410a9ff9f2567e068208c493d381f2a37549a8e3628ea78b736d26ef7",
+  "same_header": true,
+  "first_100_rows_identical": true,
+  "reference_method": "csv.DictReader + Decimal over raw decimal text; stats_cli/compare.py not run on the 120-row input",
+  "expected": {
+    "count": 120,
+    "total_ms_exact": "3392.040",
+    "avg_ms_exact": "28.267",
+    "compare": "PASS",
+    "returncode": 0
+  },
+  "expected_stdout": "header=latency_ms\ncount=120\ntotal_ms=3392.04\navg_ms=28.267\ncompare=PASS\n",
+  "python_source_sha256": "b073eca5f54d255a09a18668e778e061b501761653127e81f37176d0a5234a59",
+  "cpp_source_sha256": "d2121743e5056b62e42b7181a01bfeb027f46ee0ba24cbf76f5c90be31b12c8e"
+}

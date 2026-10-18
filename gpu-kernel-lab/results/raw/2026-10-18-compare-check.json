@@ -1,0 +1,580 @@
+{
+  "operator": "assistant",
+  "task_date": "2026-10-17",
+  "actual_learning_date": "2026-10-18",
+  "scope": "Automatic comparator verification; original program and C++ executable not replaced; simulations use byte-identical temporary Python copy",
+  "cwd": "/home/bestqjj/桌面/LLM Inference",
+  "source": "gpu-kernel-lab/python-basics/compare.py",
+  "source_sha256": "b073eca5f54d255a09a18668e778e061b501761653127e81f37176d0a5234a59",
+  "cpp_source_sha256": "d2121743e5056b62e42b7181a01bfeb027f46ee0ba24cbf76f5c90be31b12c8e",
+  "cpp_binary_sha256": "ab26c21ce3dfd63f830c6b21a328114dfbc7dc3c974d942e5ea52ab344fc292f",
+  "python_version": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "comparison_rules": {
+    "count": "exact equality",
+    "rel_tol": 1e-12,
+    "abs_tol": 1e-09,
+    "empty_avg": "N/A on both sides"
+  },
+  "expected_method": "CSV Decimal reference for real stats; predefined controlled changes for matching/mismatching C++ stdout, including prior A/B/C exercise",
+  "cases": [
+    {
+      "name": "real_normal_100",
+      "real": true,
+      "pass": true,
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 0,
+        "stdout": "header=latency_ms\ncount=100\ntotal_ms=2744.892\navg_ms=27.44892\ncompare=PASS\n",
+        "stderr": ""
+      },
+      "expected": {
+        "returncode": 0,
+        "stats": {
+          "count": 100,
+          "total_ms": "2744.892",
+          "avg_ms": "27.44892"
+        },
+        "compare": "PASS",
+        "stderr": ""
+      },
+      "checks": {
+        "exit_zero": true,
+        "stderr_empty": true,
+        "five_fields": true,
+        "header": true,
+        "count": true,
+        "compare_pass": true,
+        "total_ms": true,
+        "avg_ms": true
+      },
+      "passed": true
+    },
+    {
+      "name": "real_header_only",
+      "real": true,
+      "empty": true,
+      "pass": true,
+      "input": "gpu-kernel-lab/tests/2026-10-17-csv-header-only.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/tests/2026-10-17-csv-header-only.csv"
+        ],
+        "returncode": 0,
+        "stdout": "header=latency_ms\ncount=0\ntotal_ms=0\navg_ms=N/A\ncompare=PASS\n",
+        "stderr": ""
+      },
+      "expected": {
+        "returncode": 0,
+        "stats": {
+          "count": 0,
+          "total_ms": "0",
+          "avg_ms": "N/A"
+        },
+        "compare": "PASS",
+        "stderr": ""
+      },
+      "checks": {
+        "exit_zero": true,
+        "stderr_empty": true,
+        "five_fields": true,
+        "header": true,
+        "count": true,
+        "compare_pass": true,
+        "total_ms": true,
+        "avg_ms": true
+      },
+      "passed": true
+    },
+    {
+      "name": "simulated_matching",
+      "stdout": "header=latency_ms\ncount=100\ntotal_ms=2744.892\navg_ms=27.44892\n",
+      "pass": true,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('header=latency_ms\\ncount=100\\ntotal_ms=2744.892\\navg_ms=27.44892\\n')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 0,
+        "stdout": "header=latency_ms\ncount=100\ntotal_ms=2744.892\navg_ms=27.44892\ncompare=PASS\n",
+        "stderr": ""
+      },
+      "expected": {
+        "returncode": 0,
+        "stats": {
+          "count": 100,
+          "total_ms": "2744.892",
+          "avg_ms": "27.44892"
+        },
+        "compare": "PASS",
+        "stderr": ""
+      },
+      "checks": {
+        "exit_zero": true,
+        "stderr_empty": true,
+        "five_fields": true,
+        "header": true,
+        "count": true,
+        "compare_pass": true,
+        "total_ms": true,
+        "avg_ms": true
+      },
+      "passed": true
+    },
+    {
+      "name": "simulated_within_tolerance",
+      "stdout": "header=latency_ms\ncount=100\ntotal_ms=2744.892\navg_ms=27.4489200001\n",
+      "pass": true,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('header=latency_ms\\ncount=100\\ntotal_ms=2744.892\\navg_ms=27.4489200001\\n')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 0,
+        "stdout": "header=latency_ms\ncount=100\ntotal_ms=2744.892\navg_ms=27.44892\ncompare=PASS\n",
+        "stderr": ""
+      },
+      "expected": {
+        "returncode": 0,
+        "stats": {
+          "count": 100,
+          "total_ms": "2744.892",
+          "avg_ms": "27.44892"
+        },
+        "compare": "PASS",
+        "stderr": ""
+      },
+      "checks": {
+        "exit_zero": true,
+        "stderr_empty": true,
+        "five_fields": true,
+        "header": true,
+        "count": true,
+        "compare_pass": true,
+        "total_ms": true,
+        "avg_ms": true
+      },
+      "passed": true
+    },
+    {
+      "name": "wrong_count",
+      "stdout": "header=latency_ms\ncount=99\ntotal_ms=2744.892\navg_ms=27.44892\n",
+      "pass": false,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('header=latency_ms\\ncount=99\\ntotal_ms=2744.892\\navg_ms=27.44892\\n')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "对照错误：count 不一致\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr_prefix": "对照错误：",
+        "no_traceback": true
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true,
+        "no_traceback": true,
+        "no_false_pass": true
+      },
+      "passed": true
+    },
+    {
+      "name": "wrong_total",
+      "stdout": "header=latency_ms\ncount=100\ntotal_ms=2744.893\navg_ms=27.44892\n",
+      "pass": false,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('header=latency_ms\\ncount=100\\ntotal_ms=2744.893\\navg_ms=27.44892\\n')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "对照错误：total_ms 不一致\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr_prefix": "对照错误：",
+        "no_traceback": true
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true,
+        "no_traceback": true,
+        "no_false_pass": true
+      },
+      "passed": true
+    },
+    {
+      "name": "wrong_average",
+      "stdout": "header=latency_ms\ncount=100\ntotal_ms=2744.892\navg_ms=27.45\n",
+      "pass": false,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('header=latency_ms\\ncount=100\\ntotal_ms=2744.892\\navg_ms=27.45\\n')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "对照错误：avg_ms 不一致\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr_prefix": "对照错误：",
+        "no_traceback": true
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true,
+        "no_traceback": true,
+        "no_false_pass": true
+      },
+      "passed": true
+    },
+    {
+      "name": "empty_average_not_NA",
+      "empty": true,
+      "stdout": "header=latency_ms\ncount=0\ntotal_ms=0\navg_ms=0\n",
+      "pass": false,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('header=latency_ms\\ncount=0\\ntotal_ms=0\\navg_ms=0\\n')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/tests/2026-10-17-csv-header-only.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/tests/2026-10-17-csv-header-only.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "对照错误：空数据均值必须为 N/A\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr_prefix": "对照错误：",
+        "no_traceback": true
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true,
+        "no_traceback": true,
+        "no_false_pass": true
+      },
+      "passed": true
+    },
+    {
+      "name": "missing_field",
+      "stdout": "header=latency_ms\ncount=100\navg_ms=27.44892\n",
+      "pass": false,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('header=latency_ms\\ncount=100\\navg_ms=27.44892\\n')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "对照错误：C++输出格式不正确\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr_prefix": "对照错误：",
+        "no_traceback": true
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true,
+        "no_traceback": true,
+        "no_false_pass": true
+      },
+      "passed": true
+    },
+    {
+      "name": "duplicate_field",
+      "stdout": "header=latency_ms\ncount=100\ntotal_ms=2744.892\navg_ms=27.44892\ncount=100\n",
+      "pass": false,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('header=latency_ms\\ncount=100\\ntotal_ms=2744.892\\navg_ms=27.44892\\ncount=100\\n')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "对照错误：C++输出字段重复\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr_prefix": "对照错误：",
+        "no_traceback": true
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true,
+        "no_traceback": true,
+        "no_false_pass": true
+      },
+      "passed": true
+    },
+    {
+      "name": "wrong_header",
+      "stdout": "header=tokens\ncount=100\ntotal_ms=2744.892\navg_ms=27.44892\n",
+      "pass": false,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('header=tokens\\ncount=100\\ntotal_ms=2744.892\\navg_ms=27.44892\\n')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "对照错误：C++输出格式不正确\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr_prefix": "对照错误：",
+        "no_traceback": true
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true,
+        "no_traceback": true,
+        "no_false_pass": true
+      },
+      "passed": true
+    },
+    {
+      "name": "invalid_count_text",
+      "stdout": "header=latency_ms\ncount=hundred\ntotal_ms=2744.892\navg_ms=27.44892\n",
+      "pass": false,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('header=latency_ms\\ncount=hundred\\ntotal_ms=2744.892\\navg_ms=27.44892\\n')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "对照错误：invalid literal for int() with base 10: 'hundred'\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr_prefix": "对照错误：",
+        "no_traceback": true
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true,
+        "no_traceback": true,
+        "no_false_pass": true
+      },
+      "passed": true
+    },
+    {
+      "name": "nonfinite_total",
+      "stdout": "header=latency_ms\ncount=100\ntotal_ms=inf\navg_ms=27.44892\n",
+      "pass": false,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('header=latency_ms\\ncount=100\\ntotal_ms=inf\\navg_ms=27.44892\\n')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "对照错误：total_ms 不一致\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr_prefix": "对照错误：",
+        "no_traceback": true
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true,
+        "no_traceback": true,
+        "no_false_pass": true
+      },
+      "passed": true
+    },
+    {
+      "name": "nonfinite_average",
+      "stdout": "header=latency_ms\ncount=100\ntotal_ms=2744.892\navg_ms=nan\n",
+      "pass": false,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('header=latency_ms\\ncount=100\\ntotal_ms=2744.892\\navg_ms=nan\\n')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "对照错误：avg_ms 不一致\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr_prefix": "对照错误：",
+        "no_traceback": true
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true,
+        "no_traceback": true,
+        "no_false_pass": true
+      },
+      "passed": true
+    },
+    {
+      "name": "empty_cpp_stdout",
+      "stdout": "",
+      "pass": false,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "对照错误：C++输出格式不正确\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr_prefix": "对照错误：",
+        "no_traceback": true
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true,
+        "no_traceback": true,
+        "no_false_pass": true
+      },
+      "passed": true
+    },
+    {
+      "name": "cpp_nonzero_exit",
+      "stdout": "",
+      "stderr": "受控 C++ 失败\n",
+      "cpp_exit": 1,
+      "pass": false,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('')\nsys.stderr.write('受控 C++ 失败\\n')\nraise SystemExit(1)\n",
+      "input": "gpu-kernel-lab/results/raw/latency.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/results/raw/latency.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "对照错误：C++运行失败：受控 C++ 失败\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr_prefix": "对照错误：",
+        "no_traceback": true
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true,
+        "no_traceback": true,
+        "no_false_pass": true
+      },
+      "passed": true
+    },
+    {
+      "name": "negative_empty_total",
+      "empty": true,
+      "stdout": "header=latency_ms\ncount=0\ntotal_ms=-0.0000000001\navg_ms=N/A\n",
+      "pass": false,
+      "simulation_source": "#!/usr/bin/python3\nimport sys\nsys.stdout.write('header=latency_ms\\ncount=0\\ntotal_ms=-0.0000000001\\navg_ms=N/A\\n')\nsys.stderr.write('')\nraise SystemExit(0)\n",
+      "input": "gpu-kernel-lab/tests/2026-10-17-csv-header-only.csv",
+      "actual": {
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/compare-controlled-check-clzgjmst/gpu-kernel-lab/python-basics/compare.py",
+          "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/tests/2026-10-17-csv-header-only.csv"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "对照错误：total_ms 不一致\n"
+      },
+      "expected": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr_prefix": "对照错误：",
+        "no_traceback": true
+      },
+      "checks": {
+        "exit_one": true,
+        "no_partial_stdout": true,
+        "error_reported": true,
+        "no_traceback": true,
+        "no_false_pass": true
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}
