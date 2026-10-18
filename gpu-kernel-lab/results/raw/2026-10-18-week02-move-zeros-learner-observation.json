@@ -1,0 +1,39 @@
+{
+  "task_date": "2026-10-18",
+  "actual_learning_date": "2026-10-18",
+  "execution_operator": "learner",
+  "recording_operator": "assistant",
+  "evidence_type": "learner_screenshot_transcription_and_read_only_source_check",
+  "source": "gpu-kernel-lab/python-basics/move_zeros_week02.py",
+  "source_sha256": "ffd95c35a003b3f6e3b7f3fb81189b06e8991f6553c4a0462e21bc709f9302c3",
+  "function_ast_sha256": "77ebf9a4a04e835fdd23d4c69909b1ab20b68a3f0532586b37819d4e946511f9",
+  "source_snapshot": "def move_zeros(nums):\n    write=0\n    for read in range(len(nums)):\n        if nums[read]!=0:\n            nums[write]=nums[read]\n            write+=1\n    for i in range(write,len(nums)):\n        nums[i]=0\n\n    return None\n\nnums = [0, 6, 0, -3, 6, 0]\nresult = move_zeros(nums)\nprint(\"nums:\", nums)\nprint(\"return:\", result)\n\nempty = []\nempty_result = move_zeros(empty)\nprint(\"empty:\", empty, \"return:\", empty_result)\n\nall_zero = [0, 0, 0]\nall_zero_result = move_zeros(all_zero)\nprint(\"all_zero:\", all_zero, \"return:\", all_zero_result)\n",
+  "cwd_relative_to_project": "gpu-kernel-lab/cpp-basics",
+  "command_evidence": "The latest screenshot shows python3 with the complete script path in double quotes, followed immediately by echo $?.",
+  "inputs": [
+    [
+      0,
+      6,
+      0,
+      -3,
+      6,
+      0
+    ],
+    [],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "expected_method": "Cases specified before the run: retain original nonzero order, append original zero count, keep length, and return None.",
+  "expected_stdout": "nums: [6, -3, 6, 0, 0, 0]\nreturn: None\nempty: [] return: None\nall_zero: [0, 0, 0] return: None\n",
+  "actual_stdout_transcribed": "nums: [6, -3, 6, 0, 0, 0]\nreturn: None\nempty: [] return: None\nall_zero: [0, 0, 0] return: None\n",
+  "expected_returncode": 0,
+  "observed_returncode": 0,
+  "passed": true,
+  "same_function_as_prior_property_verification": true,
+  "assistant_tests_repeated": false,
+  "prior_verification": "2026-10-18-week02-move-zeros-check.json",
+  "remaining": "Learner explanations of actual loop counts, stable order, and extra space."
+}

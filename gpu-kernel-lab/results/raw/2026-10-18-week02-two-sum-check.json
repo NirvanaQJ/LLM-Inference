@@ -1,0 +1,206 @@
+{
+  "task_date": "2026-10-18",
+  "actual_verification_date": "2026-10-18",
+  "operator": "assistant",
+  "scope": "Read-only verification of learner-saved new function and its existing ordinary top-level call; not learner execution evidence.",
+  "source": "gpu-kernel-lab/python-basics/two_sum_sorted_week02.py",
+  "source_sha256": "708a0455637eea4f39dcc2140de02912c64ab65cb1aad1837144bc8198bc83ba",
+  "source_snapshot": "def two_sum_sorted(nums,target):\n    left=0\n    right=len(nums)-1\n    while left<right:\n        total=nums[left]+nums[right]\n        if total==target:\n            return(left,right)\n        elif total<target:\n            left+=1\n        else:\n            right-=1\n    return None\n\nprint(two_sum_sorted([2, 4, 5, 9, 13], 14))",
+  "function_ast_sha256": "705ad10f97e2cfdeb942b2c6a77b743ed053a30026349b6e7c38a07dfe3fa3fb",
+  "python_version": "3.14.4",
+  "expected_method": "Pre-run cases from the lesson specification; independently enumerate every pair of distinct indices i<j and compare their sum to target, then check tuple/None type and unchanged input. References were prepared before executing the saved script or calling its function.",
+  "ordinary_script_run": {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "gpu-kernel-lab/python-basics/two_sum_sorted_week02.py"
+    ],
+    "cwd_relative_to_project": ".",
+    "expected_stdout": "(2, 3)\n",
+    "expected_returncode": 0,
+    "actual_stdout": "(2, 3)\n",
+    "actual_stderr": "",
+    "actual_returncode": 0,
+    "passed": true
+  },
+  "cases": [
+    {
+      "name": "ordinary",
+      "input": [
+        2,
+        4,
+        5,
+        9,
+        13
+      ],
+      "target": 14,
+      "valid_index_pairs": [
+        [
+          2,
+          3
+        ]
+      ],
+      "expected_return": [
+        2,
+        3
+      ],
+      "actual_return": [
+        2,
+        3
+      ],
+      "actual_repr": "(2, 3)",
+      "actual_type": "tuple",
+      "input_after": [
+        2,
+        4,
+        5,
+        9,
+        13
+      ],
+      "checks": {
+        "value": true,
+        "return_type": true,
+        "input_unchanged": true
+      },
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "input": [],
+      "target": 14,
+      "valid_index_pairs": [],
+      "expected_return": null,
+      "actual_return": null,
+      "actual_repr": "None",
+      "actual_type": "NoneType",
+      "input_after": [],
+      "checks": {
+        "value": true,
+        "return_type": true,
+        "input_unchanged": true
+      },
+      "passed": true
+    },
+    {
+      "name": "single",
+      "input": [
+        7
+      ],
+      "target": 14,
+      "valid_index_pairs": [],
+      "expected_return": null,
+      "actual_return": null,
+      "actual_repr": "None",
+      "actual_type": "NoneType",
+      "input_after": [
+        7
+      ],
+      "checks": {
+        "value": true,
+        "return_type": true,
+        "input_unchanged": true
+      },
+      "passed": true
+    },
+    {
+      "name": "duplicate",
+      "input": [
+        7,
+        7
+      ],
+      "target": 14,
+      "valid_index_pairs": [
+        [
+          0,
+          1
+        ]
+      ],
+      "expected_return": [
+        0,
+        1
+      ],
+      "actual_return": [
+        0,
+        1
+      ],
+      "actual_repr": "(0, 1)",
+      "actual_type": "tuple",
+      "input_after": [
+        7,
+        7
+      ],
+      "checks": {
+        "value": true,
+        "return_type": true,
+        "input_unchanged": true
+      },
+      "passed": true
+    },
+    {
+      "name": "no_solution",
+      "input": [
+        1,
+        2,
+        3
+      ],
+      "target": 9,
+      "valid_index_pairs": [],
+      "expected_return": null,
+      "actual_return": null,
+      "actual_repr": "None",
+      "actual_type": "NoneType",
+      "input_after": [
+        1,
+        2,
+        3
+      ],
+      "checks": {
+        "value": true,
+        "return_type": true,
+        "input_unchanged": true
+      },
+      "passed": true
+    },
+    {
+      "name": "negative",
+      "input": [
+        -7,
+        -2,
+        4,
+        10
+      ],
+      "target": 2,
+      "valid_index_pairs": [
+        [
+          1,
+          2
+        ]
+      ],
+      "expected_return": [
+        1,
+        2
+      ],
+      "actual_return": [
+        1,
+        2
+      ],
+      "actual_repr": "(1, 2)",
+      "actual_type": "tuple",
+      "input_after": [
+        -7,
+        -2,
+        4,
+        10
+      ],
+      "checks": {
+        "value": true,
+        "return_type": true,
+        "input_unchanged": true
+      },
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "learner_screenshot_note": "The screenshot shows the learner running the new script, but its left edge crops the full ordinary output and numeric exit status. No learner return code is inferred.",
+  "source_modified": false
+}

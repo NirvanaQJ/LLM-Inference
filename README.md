@@ -2,7 +2,7 @@
 
 这是我从 2026 年 10 月开始，面向 **LLM Inference Systems / GPU Systems** 岗位的学习、实验与求职工作区。学习主线为 Python / C++ / Linux → CUDA / Triton → 大模型推理 → vLLM / SGLang → GPU 性能分析；NCCL 与集群通信是与推理性能相连接的扩展方向。
 
-> **截至 2026-10-18：**已补完 17 日「Python/C++ 对照」，P0、P1 与固定记录全部通过，见[10 月 18 日日记](日记/2026-10-18.md)：C++ 读取单列 CSV 并统计，Python 自动核对同源 100 条数据；只扩展样本数至 120 条，结果仍为 PASS，并完成类型差异复答。本人操作、回答与助手边界复核/局部修正分别记录；本人估计本次补学约 70 分钟，未独立计时。下次独立复做重点为检查类型转换；18 日原定周验收课程尚未启动。
+> **截至 2026-10-18：**17 日补学与 18 日原定课程的 P0、P1 和固定项均已通过，分别见[10 月 17 日日记（实际于 18 日补学）](日记/2026-10-17.md)与[10 月 18 日日记](日记/2026-10-18.md)。补学完成 Python/C++ 同源 100/120 条模拟 CSV 自动对照与类型检查；[W02 周验收](week-02-review.md)完成学后本人组织编译命令、最小统计实跑、两道旧题复做与周证据复盘，本周数组/双指针固定练习去重 2 题。本人操作、回答、指导及助手复核分别记录。本人估计两段各约 70 分钟，周验收其中复做/复盘约 30 分钟；日历已如实更新未知安排与下一核查节点，下周从 19 日「对象生命周期」开始，下次重点是路径与命令。
 
 此前 10 月 5—8 日和 10—16 日均有 P0、P1 与固定项通过证据，13 日次日复答已于 14 日完成。9 日 P0 已通过，P1 与岗位核查固定项仍待验证，今日成果不自动补算旧欠账。当前成果主要是基础编程、日志统计和**模拟**延迟分析，尚无 CUDA、Triton、模型推理或通信性能实测。
 
@@ -11,11 +11,11 @@
 | 想找什么 | 入口 |
 | --- | --- |
 | 每天的任务、阶段目标和验收标准 | [交互式学习路线图](LLM-Inference-GPU-Systems-Roadmap-2026-2028.html) |
-| 实际完成情况、未通过项和完整证据链 | [日记索引](日记/README.md)；最近记录：[10 月 16 日](日记/2026-10-16.md)、[10 月 18 日](日记/2026-10-18.md) |
+| 实际完成情况、未通过项和完整证据链 | [日记索引](日记/README.md)；最近记录：[10 月 17 日（18 日补学）](日记/2026-10-17.md)、[10 月 18 日](日记/2026-10-18.md) |
 | 两个实验项目的目标、目录及现状 | [LLM 推理实验](llm-inference-lab/README.md) · [GPU 算子实验](gpu-kernel-lab/README.md) |
 | 起点与路线图审核 | [基线技能记录](baseline-skills.md) · [路线图审核记录](Red-Team-Audit-2026-10-03.md) |
 
-**阅读方式：**路线图写计划；日记按日期记录实际操作和验收；下面的主题索引只选关键文件。需要复现时，从对应日记进入测试记录和原始数据。路线图网页中的勾选状态保存在浏览器本地，不会因提交日记而自动同步。
+**阅读方式：**路线图写计划；日记记录实际操作和验收，补学明确区分任务日期与实际学习日期；下面的主题索引只选关键文件。需要复现时，从对应日记进入测试记录和原始数据。路线图网页中的勾选状态保存在浏览器本地，不会因提交日记而自动同步。
 
 ## 成果索引（按主题）
 
@@ -40,7 +40,8 @@
 | 重复编号与统计适用范围 | [三行输入](gpu-kernel-lab/tests/2026-10-15-duplicate-requests.txt) · [限制条件分析](gpu-kernel-lab/tests/2026-10-15-request-stats-limits.md) | [两种规则手算、本人运行及适用范围](gpu-kernel-lab/tests/2026-10-15-request-stats-limits.md) · [10 月 15 日日记](日记/2026-10-15.md) |
 | gdb 越界定位与修复 | [修复后源码](gpu-kernel-lab/cpp-basics/gdb_demo.cpp) · [修复前源码](gpu-kernel-lab/cpp-basics/gdb_demo_before.cpp) · [调试日志](gpu-kernel-lab/cpp-basics/gdb-session.txt) | [断点、单步、变量、堆栈与修复验收](gpu-kernel-lab/tests/2026-10-16-gdb-cases.md) · [三组函数复核](gpu-kernel-lab/results/raw/2026-10-16-gdb-fixed-check.json) · [10 月 16 日日记](日记/2026-10-16.md) |
 | C++ 链接缺库错误复测 | [复用求和器](gpu-kernel-lab/cpp-basics/sum.cpp) · [失败日志](gpu-kernel-lab/results/raw/2026-10-16-p1-link-failure.txt) · [成功输出](gpu-kernel-lab/results/raw/2026-10-16-p1-link-success.txt) | [旧错答、当前复答、同一目标文件链接失败与修正](gpu-kernel-lab/tests/2026-10-16-linking-recheck.md) · [10 月 16 日日记](日记/2026-10-16.md) |
-| Python/C++ 同输入统计与类型转换 | [C++ CSV 统计](gpu-kernel-lab/cpp-basics/stats_cli.cpp) · [Python 自动对照](gpu-kernel-lab/python-basics/compare.py) · [运行说明](gpu-kernel-lab/python-basics/README.md#pythonc-csv-统计对照) | [完整验收与纠错](gpu-kernel-lab/tests/2026-10-17-python-cpp-cases.md) · [120 条原始输出](gpu-kernel-lab/results/raw/2026-10-18-csv-120-output.txt) · [10 月 18 日补学日记](日记/2026-10-18.md) |
+| Python/C++ 同输入统计与类型转换 | [C++ CSV 统计](gpu-kernel-lab/cpp-basics/stats_cli.cpp) · [Python 自动对照](gpu-kernel-lab/python-basics/compare.py) · [运行说明](gpu-kernel-lab/python-basics/README.md#pythonc-csv-统计对照) | [完整验收与纠错](gpu-kernel-lab/tests/2026-10-17-python-cpp-cases.md) · [120 条原始输出](gpu-kernel-lab/results/raw/2026-10-18-csv-120-output.txt) · [10 月 17 日日记（18 日补学）](日记/2026-10-17.md) |
+| W02 周验收与旧题复做 | [两数求和本次实现](gpu-kernel-lab/python-basics/two_sum_sorted_week02.py) · [移动零本次实现](gpu-kernel-lab/python-basics/move_zeros_week02.py) | [周验收与下一步](week-02-review.md) · [两数求和验收](gpu-kernel-lab/tests/2026-10-18-week02-two-sum-cases.md) · [移动零验收](gpu-kernel-lab/tests/2026-10-18-week02-move-zeros-cases.md) · [错题记录](gpu-kernel-lab/tests/algorithm-errors.md) · [10 月 18 日日记](日记/2026-10-18.md) |
 
 10 月 3—4 日的路线图、审核、环境及最小 C++ 结果，见[日记索引](日记/README.md)和上方基线入口。表中 10 月 10 日生成、18 日沿用的延迟来自固定种子的随机数，**不是 GPU 测量结果**；两组数据的差异不代表性能变化，跨语言统计 PASS 也不能说明程序谁更快。
 

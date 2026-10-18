@@ -1,0 +1,21 @@
+{
+  "task_date": "2026-10-18",
+  "actual_learning_date": "2026-10-18",
+  "execution_operator": "learner",
+  "recording_operator": "assistant",
+  "evidence_type": "learner_screenshot_transcription_and_read_only_source_check",
+  "source": "gpu-kernel-lab/python-basics/move_zeros_week02.py",
+  "source_sha256": "b9484bd4c465d3dacb5188e26c6703c990dd2c1d6d3ebc82b5921b44079f69a5",
+  "function_ast_sha256": "77ebf9a4a04e835fdd23d4c69909b1ab20b68a3f0532586b37819d4e946511f9",
+  "cwd_relative_to_project": "gpu-kernel-lab/cpp-basics",
+  "command_evidence": "The screenshot shows python3 with the complete script path in double quotes, followed immediately by echo $?.",
+  "input": [0, 6, 0, -3, 6, 0],
+  "expected_method": "Predefined stable in-place contract and the learner's pre-run hand answer: retain [6,-3,6] in order, append three zeros, and return None.",
+  "expected_stdout": "nums: [6, -3, 6, 0, 0, 0]\nreturn: None\n",
+  "actual_stdout_transcribed": "nums: [6, -3, 6, 0, 0, 0]\nreturn: None\n",
+  "expected_returncode": 0,
+  "observed_returncode": 0,
+  "passed": true,
+  "assistant_script_rerun": false,
+  "remaining": "Learner empty/all-zero runs and explanations of actual loop counts, order, and extra space."
+}

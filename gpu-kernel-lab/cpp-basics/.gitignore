@@ -3,6 +3,7 @@
 /dedup
 /stats
 /stats_cli
+/stats_week02
 /gdb_demo
 /p1_sum
 *.o

@@ -1,0 +1,31 @@
+{
+  "task_date": "2026-10-18",
+  "actual_learning_date": "2026-10-18",
+  "execution_operator": "learner",
+  "recording_operator": "assistant",
+  "evidence_type": "learner_screenshot_transcription",
+  "evidence_note": "The output and return code were transcribed from the learner's screenshot. This is not a captured stdout file or an assistant rerun; the original screenshot remains in the conversation.",
+  "cwd_relative_to_project": "gpu-kernel-lab/cpp-basics",
+  "command": "./stats_cli ../tests/2026-10-18-week02-small.csv",
+  "returncode_command": "echo $?",
+  "source": "gpu-kernel-lab/cpp-basics/stats_cli.cpp",
+  "source_sha256": "d2121743e5056b62e42b7181a01bfeb027f46ee0ba24cbf76f5c90be31b12c8e",
+  "input": "gpu-kernel-lab/tests/2026-10-18-week02-small.csv",
+  "input_sha256": "cbde9f8e39b148771f43d1ef6d3d11da8dde652a2cde05ffb35fdcd356f839be",
+  "expected_method": "Independent hand calculation recorded before the learner's run: 3 records, 1.25 + 2.5 + 3.75 = 7.5, and 7.5 / 3 = 2.5. Read-only Decimal verification after the feedback confirmed these reference values without running the target program.",
+  "expected_stdout": "header=latency_ms\ncount=3\ntotal_ms=7.5\navg_ms=2.5\n",
+  "expected_returncode": 0,
+  "actual_stdout_transcribed": "header=latency_ms\ncount=3\ntotal_ms=7.5\navg_ms=2.5\n",
+  "observed_returncode": 0,
+  "checks": {
+    "header": true,
+    "count": true,
+    "total_ms": true,
+    "avg_ms": true,
+    "returncode": true
+  },
+  "passed": true,
+  "learner_type_answer": "字符串性质，不能直接相加",
+  "type_answer_assessment": "Correct for the question asked: line is std::string and cannot directly perform numeric addition with double 2.0.",
+  "independence_note": "This run followed supplied commands and a path explanation. It establishes a learner-executed successful minimal run, not an unprompted independent compilation or reproduction."
+}

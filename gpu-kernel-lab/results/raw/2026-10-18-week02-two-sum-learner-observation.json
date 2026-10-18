@@ -1,0 +1,27 @@
+{
+  "task_date": "2026-10-18",
+  "actual_learning_date": "2026-10-18",
+  "execution_operator": "learner",
+  "recording_operator": "assistant",
+  "evidence_type": "learner_screenshot_transcription_and_read_only_source_check",
+  "evidence_note": "The latest screenshot displays the full six output lines and echo $? immediately afterward. This record transcribes the screenshot; it is not a directly captured stdout file or an assistant rerun.",
+  "source": "gpu-kernel-lab/python-basics/two_sum_sorted_week02.py",
+  "source_sha256": "5b4300466e82d8ed040d9af27fb687143fce8bbd5dbbbfd0d225968763a6c902",
+  "function_ast_sha256": "705ad10f97e2cfdeb942b2c6a77b743ed053a30026349b6e7c38a07dfe3fa3fb",
+  "cwd_relative_to_project": "gpu-kernel-lab/cpp-basics",
+  "command_evidence": "The learner ran python3 with the script's complete absolute path in double quotes, then echo $? without an intervening command.",
+  "expected_source": "gpu-kernel-lab/tests/2026-10-18-week02-two-sum-cases.md",
+  "expected_stdout": "(2, 3)\nempty: None\nsingle: None\nduplicate: (0, 1)\nno_solution: None\nnegative: (1, 2)\n",
+  "actual_stdout_transcribed": "(2, 3)\nempty: None\nsingle: None\nduplicate: (0, 1)\nno_solution: None\nnegative: (1, 2)\n",
+  "expected_returncode": 0,
+  "observed_returncode": 0,
+  "checks": {
+    "six_outputs_match_predefined_expectations": true,
+    "exit_status": true,
+    "same_function_as_assistant_property_verification": true
+  },
+  "passed": true,
+  "reused_assistant_property_verification": "gpu-kernel-lab/results/raw/2026-10-18-week02-two-sum-check.json",
+  "property_evidence_scope": "Tuple/NoneType and input preservation were verified by the assistant previously. The current screenshot establishes learner-executed displayed values and exit status. Only top-level calls were added; the function AST is unchanged, so the assistant did not repeat those tests.",
+  "remaining": "Learner explanations of sortedness, strict pointer bounds, time and extra-space complexity are still pending."
+}

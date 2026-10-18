@@ -1,0 +1,23 @@
+{
+  "task_date": "2026-10-18",
+  "actual_learning_date": "2026-10-18",
+  "execution_operator": "learner",
+  "recording_operator": "assistant",
+  "evidence_type": "learner_screenshot_and_read_only_artifact_check",
+  "cwd_relative_to_project": "gpu-kernel-lab/cpp-basics",
+  "command_observed": "g++ -std=c++17 -Wall -Wextra stats_cli.cpp -o stats_week02",
+  "returncode_command": "echo $?",
+  "expected_returncode": 0,
+  "observed_returncode": 0,
+  "compiler_diagnostics_observed": false,
+  "source": "gpu-kernel-lab/cpp-basics/stats_cli.cpp",
+  "source_sha256": "d2121743e5056b62e42b7181a01bfeb027f46ee0ba24cbf76f5c90be31b12c8e",
+  "output": "gpu-kernel-lab/cpp-basics/stats_week02",
+  "output_absent_at_assignment": true,
+  "output_exists_after_learner_compile": true,
+  "output_sha256": "ab26c21ce3dfd63f830c6b21a328114dfbc7dc3c974d942e5ea52ab344fc292f",
+  "passed": true,
+  "independence_scope": "After earlier instruction and correction, the learner composed this command from the given source, output name, language standard, and warning requirements. No complete command was supplied for this attempt. The result supports this compilation task in the familiar source directory, not entirely unprompted mastery of all path forms.",
+  "assistant_compilation_or_target_run": false,
+  "new_output_program_run": "not performed; the unchanged source's small-data and header-only runs are recorded separately"
+}

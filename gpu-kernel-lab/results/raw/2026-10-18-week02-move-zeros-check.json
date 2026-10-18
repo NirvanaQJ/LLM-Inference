@@ -1,0 +1,247 @@
+{
+  "task_date": "2026-10-18",
+  "actual_verification_date": "2026-10-18",
+  "operator": "assistant",
+  "scope": "Seven calls of the exact learner-saved function extracted with the standard-library AST parser. Property verification is assistant evidence, not learner execution. The script top-level example was not rerun.",
+  "source": "gpu-kernel-lab/python-basics/move_zeros_week02.py",
+  "source_sha256": "b9484bd4c465d3dacb5188e26c6703c990dd2c1d6d3ebc82b5921b44079f69a5",
+  "source_snapshot": "def move_zeros(nums):\n    write=0\n    for read in range(len(nums)):\n        if nums[read]!=0:\n            nums[write]=nums[read]\n            write+=1\n    for i in range(write,len(nums)):\n        nums[i]=0\n\n    return None\n\nnums = [0, 6, 0, -3, 6, 0]\nresult = move_zeros(nums)\nprint(\"nums:\", nums)\nprint(\"return:\", result)\n",
+  "function_ast_sha256": "77ebf9a4a04e835fdd23d4c69909b1ab20b68a3f0532586b37819d4e946511f9",
+  "python_version": "3.14.4",
+  "expected_method": "Before invoking the learner function, derive every expected list from the original nonzero sequence followed by the original count of zeros; the oracle is separate from the two-pass read/write implementation. Return None, unchanged length, observed original list alias, and nonzero order follow the previously defined contract. Test copies and oracle lists are verification overhead, not algorithm extra space.",
+  "cases": [
+    {
+      "name": "ordinary",
+      "input": [
+        0,
+        6,
+        0,
+        -3,
+        6,
+        0
+      ],
+      "expected_list": [
+        6,
+        -3,
+        6,
+        0,
+        0,
+        0
+      ],
+      "expected_return": null,
+      "actual_list": [
+        6,
+        -3,
+        6,
+        0,
+        0,
+        0
+      ],
+      "actual_return": null,
+      "actual_return_type": "NoneType",
+      "alias_observed_list": [
+        6,
+        -3,
+        6,
+        0,
+        0,
+        0
+      ],
+      "checks": {
+        "content": true,
+        "return_none": true,
+        "length_preserved": true,
+        "same_list_observed_via_alias": true,
+        "nonzero_order_preserved": true
+      },
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "input": [],
+      "expected_list": [],
+      "expected_return": null,
+      "actual_list": [],
+      "actual_return": null,
+      "actual_return_type": "NoneType",
+      "alias_observed_list": [],
+      "checks": {
+        "content": true,
+        "return_none": true,
+        "length_preserved": true,
+        "same_list_observed_via_alias": true,
+        "nonzero_order_preserved": true
+      },
+      "passed": true
+    },
+    {
+      "name": "all_zero",
+      "input": [
+        0,
+        0,
+        0
+      ],
+      "expected_list": [
+        0,
+        0,
+        0
+      ],
+      "expected_return": null,
+      "actual_list": [
+        0,
+        0,
+        0
+      ],
+      "actual_return": null,
+      "actual_return_type": "NoneType",
+      "alias_observed_list": [
+        0,
+        0,
+        0
+      ],
+      "checks": {
+        "content": true,
+        "return_none": true,
+        "length_preserved": true,
+        "same_list_observed_via_alias": true,
+        "nonzero_order_preserved": true
+      },
+      "passed": true
+    },
+    {
+      "name": "single_zero",
+      "input": [
+        0
+      ],
+      "expected_list": [
+        0
+      ],
+      "expected_return": null,
+      "actual_list": [
+        0
+      ],
+      "actual_return": null,
+      "actual_return_type": "NoneType",
+      "alias_observed_list": [
+        0
+      ],
+      "checks": {
+        "content": true,
+        "return_none": true,
+        "length_preserved": true,
+        "same_list_observed_via_alias": true,
+        "nonzero_order_preserved": true
+      },
+      "passed": true
+    },
+    {
+      "name": "single_nonzero",
+      "input": [
+        -4
+      ],
+      "expected_list": [
+        -4
+      ],
+      "expected_return": null,
+      "actual_list": [
+        -4
+      ],
+      "actual_return": null,
+      "actual_return_type": "NoneType",
+      "alias_observed_list": [
+        -4
+      ],
+      "checks": {
+        "content": true,
+        "return_none": true,
+        "length_preserved": true,
+        "same_list_observed_via_alias": true,
+        "nonzero_order_preserved": true
+      },
+      "passed": true
+    },
+    {
+      "name": "no_zero",
+      "input": [
+        6,
+        -3,
+        6
+      ],
+      "expected_list": [
+        6,
+        -3,
+        6
+      ],
+      "expected_return": null,
+      "actual_list": [
+        6,
+        -3,
+        6
+      ],
+      "actual_return": null,
+      "actual_return_type": "NoneType",
+      "alias_observed_list": [
+        6,
+        -3,
+        6
+      ],
+      "checks": {
+        "content": true,
+        "return_none": true,
+        "length_preserved": true,
+        "same_list_observed_via_alias": true,
+        "nonzero_order_preserved": true
+      },
+      "passed": true
+    },
+    {
+      "name": "edge_zeros",
+      "input": [
+        0,
+        0,
+        -5,
+        0,
+        2,
+        0
+      ],
+      "expected_list": [
+        -5,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_return": null,
+      "actual_list": [
+        -5,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "actual_return": null,
+      "actual_return_type": "NoneType",
+      "alias_observed_list": [
+        -5,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "checks": {
+        "content": true,
+        "return_none": true,
+        "length_preserved": true,
+        "same_list_observed_via_alias": true,
+        "nonzero_order_preserved": true
+      },
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "assistant_top_level_script_run": false,
+  "source_modified": false
+}
