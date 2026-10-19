@@ -1,0 +1,24 @@
+{
+  "task_date": "2026-10-19",
+  "actual_learning_date": "2026-10-19",
+  "timezone": "Asia/Shanghai",
+  "evidence_type": "transcription_of_learner_terminal_screenshot",
+  "execution_actor": "learner",
+  "working_directory": "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/cpp-basics",
+  "source_file": "gpu-kernel-lab/cpp-basics/lifetime_demo.cpp",
+  "source_sha256_at_assistant_read": "dbd2dd2d9a0f4988be92d2c29c3f3a1f26e15672ccf52cb3df73e3f292804ad1",
+  "compile": {
+    "command": "g++ -std=c++17 -Wall -Wextra lifetime_demo.cpp -o lifetime_demo",
+    "diagnostics_visible": false,
+    "exit_status_observed_immediately_after_command": 0
+  },
+  "run": {
+    "command": "./lifetime_demo",
+    "stdout_lines_expected": ["构造", "块内", "块外", "析构"],
+    "stdout_lines_observed": ["构造", "块内", "块外", "析构"],
+    "exit_status_observed_immediately_after_command": 0,
+    "matches_expected": true
+  },
+  "expected_basis": "先前本人正确预测，并与已核对的普通局部对象作用域规则一致；不是从 actual 复制后生成的预期。",
+  "assistance_boundary": "助手提供完整教学示例和命令；本人保存、编译并运行。助手只读核对源码，未代编译或运行。该证据不表示独立编写、文件句柄 RAII 主任务或全部当日验收通过。"
+}

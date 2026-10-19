@@ -1,0 +1,27 @@
+{
+  "task_date": "2026-10-19",
+  "actual_learning_date": "2026-10-19",
+  "timezone": "Asia/Shanghai",
+  "evidence_type": "transcription_of_learner_terminal_screenshot",
+  "execution_actor": "learner",
+  "working_directory": "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/cpp-basics",
+  "source_file": "gpu-kernel-lab/cpp-basics/file_guard.cpp",
+  "source_sha256_at_assistant_read": "3b183319c4628764b9b39951d60985eb0ae4ada1d877dfea12a8d50c3039d4a8",
+  "input_file": "lifetime_demo.cpp",
+  "compile": {
+    "command": "g++ -std=c++17 -Wall -Wextra file_guard.cpp -o file_guard",
+    "diagnostics_visible": false,
+    "exit_status_observed_immediately_after_command": 0
+  },
+  "run": {
+    "command": "./file_guard",
+    "expected_pattern": ["构造 fd=N", "使用文件", "析构 fd=N", "main 即将结束"],
+    "expected_constraints": "N 是同一个非负整数，预期在运行前已记录，不固定为 3。",
+    "stdout_lines_observed": ["构造 fd=3", "使用文件", "析构 fd=3", "main 即将结束"],
+    "exit_status_observed_immediately_after_command": 0,
+    "matches_expected_order_and_descriptor": true
+  },
+  "passed_scope": "按指导实现后的本人编译、正常运行及构造/析构日志顺序。",
+  "not_yet_verified": ["通过系统查询核验正常路径句柄已关闭", "构造成功后抛出异常的清理", "禁止拷贝的两种负向编译", "P1 不存在文件边界"],
+  "assistance_boundary": "助手提供过类骨架、补充代码和命令；本人保存并编译运行，助手只读核对源码，未代编译或运行。析构日志不单独作为关闭系统句柄的证据。"
+}

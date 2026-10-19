@@ -6,4 +6,6 @@
 /stats_week02
 /gdb_demo
 /p1_sum
+/lifetime_demo
+/file_guard
 *.o

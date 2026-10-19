@@ -1,0 +1,30 @@
+{
+  "task_date": "2026-10-19",
+  "actual_learning_date": "2026-10-19",
+  "timezone": "Asia/Shanghai",
+  "evidence_type": "transcription_of_learner_terminal_screenshot",
+  "execution_actor": "learner",
+  "working_directory": "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/cpp-basics",
+  "source_file": "gpu-kernel-lab/cpp-basics/file_guard.cpp",
+  "source_sha256_at_assistant_read": "703fbbf33bef492e4102d69d78b013ee0d4446a6e4088bf1943b658ed2225f01",
+  "learner_compile": {
+    "exit_status": null,
+    "note": "截图顶部有孤立的 0，但本轮编译命令未入镜，不补造完整关联；正常源码的助手语法检查另记 copy-check。两次运行命令、输出及各自状态清楚可见。"
+  },
+  "normal": {
+    "command": "./file_guard",
+    "stdout_lines_observed": ["构造 fd=3", "作用域内查询=0", "析构 fd=3", "作用域外查询=-1, EBADF=1", "关闭检查 PASS"],
+    "exit_status_observed_immediately_after_command": 0,
+    "matches_expected": true
+  },
+  "exception": {
+    "command": "./file_guard throw",
+    "stdout_lines_observed": ["构造 fd=3", "作用域内查询=0", "析构 fd=3", "捕获异常：模拟使用文件失败", "作用域外查询=-1, EBADF=1", "关闭检查 PASS"],
+    "exit_status_observed_immediately_after_command": 0,
+    "destruction_before_catch_log": true,
+    "matches_expected": true
+  },
+  "expected_basis": "检查点 10 在本人运行前记录的两模式控制流与 F_GETFD/EBADF 判定，编号不固定为 3。",
+  "passed_scope": "本人正常与构造成功后模拟异常两条路径均确认句柄关闭；构造、析构和捕获顺序通过。",
+  "assistance_boundary": "本人按指导修改并运行；助手只读核对实现，另辅助完成编译控制与禁止拷贝检查。必要理解、P1 与固定项仍待完成，不宣布全天完成。"
+}

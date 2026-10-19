@@ -1,0 +1,122 @@
+{
+  "task_date": "2026-10-19",
+  "timezone": "Asia/Shanghai",
+  "actor": "assistant",
+  "python_version": "3.14.4",
+  "source_file": "gpu-kernel-lab/python-basics/two_sum_hash.py",
+  "source_sha256": "cac971db0363ec59126cb0cbe63f2421e5b8388bafcd79d4674e639795186d01",
+  "function_ast_sha256": "6918e8512bcebd8d576864e95b54acc5afc68a2356a31f5e9344bd8b532fdbc7",
+  "method": "直接执行已保存源码中的原函数定义，不执行文件末尾的测试调用；未修改本人源码。",
+  "expected_basis": "实现前已保存于 tests/2026-10-19-two-sum-hash-cases.md 的手算预期和输入/返回规格。",
+  "cases": [
+    {
+      "name": "ordinary",
+      "input": [
+        8,
+        3,
+        6,
+        2
+      ],
+      "target": 9,
+      "expected_repr": "(1, 2)",
+      "actual_repr": "(1, 2)",
+      "expected_type": "tuple",
+      "actual_type": "tuple",
+      "input_unchanged": true,
+      "satisfies_return_specification": true,
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "input": [],
+      "target": 9,
+      "expected_repr": "None",
+      "actual_repr": "None",
+      "expected_type": "NoneType",
+      "actual_type": "NoneType",
+      "input_unchanged": true,
+      "satisfies_return_specification": true,
+      "passed": true
+    },
+    {
+      "name": "single",
+      "input": [
+        4
+      ],
+      "target": 8,
+      "expected_repr": "None",
+      "actual_repr": "None",
+      "expected_type": "NoneType",
+      "actual_type": "NoneType",
+      "input_unchanged": true,
+      "satisfies_return_specification": true,
+      "passed": true
+    },
+    {
+      "name": "duplicate",
+      "input": [
+        4,
+        4
+      ],
+      "target": 8,
+      "expected_repr": "(0, 1)",
+      "actual_repr": "(0, 1)",
+      "expected_type": "tuple",
+      "actual_type": "tuple",
+      "input_unchanged": true,
+      "satisfies_return_specification": true,
+      "passed": true
+    },
+    {
+      "name": "no_solution",
+      "input": [
+        1,
+        2,
+        4
+      ],
+      "target": 10,
+      "expected_repr": "None",
+      "actual_repr": "None",
+      "expected_type": "NoneType",
+      "actual_type": "NoneType",
+      "input_unchanged": true,
+      "satisfies_return_specification": true,
+      "passed": true
+    },
+    {
+      "name": "negative",
+      "input": [
+        -3,
+        7,
+        2,
+        9
+      ],
+      "target": 4,
+      "expected_repr": "(0, 1)",
+      "actual_repr": "(0, 1)",
+      "expected_type": "tuple",
+      "actual_type": "tuple",
+      "input_unchanged": true,
+      "satisfies_return_specification": true,
+      "passed": true
+    },
+    {
+      "name": "zero",
+      "input": [
+        0,
+        5,
+        0
+      ],
+      "target": 0,
+      "expected_repr": "(0, 2)",
+      "actual_repr": "(0, 2)",
+      "expected_type": "tuple",
+      "actual_type": "tuple",
+      "input_unchanged": true,
+      "satisfies_return_specification": true,
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "scope": "助手辅助核验七组值、返回类型、不同位置、合法求和和输入不变；不替代本人边界运行和理解回答。"
+}

@@ -1,0 +1,18 @@
+{
+  "task_date": "2026-10-19",
+  "timezone": "Asia/Shanghai",
+  "evidence_type": "transcription_of_learner_terminal_screenshot",
+  "execution_actor": "learner",
+  "working_directory": "/home/bestqjj/桌面/LLM Inference",
+  "interpreter_path_visible": "/home/bestqjj/桌面/LLM Inference/.venv/bin/python",
+  "script_path_visible": "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/python-basics/two_sum_hash.py",
+  "source_sha256_at_assistant_read": "3bb6808b88b181d8733137e02bacdc957e9b0867ca5920e0252b8058262586f8",
+  "function_ast_sha256": "6918e8512bcebd8d576864e95b54acc5afc68a2356a31f5e9344bd8b532fdbc7",
+  "function_unchanged_from_assistant_property_check": true,
+  "stdout_lines_expected_before_run": ["(1, 2)", "empty: None", "single: None", "duplicate: (0, 1)", "no_solution: None", "negative: (0, 1)", "zero: (0, 2)"],
+  "stdout_lines_observed": ["(1, 2)", "empty: None", "single: None", "duplicate: (0, 1)", "no_solution: None", "negative: (0, 1)", "zero: (0, 2)"],
+  "outputs_match_expected": true,
+  "exit_status": null,
+  "exit_status_note": "本截图未显示 echo $? 的数字，终端返回提示符不单独当作状态 0。待本人在未执行其他命令时立即补查，或重跑并紧接查看。",
+  "assistance_boundary": "本人追加并运行七组调用，助手只读确认函数未改变，沿用已有属性检查，没有重复执行七组辅助测试。"
+}

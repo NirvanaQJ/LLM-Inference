@@ -1,0 +1,38 @@
+{
+  "task_date": "2026-10-19",
+  "actual_learning_date": "2026-10-19",
+  "timezone": "Asia/Shanghai",
+  "evidence_type": "transcription_of_learner_terminal_screenshot",
+  "execution_actor": "learner",
+  "working_directory": "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/cpp-basics",
+  "source_file": "gpu-kernel-lab/cpp-basics/file_guard.cpp",
+  "source_sha256_at_assistant_read": "4f58b3978b6a560313186141b92ee9b6694a2d27699b34f150838d07d857b4bd",
+  "input_file": "lifetime_demo.cpp",
+  "compile": {
+    "command": "g++ -std=c++17 -Wall -Wextra file_guard.cpp -o file_guard",
+    "diagnostics_visible": false,
+    "exit_status_observed_immediately_after_command": 0
+  },
+  "run": {
+    "command": "./file_guard",
+    "stdout_lines_observed": ["构造 fd=3", "作用域内查询=0", "析构 fd=3", "作用域外查询=-1, EBADF=1", "关闭检查 PASS"],
+    "exit_status_observed_immediately_after_command": 0
+  },
+  "expected_before_run": {
+    "inside_query": "nonnegative",
+    "outside_query": -1,
+    "saved_errno_equals_EBADF": true,
+    "success_line": "关闭检查 PASS",
+    "compile_exit_status": 0,
+    "run_exit_status": 0
+  },
+  "observed": {
+    "descriptor": 3,
+    "inside_query": 0,
+    "outside_query": -1,
+    "saved_errno_equals_EBADF": true,
+    "matches_expected": true
+  },
+  "evidence_scope": "正常路径中同一编号在 guard 存活时有效，作用域退出后查询为 -1/EBADF；源码确认查询前未重新打开文件，错误值在查询后立即保存。",
+  "assistance_boundary": "助手提供查询代码和命令，本人修改、编译并运行；助手只读核对，未代编译或运行。异常路径、禁止拷贝负向编译及 P1 边界仍待验证。"
+}
