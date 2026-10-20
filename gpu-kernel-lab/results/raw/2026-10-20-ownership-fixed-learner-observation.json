@@ -1,0 +1,45 @@
+{
+  "task_date": "2026-10-20",
+  "actual_learning_date": "2026-10-20",
+  "timezone": "Asia/Shanghai",
+  "evidence_type": "transcription_of_learner_terminal_screenshot",
+  "execution_actor": "learner",
+  "working_directory": "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/cpp-basics",
+  "source_file": "gpu-kernel-lab/cpp-basics/ownership.cpp",
+  "source_sha256_at_assistant_read": "e2c7a26140c9efed955a0bd80f27795dc9999f198a44036aa0caa9f05ce06bad",
+  "source_text_at_assistant_read": "#include <iostream>\n#include <memory>\n#include <utility>\n\nstruct Request {\n    int id = 7;\n\n    ~Request() {\n        std::cout << \"销毁请求\\n\";\n    }\n};\n\nvoid unique_demo() {\n    auto req = std::make_unique<Request>();\n\n    {\n        auto next = std::move(req);\n        std::cout << \"处理请求 \" << next->id << \"\\n\";\n    }\n\n    if (!req) {\n        std::cout << \"req 已空\\n\";\n    }\n}\n\nvoid weak_demo() {\n    std::weak_ptr<Request> watch;\n\n    {\n        auto req = std::make_shared<Request>();\n        watch = req;\n\n        std::cout << \"强引用数 \" << req.use_count() << \"\\n\";\n        std::cout << \"块内过期 \" << watch.expired() << \"\\n\";\n\n        if (auto current = watch.lock()) {\n            std::cout << \"访问请求 \" << current->id << \"\\n\";\n        }\n    } // A\n\n    std::cout << \"块外过期 \" << watch.expired() << \"\\n\";\n\n    if (auto current = watch.lock()) {\n        std::cout << \"访问请求 \" << current->id << \"\\n\";\n    } else {\n        std::cout << \"请求已不存在\\n\";\n    }\n}\n\nstruct CycleRequest {\n    int id = 0;\n    std::shared_ptr<CycleRequest> peer;\n\n    ~CycleRequest() {\n        std::cout << \"销毁请求 \" << id << \"\\n\";\n    }\n};\n\n// 循环引用演示：观察完成后手动断环清理。\nvoid cycle_demo() {\n    std::weak_ptr<CycleRequest> watch_a;\n    std::weak_ptr<CycleRequest> watch_b;\n\n    {\n        auto a = std::make_shared<CycleRequest>();\n        auto b = std::make_shared<CycleRequest>();\n        a->id = 1;\n        b->id = 2;\n\n        a->peer = b; // 请求 1 拥有请求 2。\n        b->peer = a; // 请求 2 拥有请求 1。\n\n        watch_a = a;\n        watch_b = b;\n\n        std::cout << \"块内计数 \" << a.use_count()\n                  << \" \" << b.use_count() << \"\\n\";\n    }\n\n    std::cout << \"块外计数 \" << watch_a.use_count()\n              << \" \" << watch_b.use_count() << \"\\n\";\n    std::cout << \"块外过期 \" << watch_a.expired()\n              << \" \" << watch_b.expired() << \"\\n\";\n\n    std::cout << \"开始手动断环\\n\";\n    if (auto saved = watch_a.lock()) {\n        saved->peer.reset();\n    }\n\n    std::cout << \"清理后过期 \" << watch_a.expired()\n              << \" \" << watch_b.expired() << \"\\n\";\n}\n\nstruct FixedRequest {\n    int id = 0;\n    std::shared_ptr<FixedRequest> next;\n    std::weak_ptr<FixedRequest> back; // 填完整智能指针类型：只观察前一个请求。\n\n    ~FixedRequest() {\n        std::cout << \"销毁请求 \" << id << \"\\n\";\n    }\n};\n\nvoid fixed_demo() {\n    std::weak_ptr<FixedRequest> watch_a;\n    std::weak_ptr<FixedRequest> watch_b;\n\n    {\n        auto a = std::make_shared<FixedRequest>();\n        auto b = std::make_shared<FixedRequest>();\n        a->id = 1;\n        b->id = 2;\n\n        a->next = b;\n        b->back = a;\n        watch_a = a;\n        watch_b = b;\n\n        std::cout << \"块内计数 \" << a.use_count()\n                  << \" \" << b.use_count() << \"\\n\";\n\n        if (auto previous = b->back.lock()) {\n            std::cout << \"回看请求 \" << previous->id << \"\\n\";\n        }\n    }\n\n    std::cout << \"块外过期 \" << watch_a.expired()\n              << \" \" << watch_b.expired() << \"\\n\";\n}\n\nint main() {\n    fixed_demo();\n}\n",
+  "saved_back_declaration_checked": "std::weak_ptr<FixedRequest> back;",
+  "compile": {
+    "command": "g++ -std=c++17 -Wall -Wextra ownership.cpp -o ownership",
+    "diagnostics_visible": false,
+    "exit_status_observed_immediately_after_command": 0
+  },
+  "run": {
+    "command": "./ownership",
+    "entry_function": "fixed_demo",
+    "stdout_lines_expected": [
+      "块内计数 1 2",
+      "回看请求 1",
+      "销毁请求 1",
+      "销毁请求 2",
+      "块外过期 1 1"
+    ],
+    "stdout_lines_observed": [
+      "块内计数 1 2",
+      "回看请求 1",
+      "销毁请求 1",
+      "销毁请求 2",
+      "块外过期 1 1"
+    ],
+    "exit_status_observed_immediately_after_command": 0,
+    "destructor_order": [
+      1,
+      2
+    ],
+    "manual_reset_in_fixed_demo": false,
+    "matches_expected": true
+  },
+  "expected_basis": "Expected derived from the weak back-reference specification and saved in ownership-cases checkpoint 12 before this learner run; learner correctly predicted owner counts and first object destruction in checkpoint 13.",
+  "screenshot_selection": "Complete lower compile/run used; prior explicit cycle-cleanup output at top is not part of fixed_demo.",
+  "assistance_boundary": "Assistant supplied the fixed scaffold and exact weak_ptr back declaration. Learner saved the declaration, compiled, and ran; owner-count and destruction predictions were supplied by learner. This proves guided structural repair, not independent full implementation. Assistant integration verification is recorded separately."
+}

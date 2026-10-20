@@ -1,0 +1,39 @@
+{
+  "task_date": "2026-10-20",
+  "actual_learning_date": "2026-10-20",
+  "timezone": "Asia/Shanghai",
+  "evidence_type": "transcription_of_learner_terminal_screenshot_and_reply",
+  "execution_actor": "learner",
+  "working_directory": "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/cpp-basics",
+  "source_file": "gpu-kernel-lab/cpp-basics/ownership.cpp",
+  "source_sha256_at_assistant_read": "1e17ed6a4512397b3e140b2f1ebc435a02f9f70622990a9be59ebe9ea23dd1b3",
+  "source_text_at_assistant_read": "#include <iostream>\n#include <memory>\n#include <utility>\n\nstruct Request {\n    int id = 7;\n\n    ~Request() {\n        std::cout << \"销毁请求\\n\";\n    }\n};\n\nint main() {\n    auto req = std::make_shared<Request>();\n    std::cout << \"初始计数 \" << req.use_count() << \"\\n\";\n\n    {\n        auto backup = req;\n        std::cout << \"共同拥有 \" << req.use_count() << \"\\n\";\n    } // A\n\n    std::cout << \"离开内层 \" << req.use_count() << \"\\n\";\n} // B",
+  "compile": {
+    "command": "g++ -std=c++17 -Wall -Wextra ownership.cpp -o ownership",
+    "diagnostics_visible": false,
+    "exit_status_observed_immediately_after_command": 0
+  },
+  "run": {
+    "command": "./ownership",
+    "stdout_lines_expected": [
+      "初始计数 1",
+      "共同拥有 2",
+      "离开内层 1",
+      "销毁请求"
+    ],
+    "stdout_lines_observed": [
+      "初始计数 1",
+      "共同拥有 2",
+      "离开内层 1",
+      "销毁请求"
+    ],
+    "exit_status_observed_immediately_after_command": 0,
+    "destructor_log_count": 1,
+    "matches_expected": true
+  },
+  "learner_explanation_verbatim": "A出销毁的是backup这个指针，此时req还拥有这请求，所以Request不会析构",
+  "explanation_assessment": "Correct after feedback: backup is the shared_ptr management object; req still owns the Request, so destroying backup does not destroy Request.",
+  "expected_basis": "Expected saved in ownership-cases checkpoint 6 before this run, using source and shared ownership scope rules.",
+  "screenshot_selection": "The lower compile and run show the shared_ptr version. The earlier three-line unique_ptr move run and isolated top 0 are not attributed to this compile.",
+  "assistance_boundary": "Assistant supplied the example, corrected an extra destructor log in the first prediction, and supplied commands. Learner edited, compiled, ran, and explained the correction. Assistant only read source, without editing, compiling, or running it. Cycle demonstration and repair, routine algorithm, and P1 remain unverified."
+}

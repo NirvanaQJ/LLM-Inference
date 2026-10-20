@@ -8,4 +8,5 @@
 /p1_sum
 /lifetime_demo
 /file_guard
+/ownership
 *.o

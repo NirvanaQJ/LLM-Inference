@@ -1,0 +1,37 @@
+{
+  "task_date": "2026-10-20",
+  "actual_learning_date": "2026-10-20",
+  "timezone": "Asia/Shanghai",
+  "evidence_type": "transcription_of_learner_terminal_screenshot",
+  "execution_actor": "learner",
+  "working_directory_of_successful_commands": "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/cpp-basics",
+  "source_file": "gpu-kernel-lab/cpp-basics/ownership.cpp",
+  "source_sha256_at_assistant_read": "0ae4350a73125454fea7f69ae6d16c93477ba01daa8094b1e5acf2ce1848770f",
+  "source_text_at_assistant_read": "#include <iostream>\n#include <memory>\n\nstruct Request {\n    int id = 7;\n\n    ~Request() {\n        std::cout << \"销毁请求\\n\";\n    }\n};\n\nint main() {\n    {\n        auto req = std::make_unique<Request>();\n        std::cout << \"创建完成\\n\";\n        std::cout << \"处理请求 \" << req->id << \"\\n\";\n    } // A\n\n    std::cout << \"块外\\n\";\n} // B",
+  "earlier_failed_compile": {
+    "command_visible": "g++ -std=c++17 -Wall -Wextra ownership.cpp -o ownership",
+    "diagnostic_excerpts_visible": [
+      "undefined reference to `main'",
+      "collect2: error: ld returned 1 exit status"
+    ],
+    "exit_status_observed_immediately_after_command": 1,
+    "stage": "link",
+    "cause": "not established from screenshot; source contents at that moment and intervening edits or saves are unknown",
+    "resolved_in_later_compile": true
+  },
+  "successful_compile": {
+    "command": "g++ -std=c++17 -Wall -Wextra ownership.cpp -o ownership",
+    "diagnostics_visible": false,
+    "exit_status_observed_immediately_after_command": 0
+  },
+  "run": {
+    "command": "./ownership",
+    "stdout_lines_expected": ["创建完成", "处理请求 7", "销毁请求", "块外"],
+    "stdout_lines_observed": ["创建完成", "处理请求 7", "销毁请求", "块外"],
+    "exit_status_observed_immediately_after_command": 0,
+    "destructor_log_count": 1,
+    "matches_expected": true
+  },
+  "expected_basis": "Expected was saved before the learner run in ownership-cases checkpoint 2, using the supplied source and unique_ptr scope destruction rules.",
+  "assistance_boundary": "Assistant supplied the complete initial example and commands. Learner saved, compiled, and ran it. Assistant inspected saved source without compiling or running it. This confirms the basic scope path, not independent implementation or completion of all daily requirements."
+}

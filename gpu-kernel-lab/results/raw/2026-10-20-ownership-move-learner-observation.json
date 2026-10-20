@@ -1,0 +1,35 @@
+{
+  "task_date": "2026-10-20",
+  "actual_learning_date": "2026-10-20",
+  "timezone": "Asia/Shanghai",
+  "evidence_type": "transcription_of_learner_terminal_screenshot",
+  "execution_actor": "learner",
+  "working_directory": "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/cpp-basics",
+  "source_file": "gpu-kernel-lab/cpp-basics/ownership.cpp",
+  "source_sha256_at_assistant_read": "4b87954b59355e24f31bfb9416f9020a28d07513974e554390d4708f5df0f50a",
+  "source_text_at_assistant_read": "#include <iostream>\n#include <memory>\n#include <utility>\n\nstruct Request {\n    int id = 7;\n\n    ~Request() {\n        std::cout << \"销毁请求\\n\";\n    }\n};\n\nint main() {\n    auto req = std::make_unique<Request>();\n\n    {\n        auto next = std::move(req);\n        std::cout << \"处理请求 \" << next->id << \"\\n\";\n    } // A\n\n    if (!req) {\n        std::cout << \"req 已空\\n\";\n    }\n} // B",
+  "compile": {
+    "command": "g++ -std=c++17 -Wall -Wextra ownership.cpp -o ownership",
+    "diagnostics_visible": false,
+    "exit_status_observed_immediately_after_command": 0
+  },
+  "run": {
+    "command": "./ownership",
+    "stdout_lines_expected": [
+      "处理请求 7",
+      "销毁请求",
+      "req 已空"
+    ],
+    "stdout_lines_observed": [
+      "处理请求 7",
+      "销毁请求",
+      "req 已空"
+    ],
+    "exit_status_observed_immediately_after_command": 0,
+    "destructor_log_count": 1,
+    "matches_expected": true
+  },
+  "expected_basis": "Source and unique_ptr move/scope rules; expected saved before this run in ownership-cases checkpoint 4, also predicted by learner.",
+  "screenshot_selection": "The lower compile and lower run show the move version. The earlier four-line basic run and isolated top 0 are not attributed to the new compile.",
+  "assistance_boundary": "Assistant supplied the example and commands. Learner edited, saved, compiled, and ran it. Assistant read source without editing, compiling, or running it. Ordinary-scope and move examples have evidence; shared ownership, cycle demonstration and repair, routine algorithm, and P1 remain unverified."
+}

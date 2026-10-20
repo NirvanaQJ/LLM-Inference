@@ -1,0 +1,87 @@
+{
+  "task_date": "2026-10-20",
+  "execution_actor": "assistant",
+  "python_version": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "source_file": "gpu-kernel-lab/python-basics/is_anagram.py",
+  "source_sha256": "3026ff291143749c642469b533e328dc2534bfd4f7e8cccce93c420b4aa23fa8",
+  "function_ast_sha256": "6a6af723e22897e3b07ca5eeb8a33f5e43c6177cc52b27319c7d00afca7a127a",
+  "function_source_text": "def is_anagram(s, t):\n    count_s = {}\n    count_t = {}\n\n    for ch in s:\n        count_s[ch] = count_s.get(ch, 0) + 1\n\n    for ch in t:\n        count_t[ch] = count_t.get(ch, 0) + 1\n\n    return count_s == count_t",
+  "method": "Execute only the actual is_anagram function AST, excluding the module-level two print calls. Verify eight hand-specified cases and exact bool return type.",
+  "expected_basis": "Anagram-cases eight-case manual expected table established before implementation; no expected values copied from actual output.",
+  "cases": [
+    {
+      "name": "ordinary",
+      "s": "tea",
+      "t": "eat",
+      "expected": true,
+      "actual": true,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "repeated",
+      "s": "aabb",
+      "t": "baba",
+      "expected": true,
+      "actual": true,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "different_counts",
+      "s": "aab",
+      "t": "abb",
+      "expected": false,
+      "actual": false,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "both_empty",
+      "s": "",
+      "t": "",
+      "expected": true,
+      "actual": true,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "one_empty",
+      "s": "",
+      "t": "a",
+      "expected": false,
+      "actual": false,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "different_lengths",
+      "s": "ab",
+      "t": "aab",
+      "expected": false,
+      "actual": false,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "different_letters",
+      "s": "ab",
+      "t": "ac",
+      "expected": false,
+      "actual": false,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "identical",
+      "s": "abc",
+      "t": "abc",
+      "expected": true,
+      "actual": true,
+      "actual_type": "bool",
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "assistance_boundary": "Assistant-only function check, separate from learner two-case run. Learner full boundary execution, empty-loop explanation, and complexity remain unverified."
+}
