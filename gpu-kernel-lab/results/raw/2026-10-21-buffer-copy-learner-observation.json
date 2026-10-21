@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-21",
+  "evidence_type": "learner_screenshot_and_assistant_read_only_source_check",
+  "working_directory": "/home/bestqjj/桌面/LLM Inference",
+  "source": "gpu-kernel-lab/cpp-basics/buffer.cpp",
+  "source_sha256": "76809ae943fdfacec13bd5cd6e6a782e4cbfcc97d32345b21cd06b8aacfa0f3b",
+  "source_text_at_check": "#include <cstddef>\n#include <iostream>\n#include <memory>\n\nstruct Buffer {\n    std::size_t size;\n    std::unique_ptr<int[]> data;\n\n    explicit Buffer(std::size_t n)\n        : size(n), data(std::make_unique<int[]>(n)) {\n    }\n    inline static int copies = 0;\n\nBuffer(const Buffer& other)\n    : size(other.size),\n      data(std::make_unique<int[]>(other.size)) {\n    for (std::size_t i = 0; i < size; ++i) {\n        data[i] = other.data[i];\n    }\n\n    ++copies;\n    std::cout << \"copy\\n\";\n}\n};\n\nint main() {\n    Buffer a(4);\n    a.data[0] = 7;\n\n    Buffer b = a;\n    b.data[0] = 99;\n\n    std::cout << \"a.first=\" << a.data[0] << '\\n';\n    std::cout << \"b.first=\" << b.data[0] << '\\n';\n    std::cout << \"copies=\" << Buffer::copies << '\\n';\n}",
+  "learner_prediction": "7 99 copies=1",
+  "expected_by_code_reasoning": [
+    "copy",
+    "a.first=7",
+    "b.first=99",
+    "copies=1"
+  ],
+  "latest_actual_stdout_visible": [
+    "copy",
+    "a.first=7",
+    "b.first=99",
+    "copies=1"
+  ],
+  "compile_command_visible": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/buffer.cpp -o /tmp/buffer-2026-10-21",
+  "run_command_visible": "/tmp/buffer-2026-10-21",
+  "numeric_exit_codes_visible": null,
+  "assessment": "Copy construction count and independent element modification passed. Move and vector reallocation remain untested.",
+  "assistant_reran_program": false,
+  "guidance_boundary": "Copy constructor and main supplied by assistant; learner saved, predicted values, and ran."
+}

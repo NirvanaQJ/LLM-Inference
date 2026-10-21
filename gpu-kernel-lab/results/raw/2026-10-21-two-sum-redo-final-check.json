@@ -1,0 +1,172 @@
+{
+  "date": "2026-10-21",
+  "evidence_type": "learner_screenshot_plus_assistant_function_checks",
+  "source": "gpu-kernel-lab/python-basics/two_sum_hash_redo.py",
+  "source_sha256": "fabbd68166fe08268d3f1bfdf3508723b7e2cb2d4dcaf65393c3f3e35b1411c8",
+  "source_text_at_check": "def two_sum_hash(nums,target):\n    num_to_index = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in num_to_index:\n            return (num_to_index[complement], i)\n        num_to_index[num] = i\n    return None\n\nprint(\"ordinary:\", two_sum_hash([2, 7, 11, 15], 9))  # 预期 (0, 1)\nprint(\"single:\", two_sum_hash([2], 9))                # 预期 None\nprint(\"empty:\", two_sum_hash([], 6))                 # 预期 None",
+  "function_ast_sha256": "e167bd23e43cf2e7126f09ddd472e910603144010f008b967c6fe60c06b661ac",
+  "learner_latest_stdout": [
+    "ordinary: (0, 1)",
+    "single: None",
+    "empty: None"
+  ],
+  "learner_numeric_exit_code_visible": null,
+  "learner_complexity_reason": "因为最坏情况下要遍历整个数组，同时创造了大小为n的字典，所以空间复杂度时O（n）",
+  "learner_lookup_reason_from_prior_message": "先检查，为了避免元素和自己匹配",
+  "complexity_assessment": "Passed: at most n iterations gives average O(n) time under average O(1) dictionary operations, and at most n entries gives worst-case O(n) extra space. Assistant clarified at most n entries, not n entries in every run.",
+  "assistant_function_checks": [
+    {
+      "name": "learner_ordinary",
+      "nums": [
+        2,
+        7,
+        11,
+        15
+      ],
+      "target": 9,
+      "expected": [
+        0,
+        1
+      ],
+      "actual": [
+        0,
+        1
+      ],
+      "return_type": "tuple",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "learner_single",
+      "nums": [
+        2
+      ],
+      "target": 9,
+      "expected": null,
+      "actual": null,
+      "return_type": "NoneType",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "learner_empty",
+      "nums": [],
+      "target": 6,
+      "expected": null,
+      "actual": null,
+      "return_type": "NoneType",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "unsorted",
+      "nums": [
+        8,
+        3,
+        6,
+        2
+      ],
+      "target": 9,
+      "expected": [
+        1,
+        2
+      ],
+      "actual": [
+        1,
+        2
+      ],
+      "return_type": "tuple",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "cannot_reuse_index",
+      "nums": [
+        4
+      ],
+      "target": 8,
+      "expected": null,
+      "actual": null,
+      "return_type": "NoneType",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "duplicate_values",
+      "nums": [
+        4,
+        4
+      ],
+      "target": 8,
+      "expected": [
+        0,
+        1
+      ],
+      "actual": [
+        0,
+        1
+      ],
+      "return_type": "tuple",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "no_solution",
+      "nums": [
+        1,
+        2,
+        4
+      ],
+      "target": 10,
+      "expected": null,
+      "actual": null,
+      "return_type": "NoneType",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "negative",
+      "nums": [
+        -3,
+        7,
+        2,
+        9
+      ],
+      "target": 4,
+      "expected": [
+        0,
+        1
+      ],
+      "actual": [
+        0,
+        1
+      ],
+      "return_type": "tuple",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "zero",
+      "nums": [
+        0,
+        5,
+        0
+      ],
+      "target": 0,
+      "expected": [
+        0,
+        2
+      ],
+      "actual": [
+        0,
+        2
+      ],
+      "return_type": "tuple",
+      "input_unchanged": true,
+      "passed": true
+    }
+  ],
+  "all_assistant_checks_passed": true,
+  "guidance_boundary": "Learner supplied function and chose singleton/empty cases. Assistant provided localized tuple/None correction and final 3 print calls with expected comments. No assistant edits to learner source; assistant function-only checks are separate from learner execution.",
+  "actual_learning_time_reported": null
+}

@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-21",
+  "source": "gpu-kernel-lab/python-basics/is_anagram_redo.py",
+  "source_sha256": "16710b7f7add881581fa6eea0ab4ad2d44b0ad3a09de03a3cebbcf04f2c92cc8",
+  "function_ast_sha256": "6a6af723e22897e3b07ca5eeb8a33f5e43c6177cc52b27319c7d00afca7a127a",
+  "source_text_at_check": "def is_anagram(s,t):\n    count_s={}\n    count_t={}\n\n    for ch in s:\n        count_s[ch]=count_s.get(ch,0)+1\n    for ch in t:\n        count_t[ch]=count_t.get(ch,0)+1\n    return count_s==count_t\n\nprint(\"ordinary:\", is_anagram(\"tea\", \"eat\"))\nprint(\"different_counts:\", is_anagram(\"aab\", \"abb\"))\nprint(\"both_empty:\", is_anagram(\"\", \"\"))",
+  "learner_evidence": {
+    "type": "screenshot",
+    "latest_visible_stdout": [
+      "ordinary: True",
+      "different_counts: False",
+      "both_empty: True"
+    ],
+    "numeric_exit_code_visible": null,
+    "earlier_python_command_visible_with_no_output": true,
+    "cause_of_earlier_no_output": "Unknown; source/save state at that time unavailable."
+  },
+  "assistant_function_only_checks": [
+    {
+      "name": "ordinary",
+      "s": "tea",
+      "t": "eat",
+      "expected": true,
+      "actual": true,
+      "return_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "different_counts",
+      "s": "aab",
+      "t": "abb",
+      "expected": false,
+      "actual": false,
+      "return_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "both_empty",
+      "s": "",
+      "t": "",
+      "expected": true,
+      "actual": true,
+      "return_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "one_empty",
+      "s": "",
+      "t": "a",
+      "expected": false,
+      "actual": false,
+      "return_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "repeated",
+      "s": "aabb",
+      "t": "baba",
+      "expected": true,
+      "actual": true,
+      "return_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "different_lengths",
+      "s": "ab",
+      "t": "aab",
+      "expected": false,
+      "actual": false,
+      "return_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "different_letters",
+      "s": "ab",
+      "t": "ac",
+      "expected": false,
+      "actual": false,
+      "return_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "identical",
+      "s": "abc",
+      "t": "abc",
+      "expected": true,
+      "actual": true,
+      "return_type": "bool",
+      "passed": true
+    }
+  ],
+  "all_assistant_checks_passed": true,
+  "guidance_boundary": "Assistant supplied interface/specification and 3 test calls this round, no implementation or skeleton body. Whether learner viewed old implementation was not separately reported."
+}

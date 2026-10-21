@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-21",
+  "evidence_type": "current_user_message_screenshot_and_read_only_source_check",
+  "source": "gpu-kernel-lab/python-basics/two_sum_hash_redo.py",
+  "source_sha256": "452a1711e23eae7edf5e4efec50d0d5a4f3ddad64421099ba52504b4ab2bd9af",
+  "source_text_at_check": "def two_sum_hash(nums,target):\n    num_to_index = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in num_to_index:\n            return [num_to_index[complement], i]\n        num_to_index[num] = i\n    return []\n\nprint(\"two_sum_hash([2], 9) = \", two_sum_hash([2], 9))\nprint(\"two_sum_hash([], 6) = \", two_sum_hash([], 6))\n",
+  "learner_answer": "时间复杂度O（n）,空间复杂度O（n），先检查，为了避免元素和自己匹配",
+  "screenshot_ordinary_outputs": [
+    "two_sum_hash([2,7,11,15], 9) =  [0, 1]",
+    "two_sum_hash([3,2,4], 6) =  [1, 2]"
+  ],
+  "source_now_has_learner_selected_boundaries": [
+    {
+      "nums": [
+        2
+      ],
+      "target": 9,
+      "expected": null
+    },
+    {
+      "nums": [],
+      "target": 6,
+      "expected": null
+    }
+  ],
+  "boundary_execution_evidence": "pending: screenshot contains older ordinary calls; saved source contains two new boundary calls",
+  "return_contract": "failed: solved branch returns list, unsolved branch returns []",
+  "lookup_before_insert": "passed: code checks before storing; learner correctly explains avoiding matching same element",
+  "complexity": "O(n)/O(n) conclusions correct under previously stated average dictionary-operation assumption; loop/space growth reasons still to be supplied",
+  "numeric_exit_code_visible": null,
+  "assistant_reran_program": false,
+  "next_step": "learner corrects solved return to tuple and unsolved return to None, preserves chosen two boundaries, restores one ordinary call, writes expected, runs, and explains complexity reasons"
+}

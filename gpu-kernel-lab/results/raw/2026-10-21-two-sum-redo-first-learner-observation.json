@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-21",
+  "evidence_type": "learner_screenshot_and_assistant_read_only_source_check",
+  "source": "gpu-kernel-lab/python-basics/two_sum_hash_redo.py",
+  "source_sha256": "2db8289b88317daf557838b217ad6d1b05c4c899cab4b0528e0f3a38aa1205c0",
+  "source_text_at_check": "def two_sum_hash(nums,target):\n    num_to_index = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in num_to_index:\n            return [num_to_index[complement], i]\n        num_to_index[num] = i\n    return []\n\nprint(\"two_sum_hash([2,7,11,15], 9) = \", two_sum_hash([2,7,11,15], 9))\nprint(\"two_sum_hash([3,2,4], 6) = \", two_sum_hash([3,2,4], 6))\n",
+  "earlier_visible_failure": {
+    "error": "NameError: name printf is not defined",
+    "location": "top-level first print call",
+    "status": "latest saved source uses print; later run outputs results"
+  },
+  "latest_visible_stdout": [
+    "two_sum_hash([2,7,11,15], 9) =  [0, 1]",
+    "two_sum_hash([3,2,4], 6) =  [1, 2]"
+  ],
+  "numeric_exit_code_visible": null,
+  "learner_answer": "时间复杂度O（n）,空间复杂度O（n），先检查，为了避免元素和自己匹配",
+  "assessment": {
+    "matching_indices": "passed for 2 ordinary cases",
+    "return_format": "failed: list returned instead of tuple; no-solution branch returns [] instead of None",
+    "two_boundaries": "pending: 2 ordinary solved inputs provided, no boundary cases yet",
+    "complexity_conclusions": "correct: average time O(n), worst extra space O(n); reasoning not provided by learner",
+    "lookup_before_insert": "passed: learner explicitly explains avoiding matching an element with itself"
+  },
+  "assistant_reran_program": false,
+  "guidance_boundary": "Learner supplied full implementation without assistant body this round; return contracts require correction. Future boundary examples may be supplied as guidance.",
+  "record_correction": "Learner answer corrected against the current conversation; earlier transcription incorrectly said the learner did not know the reason. Later saved boundary calls are recorded separately in 2026-10-21-two-sum-redo-return-contract-observation.json."
+}

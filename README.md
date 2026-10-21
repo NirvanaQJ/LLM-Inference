@@ -2,7 +2,7 @@
 
 这是我从 2026 年 10 月开始，面向 **LLM Inference Systems / GPU Systems** 岗位的学习、实验与求职工作区。学习主线为 Python / C++ / Linux → CUDA / Triton → 大模型推理 → vLLM / SGLang → GPU 性能分析；NCCL 与集群通信是与推理性能相连接的扩展方向。
 
-> **截至 2026-10-20：**20 日「智能指针」的 P0（含固定哈希新题）与 P1 今日三道问答通过，见[当日日记](日记/2026-10-20.md)；2026-10-21 不看笔记复答及遗漏记录仍待验证。按指导完成 unique_ptr 转移、shared_ptr/weak_ptr 观察与循环引用修复，固定新题「有效的字母异位词」八组边界及复杂度解释通过。完整示例、骨架填空、提示纠错与助手检查分别记录，不扩大为全程独立掌握。本人报告总学习 120 分钟，其中算法练习 30 分钟，包含在总时长内。19 日对象生命周期、17 日补学及 18 日 W02 周验收的既有证据保留于对应日记及[周验收](week-02-review.md)。
+> **截至 2026-10-21：**21 日「移动语义」的 P0、固定项与 P1 全部通过：缓冲区拷贝/移动计数、可重复 vector 扩容、移动后限制解释，以及异位词和哈希两数求和两道旧题复做均已有证据，见[当日日记](日记/2026-10-21.md)。20 日智能指针三题的不看笔记次日复答也于 21 日通过，未发现遗漏。完整示例、本人实现、提示纠错与助手检查分别记录，不扩大为全程独立掌握。21 日实际用时尚未报告。此前 19 日、17 日补学和 18 日 W02 周验收的既有证据保留于对应日记及[周验收](week-02-review.md)。
 
 此前 10 月 5—8 日和 10—16 日均有 P0、P1 与固定项通过证据，13 日次日复答已于 14 日完成。9 日 P0 已通过，P1 与岗位核查固定项仍待验证，今日成果不自动补算旧欠账。当前成果主要是基础编程、日志统计和**模拟**延迟分析，尚无 CUDA、Triton、模型推理或通信性能实测。
 
@@ -11,7 +11,7 @@
 | 想找什么 | 入口 |
 | --- | --- |
 | 每天的任务、阶段目标和验收标准 | [交互式学习路线图](LLM-Inference-GPU-Systems-Roadmap-2026-2028.html) |
-| 实际完成情况、未通过项和完整证据链 | [日记索引](日记/README.md)；最近记录：[10 月 19 日](日记/2026-10-19.md)、[10 月 20 日](日记/2026-10-20.md) |
+| 实际完成情况、未通过项和完整证据链 | [日记索引](日记/README.md)；最近记录：[10 月 20 日](日记/2026-10-20.md)、[10 月 21 日](日记/2026-10-21.md) |
 | 两个实验项目的目标、目录及现状 | [LLM 推理实验](llm-inference-lab/README.md) · [GPU 算子实验](gpu-kernel-lab/README.md) |
 | 起点与路线图审核 | [基线技能记录](baseline-skills.md) · [路线图审核记录](Red-Team-Audit-2026-10-03.md) |
 
@@ -44,8 +44,10 @@
 | W02 周验收与旧题复做 | [两数求和本次实现](gpu-kernel-lab/python-basics/two_sum_sorted_week02.py) · [移动零本次实现](gpu-kernel-lab/python-basics/move_zeros_week02.py) | [周验收与下一步](week-02-review.md) · [两数求和验收](gpu-kernel-lab/tests/2026-10-18-week02-two-sum-cases.md) · [移动零验收](gpu-kernel-lab/tests/2026-10-18-week02-move-zeros-cases.md) · [错题记录](gpu-kernel-lab/tests/algorithm-errors.md) · [10 月 18 日日记](日记/2026-10-18.md) |
 | C++ 对象生命周期与文件句柄 RAII | [局部对象示例](gpu-kernel-lab/cpp-basics/lifetime_demo.cpp) · [禁止拷贝的文件管理类](gpu-kernel-lab/cpp-basics/file_guard.cpp) | [正常/异常关闭、拷贝拒绝、缺失文件与理解验收](gpu-kernel-lab/tests/2026-10-19-file-guard-cases.md) · [10 月 19 日日记](日记/2026-10-19.md) |
 | 两数求和的无序输入/哈希模板 | [本人函数与七组调用](gpu-kernel-lab/python-basics/two_sum_hash.py) | [边界、先查再存与复杂度](gpu-kernel-lab/tests/2026-10-19-two-sum-hash-cases.md) · [10 月 19 日日记](日记/2026-10-19.md)；同题族变式不重复增加独立新题数 |
-| 智能指针与循环引用修复 | [独占转移、弱观察、循环演示与修复](gpu-kernel-lab/cpp-basics/ownership.cpp) | [本人运行、关系图与理解验收](gpu-kernel-lab/tests/2026-10-20-ownership-cases.md) · [三题问答（今日通过，次日复答待验证）](gpu-kernel-lab/tests/2026-10-20-ownership-selfcheck.md) · [10 月 20 日日记](日记/2026-10-20.md) |
+| 智能指针与循环引用修复 | [独占转移、弱观察、循环演示与修复](gpu-kernel-lab/cpp-basics/ownership.cpp) | [本人运行、关系图与理解验收](gpu-kernel-lab/tests/2026-10-20-ownership-cases.md) · [三题问答（次日不看笔记复答于 21 日通过）](gpu-kernel-lab/tests/2026-10-20-ownership-selfcheck.md) · [10 月 20 日日记](日记/2026-10-20.md) |
 | 哈希新题：有效的字母异位词 | [计数字典函数与八组调用](gpu-kernel-lab/python-basics/is_anagram.py) | [边界与复杂度验收](gpu-kernel-lab/tests/2026-10-20-anagram-cases.md) · [10 月 20 日日记](日记/2026-10-20.md) |
+| C++ 移动语义与 vector 扩容 | [缓冲区及两个演示](gpu-kernel-lab/cpp-basics/buffer.cpp) | [逐项验收与本人两次扩容](gpu-kernel-lab/tests/2026-10-21-buffer-cases.md) · [10 月 21 日日记](日记/2026-10-21.md) |
+| 两道哈希旧题复做 | [异位词复做](gpu-kernel-lab/python-basics/is_anagram_redo.py) · [两数求和复做](gpu-kernel-lab/python-basics/two_sum_hash_redo.py) | [八组异位词及复杂度](gpu-kernel-lab/tests/2026-10-21-anagram-redo-cases.md) · [P1 两边界、返回约定及复杂度](gpu-kernel-lab/tests/2026-10-21-two-sum-hash-redo-cases.md) |
 
 10 月 3—4 日的路线图、审核、环境及最小 C++ 结果，见[日记索引](日记/README.md)和上方基线入口。表中 10 月 10 日生成、18 日沿用的延迟来自固定种子的随机数，**不是 GPU 测量结果**；两组数据的差异不代表性能变化，跨语言统计 PASS 也不能说明程序谁更快。
 

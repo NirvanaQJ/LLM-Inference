@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-21",
+  "evidence_type": "learner_second_run_screenshot_and_read_only_source_check",
+  "source": "gpu-kernel-lab/cpp-basics/buffer.cpp",
+  "source_sha256": "c6471f89300cb01fb939b9db7e4be7acd488fa89b3a4fc1262ed63d666488b83",
+  "learner_variant_answer": "3 0 3",
+  "variant_assessment": "Numbers correct after prior correction; learner has not yet supplied reason.",
+  "successful_runs_visible": 2,
+  "first_visible_run_stdout": [
+    "before size=2 capacity=2",
+    "move",
+    "move",
+    "after size=2 capacity=3",
+    "values=7,9",
+    "copies=0",
+    "moves=2"
+  ],
+  "second_visible_run_command": "/tmp/buffer-2026-10-21",
+  "second_visible_run_stdout": [
+    "before size=2 capacity=2",
+    "move",
+    "move",
+    "after size=2 capacity=3",
+    "values=7,9",
+    "copies=0",
+    "moves=2"
+  ],
+  "numeric_exit_codes_visible": null,
+  "repeatability_assessment": "passed for the same saved program: both runs size 2 to 2, capacity 2 to 3, copies 0, moves 2 and values 7,9",
+  "assistant_reran_learner_main": false
+}

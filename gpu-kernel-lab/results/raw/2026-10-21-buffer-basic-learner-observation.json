@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-21",
+  "evidence_type": "learner_screenshot_and_assistant_read_only_source_check",
+  "working_directory": "/home/bestqjj/桌面/LLM Inference",
+  "source": "gpu-kernel-lab/cpp-basics/buffer.cpp",
+  "source_sha256": "8675a0a8d5cb72d4932179a9262b487c41b3d5f04baf7a18f363ade3b6fc8a1c",
+  "source_text_at_check": "#include <cstddef>\n#include <iostream>\n#include <memory>\n\nstruct Buffer {\n    std::size_t size;\n    std::unique_ptr<int[]> data;\n\n    explicit Buffer(std::size_t n)\n        : size(n), data(std::make_unique<int[]>(n)) {\n    }\n};\n\nint main() {\n    Buffer a(4);\n    a.data[0] = 7;\n\n    std::cout << \"size=\" << a.size << '\\n';\n    std::cout << \"first=\" << a.data[0] << '\\n';\n}",
+  "compile_command_visible": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/buffer.cpp -o /tmp/buffer-2026-10-21",
+  "run_command_visible": "/tmp/buffer-2026-10-21",
+  "expected_stdout_saved_in_prior_lesson": [
+    "size=4",
+    "first=7"
+  ],
+  "latest_actual_stdout_visible": [
+    "size=4",
+    "first=7"
+  ],
+  "latest_numeric_exit_codes": null,
+  "earlier_failure_visible": [
+    "undefined reference to `main`",
+    "collect2: error: ld returned 1 exit status",
+    "bash: /tmp/buffer-2026-10-21: 没有那个文件或目录"
+  ],
+  "earlier_failure_cause": "Unknown: linker could not find main at that time; earlier source contents and save state are unavailable.",
+  "learner_explanation": "修改的是其管理数组中的第一个整数",
+  "assessment": "Minimal construction/access run and explanation passed; copy/move not yet implemented.",
+  "assistant_reran_program": false
+}

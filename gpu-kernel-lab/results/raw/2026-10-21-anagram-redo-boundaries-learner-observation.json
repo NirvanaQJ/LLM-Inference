@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-21",
+  "evidence_type": "learner_screenshot_and_read_only_source_check",
+  "source": "gpu-kernel-lab/python-basics/is_anagram_redo.py",
+  "source_sha256": "81b368b500b719809be4f2a15fe5df8d1e0aa9ed5d242b49c899f46c0a02ece6",
+  "source_text_at_check": "def is_anagram(s,t):\n    count_s={}\n    count_t={}\n\n    for ch in s:\n        count_s[ch]=count_s.get(ch,0)+1\n    for ch in t:\n        count_t[ch]=count_t.get(ch,0)+1\n    return count_s==count_t\n\nprint(\"ordinary:\", is_anagram(\"tea\", \"eat\"))\nprint(\"different_counts:\", is_anagram(\"aab\", \"abb\"))\nprint(\"both_empty:\", is_anagram(\"\", \"\"))\n\nprint(\"one_empty:\", is_anagram(\"\", \"a\"))             # 预期 False\nprint(\"repeated:\", is_anagram(\"aabb\", \"baba\"))        # 预期 True\nprint(\"different_lengths:\", is_anagram(\"ab\", \"aab\")) # 预期 False\nprint(\"different_letters:\", is_anagram(\"ab\", \"ac\"))  # 预期 False\nprint(\"identical:\", is_anagram(\"abc\", \"abc\"))        # 预期 True",
+  "function_ast_sha256": "6a6af723e22897e3b07ca5eeb8a33f5e43c6177cc52b27319c7d00afca7a127a",
+  "function_unchanged": true,
+  "reused_assistant_check": "2026-10-21-anagram-redo-ordinary-and-assistant-check.json",
+  "latest_actual_stdout_visible": [
+    "ordinary: True",
+    "different_counts: False",
+    "both_empty: True",
+    "one_empty: False",
+    "repeated: True",
+    "different_lengths: False",
+    "different_letters: False",
+    "identical: True"
+  ],
+  "numeric_exit_code_visible": null,
+  "learner_complexity_answer": "时间复杂度时O（n+m）因为完整遍历两个字符串\nO（1） 最多有26个键",
+  "assessment": "Learner 8-case execution and complexity reasoning passed. Each dictionary has at most 26 keys; fixed alphabet gives O(1) extra space. Average time O(n+m) under average constant-time dictionary operations.",
+  "actual_learning_time_reported": null
+}

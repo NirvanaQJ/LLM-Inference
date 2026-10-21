@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-21",
+  "evidence_type": "assistant_boundary_checks_not_learner_operation",
+  "source": "gpu-kernel-lab/cpp-basics/buffer.cpp",
+  "source_sha256": "c6471f89300cb01fb939b9db7e4be7acd488fa89b3a4fc1262ed63d666488b83",
+  "checks_source": "\n#include <cassert>\nint main() {\n    Buffer empty(0);\n    Buffer empty_copy(empty);\n    Buffer empty_move(std::move(empty));\n    assert(empty.size == 0 && !empty.data);\n    assert(empty_copy.size == 0 && empty_move.size == 0);\n    std::cout << \"zero_length=PASS\\n\";\n\n    Buffer original(3);\n    original.data[0] = 11;\n    original.data[1] = -2;\n    original.data[2] = 99;\n    Buffer copied(original);\n    assert(copied.data.get() != original.data.get());\n    assert(copied.data[0] == 11 && copied.data[1] == -2 && copied.data[2] == 99);\n    copied.data[1] = 123;\n    assert(original.data[1] == -2);\n    std::cout << \"deep_copy_independence=PASS\\n\";\n\n    int* payload = copied.data.get();\n    Buffer moved(std::move(copied));\n    assert(moved.size == 3 && moved.data.get() == payload && moved.data[1] == 123);\n    assert(copied.size == 0 && !copied.data);\n    Buffer recopy(copied);\n    Buffer remove(std::move(copied));\n    assert(recopy.size == 0 && remove.size == 0 && !remove.data);\n    std::cout << \"move_and_moved_from_operations=PASS\\n\";\n\n    for (std::size_t count : {std::size_t(0), std::size_t(3)}) {\n        std::vector<Buffer> items;\n        items.reserve(count);\n        for (std::size_t i = 0; i < count; ++i) {\n            items.emplace_back(3);\n            for (std::size_t j = 0; j < 3; ++j)\n                items[i].data[j] = static_cast<int>(10 * i + j);\n        }\n        const auto old_capacity = items.capacity();\n        Buffer::copies = 0;\n        Buffer::moves = 0;\n        items.reserve(old_capacity + 1);\n        assert(items.size() == count && items.capacity() >= old_capacity + 1);\n        assert(Buffer::copies == 0 && Buffer::moves == static_cast<int>(count));\n        for (std::size_t i = 0; i < count; ++i)\n            for (std::size_t j = 0; j < 3; ++j)\n                assert(items[i].data[j] == static_cast<int>(10 * i + j));\n        std::cout << \"vector count=\" << count << \" copies=\" << Buffer::copies\n                  << \" moves=\" << Buffer::moves << \" values=PASS\\n\";\n    }\n}\n",
+  "compile_command": [
+    "g++",
+    "-std=c++17",
+    "-Wall",
+    "-Wextra",
+    "-fsanitize=address,undefined",
+    "-fno-omit-frame-pointer",
+    "/tmp/buffer-boundary-2026-10-21.cpp",
+    "-o",
+    "/tmp/buffer-boundary-2026-10-21"
+  ],
+  "compile_returncode": 0,
+  "compile_stdout": "",
+  "compile_stderr": "",
+  "expected_checks": [
+    "zero_length=PASS",
+    "deep_copy_independence=PASS",
+    "move_and_moved_from_operations=PASS",
+    "vector count=0 copies=0 moves=0 values=PASS",
+    "vector count=3 copies=0 moves=3 values=PASS"
+  ],
+  "run_returncode": 0,
+  "run_stdout": "copy\nmove\nzero_length=PASS\ncopy\ndeep_copy_independence=PASS\nmove\ncopy\nmove\nmove_and_moved_from_operations=PASS\nvector count=0 copies=0 moves=0 values=PASS\nmove\nmove\nmove\nvector count=3 copies=0 moves=3 values=PASS\n",
+  "run_stderr": "",
+  "passed": true,
+  "initial_instrumented_run": {
+    "run_returncode": 1,
+    "run_stdout": "",
+    "run_stderr": "==9==LeakSanitizer has encountered a fatal error.\n==9==HINT: For debugging, try setting environment variable LSAN_OPTIONS=verbosity=1:log_threads=1\n==9==HINT: LeakSanitizer does not work under ptrace (strace, gdb, etc)\n",
+    "passed": false
+  },
+  "environment_limitation": "LeakSanitizer cannot operate under this execution environment tracing; leak detection is unverified.",
+  "run_environment_override": {
+    "ASAN_OPTIONS": "detect_leaks=0"
+  }
+}

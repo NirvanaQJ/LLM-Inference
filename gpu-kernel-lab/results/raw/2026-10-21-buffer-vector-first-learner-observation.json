@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-21",
+  "evidence_type": "learner_screenshot_and_assistant_read_only_source_check",
+  "source": "gpu-kernel-lab/cpp-basics/buffer.cpp",
+  "source_sha256": "c6471f89300cb01fb939b9db7e4be7acd488fa89b3a4fc1262ed63d666488b83",
+  "source_text_at_check": "#include <cstddef>\n#include <iostream>\n#include <memory>\n#include <utility>\n#include <vector>\n\nstruct Buffer {\n    std::size_t size;\n    std::unique_ptr<int[]> data;\n\n    explicit Buffer(std::size_t n)\n        : size(n), data(std::make_unique<int[]>(n)) {\n    }\n    inline static int copies = 0;\n\nBuffer(const Buffer& other)\n    : size(other.size),\n      data(std::make_unique<int[]>(other.size)) {\n    for (std::size_t i = 0; i < size; ++i) {\n        data[i] = other.data[i];\n    }\n\n    ++copies;\n    std::cout << \"copy\\n\";\n}\ninline static int moves = 0;\n\nBuffer(Buffer&& other) noexcept\n    : size(other.size),\n      data(std::move(other.data)) {\n    other.size = 0;\n\n    ++moves;\n    std::cout << \"move\\n\";\n}\n};\n\nvoid copy_move_demo() {\n    Buffer a(4);\n    a.data[0] = 7;\n\n    Buffer b = a;\n    b.data[0] = 99;\n\n    Buffer c = std::move(b);\n\n    std::cout << \"a.first=\" << a.data[0] << '\\n';\n    std::cout << \"b.size=\" << b.size << '\\n';\n    std::cout << \"b.empty=\" << (b.data == nullptr) << '\\n';\n    std::cout << \"c.first=\" << c.data[0] << '\\n';\n    std::cout << \"copies=\" << Buffer::copies << '\\n';\n    std::cout << \"moves=\" << Buffer::moves << '\\n';\n}\n\nvoid vector_demo() {\n    std::vector<Buffer> buffers;\n    buffers.reserve(2);\n\n    buffers.emplace_back(4);\n    buffers.emplace_back(4);\n    buffers[0].data[0] = 7;\n    buffers[1].data[0] = 9;\n\n    auto old_capacity = buffers.capacity();\n\n    Buffer::copies = 0;\n    Buffer::moves = 0;\n\n    std::cout << \"before size=\" << buffers.size()\n              << \" capacity=\" << old_capacity << '\\n';\n\n    buffers.reserve(old_capacity + 1);\n\n    std::cout << \"after size=\" << buffers.size()\n              << \" capacity=\" << buffers.capacity() << '\\n';\n    std::cout << \"values=\" << buffers[0].data[0]\n              << \",\" << buffers[1].data[0] << '\\n';\n    std::cout << \"copies=\" << Buffer::copies << '\\n';\n    std::cout << \"moves=\" << Buffer::moves << '\\n';\n}\n\nint main() {\n    vector_demo();\n}",
+  "learner_prediction": {
+    "after_size": 4,
+    "copies": 1,
+    "moves": 1,
+    "values_preserved": true
+  },
+  "learner_question": "为什么copuies为0   moves为2",
+  "expected_before_run_from_task_and_code": {
+    "before_size": 2,
+    "after_size": 2,
+    "capacity_condition": "after capacity > old capacity; no fixed growth factor assumed",
+    "values": [
+      7,
+      9
+    ],
+    "copies": 0,
+    "moves": 2
+  },
+  "latest_actual_stdout_visible": [
+    "before size=2 capacity=2",
+    "move",
+    "move",
+    "after size=2 capacity=3",
+    "values=7,9",
+    "copies=0",
+    "moves=2"
+  ],
+  "visible_successful_vector_runs": 1,
+  "numeric_exit_codes_visible": null,
+  "earlier_shell_errors_visible": [
+    "buffers[1].data[0]: 未找到命令",
+    "bash: 未预期的记号附近有语法错误",
+    "Buffer::copies: 未找到命令",
+    "Buffer::moves: 未找到命令",
+    "bash here-document delimiter warnings"
+  ],
+  "earlier_shell_error_interpretation": "Bash interpreted text resembling C++ as shell input. Source is now saved and latest compilation/run succeeded in displayed output.",
+  "assessment": {
+    "single_vector_run": "passed",
+    "size_and_counts_prediction": "failed; correction explained, learner re-answer pending",
+    "data_preservation_prediction": "passed",
+    "repeatability": "pending second run"
+  },
+  "assistant_reran_program": false,
+  "guidance_boundary": "Full vector example supplied by assistant; learner saved and ran. Code and successful output do not by themselves prove understanding."
+}

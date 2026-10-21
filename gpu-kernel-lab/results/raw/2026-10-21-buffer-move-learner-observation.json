@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-21",
+  "evidence_type": "learner_screenshot_and_assistant_read_only_source_check",
+  "source": "gpu-kernel-lab/cpp-basics/buffer.cpp",
+  "source_sha256": "e4b0ffe5f3d6cca4da4b86827a798d36625b3a6b2569159a985a0bd10d51d325",
+  "source_text_at_check": "#include <cstddef>\n#include <iostream>\n#include <memory>\n#include <utility>\n\nstruct Buffer {\n    std::size_t size;\n    std::unique_ptr<int[]> data;\n\n    explicit Buffer(std::size_t n)\n        : size(n), data(std::make_unique<int[]>(n)) {\n    }\n    inline static int copies = 0;\n\nBuffer(const Buffer& other)\n    : size(other.size),\n      data(std::make_unique<int[]>(other.size)) {\n    for (std::size_t i = 0; i < size; ++i) {\n        data[i] = other.data[i];\n    }\n\n    ++copies;\n    std::cout << \"copy\\n\";\n}\ninline static int moves = 0;\n\nBuffer(Buffer&& other) noexcept\n    : size(other.size),\n      data(std::move(other.data)) {\n    other.size = 0;\n\n    ++moves;\n    std::cout << \"move\\n\";\n}\n};\n\nint main() {\n    Buffer a(4);\n    a.data[0] = 7;\n\n    Buffer b = a;\n    b.data[0] = 99;\n\n    Buffer c = std::move(b);\n\n    std::cout << \"a.first=\" << a.data[0] << '\\n';\n    std::cout << \"b.size=\" << b.size << '\\n';\n    std::cout << \"b.empty=\" << (b.data == nullptr) << '\\n';\n    std::cout << \"c.first=\" << c.data[0] << '\\n';\n    std::cout << \"copies=\" << Buffer::copies << '\\n';\n    std::cout << \"moves=\" << Buffer::moves << '\\n';\n}",
+  "working_directory": "/home/bestqjj/桌面/LLM Inference",
+  "compile_command_visible": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/buffer.cpp -o /tmp/buffer-2026-10-21",
+  "run_command_visible": "/tmp/buffer-2026-10-21",
+  "learner_prediction_and_explanation": "0 1 99 1 1 不能，因为b指向的数组已经被转移给c了",
+  "expected_by_code_reasoning": [
+    "copy",
+    "move",
+    "a.first=7",
+    "b.size=0",
+    "b.empty=1",
+    "c.first=99",
+    "copies=1",
+    "moves=1"
+  ],
+  "latest_actual_stdout_visible": [
+    "copy",
+    "move",
+    "a.first=7",
+    "b.size=0",
+    "b.empty=1",
+    "c.first=99",
+    "copies=1",
+    "moves=1"
+  ],
+  "numeric_exit_codes_visible": null,
+  "assessment": "Move construction, copy/move counts, and this Buffer moved-from element access explanation passed.",
+  "remaining": "vector reallocation repeatability, cost and expression-category explanations, broader moved-from guarantees, algorithm tasks",
+  "assistant_reran_program": false,
+  "guidance_boundary": "Full constructor/main examples supplied by assistant; learner saved, predicted, ran, and explained."
+}
