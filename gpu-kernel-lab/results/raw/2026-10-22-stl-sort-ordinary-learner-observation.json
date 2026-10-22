@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-22",
+  "evidence_type": "learner_screenshot_and_conversation_with_assistant_read_only_source_check",
+  "screenshot_observation": {
+    "compile_command_visible": "g++ -std=c++17 -Wall -Wextra \"./gpu-kernel-lab/cpp-basics/stl_stats.cpp\" -o /tmp/stl_stats",
+    "run_command_visible": "/tmp/stl_stats",
+    "latest_output_lines": [
+      "r2 model-B 10",
+      "r3 model-A 20",
+      "r1 model-A 30"
+    ],
+    "numeric_exit_code": null,
+    "note": "截图最新命令后出现三行输出及终端提示符；未显示数字退出码。上方旧 Python 历史不作为当天排序证据。"
+  },
+  "expected_from_input_and_ascending_latency_spec": [
+    "r2 model-B 10",
+    "r3 model-A 20",
+    "r1 model-A 30"
+  ],
+  "ordinary_case_matches_expected": true,
+  "comparator_question": {
+    "prompt": "a 和 b 的延迟都是 10.0 时 lambda 返回 true 还是 false",
+    "learner_answer": "false",
+    "expected": false,
+    "passed": true
+  },
+  "source_path": "gpu-kernel-lab/cpp-basics/stl_stats.cpp",
+  "source_sha256": "82103e648d94c13720c06143b7275f528d6fc76a4af0f2ad87c1dba6b919e4ca",
+  "source_snapshot": "#include <algorithm>\n#include <iostream>\n#include <string>\n#include <vector>\n\nstruct Request {\n    std::string id;\n    std::string model;\n    double latency_ms;\n};\n\nint main() {\n    std::vector<Request> requests = {\n        {\"r1\", \"model-A\", 30.0},\n        {\"r2\", \"model-B\", 10.0},\n        {\"r3\", \"model-A\", 20.0}\n    };\n\n    std::sort(requests.begin(), requests.end(),\n        [](const Request& a, const Request& b) {\n            return a.latency_ms < b.latency_ms;\n        });\n\n    for (const Request& r : requests) {\n        std::cout << r.id << \" \"\n                  << r.model << \" \"\n                  << r.latency_ms << \"\\n\";\n    }\n}",
+  "assistant_executed_program": false,
+  "scope": "仅普通乱序一组及同延迟比较表达式回答通过；其余排序边界、分组、迭代器失效、固定项及 P1 待验证。示例由助手提供，不作为独立实现证据。",
+  "privacy_redaction": {
+    "applied": true,
+    "removed": "Machine-specific home directory and project-root prefix in transcribed commands.",
+    "replacement": "Project-relative source path beginning with ./; flags and executable names preserved.",
+    "evidence_integrity": "Inputs, expected/actual outputs, learner answers, source snapshots and their hashes are unchanged.",
+    "originals": "Unredacted originals retained locally only and excluded from publication."
+  }
+}

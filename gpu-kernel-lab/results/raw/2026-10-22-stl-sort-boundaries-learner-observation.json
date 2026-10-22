@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-22",
+  "evidence_type": "learner_screenshot_and_conversation_with_assistant_read_only_source_check",
+  "observed_latest_output": [
+    "[ordinary] size=3",
+    "r2 model-B 10",
+    "r3 model-A 20",
+    "r1 model-A 30",
+    "[empty] size=0",
+    "[single] size=1",
+    "r0 model-A 7",
+    "[ties] size=3",
+    "r6 model-A 5",
+    "r4 model-A 10",
+    "r5 model-B 10"
+  ],
+  "expected_defined_before_run": {
+    "ordinary": {
+      "size": 3,
+      "ids": [
+        "r2",
+        "r3",
+        "r1"
+      ],
+      "latencies": [
+        10,
+        20,
+        30
+      ]
+    },
+    "empty": {
+      "size": 0,
+      "requests": []
+    },
+    "single": {
+      "size": 1,
+      "requests": [
+        [
+          "r0",
+          "model-A",
+          7
+        ]
+      ]
+    },
+    "ties": {
+      "size": 3,
+      "latencies": [
+        5,
+        10,
+        10
+      ],
+      "requests_preserved": [
+        [
+          "r4",
+          "model-A",
+          10
+        ],
+        [
+          "r5",
+          "model-B",
+          10
+        ],
+        [
+          "r6",
+          "model-A",
+          5
+        ]
+      ],
+      "relative_order_of_equal_latency_requests_required": false
+    }
+  },
+  "execution_cases": {
+    "ordinary": "passed",
+    "empty": "passed",
+    "single": "passed",
+    "ties": "passed"
+  },
+  "numeric_exit_code": null,
+  "learner_explanation_verbatim": "可以，因为lambda的比较规则是小于，不满足，所以会将r5放在前面",
+  "explanation_assessment": "未通过：将比较结果 false 误解为反向顺序指令；同延迟双向比较均 false，std::sort 不保证两者原相对顺序。原答同时说可以保证 r4 在前，又说 r5 在前，均不据此推断正确理解。",
+  "next_checkpoint": "助手讲解后，由本人判断 r6/r5/r4 是否也符合当前按延迟升序的要求并解释理由。",
+  "source_path": "gpu-kernel-lab/cpp-basics/stl_stats.cpp",
+  "source_sha256": "25a19a6f987441992a1d549356ba26ae995757639d6bf2e64d2653219e53946d",
+  "source_snapshot": "#include <algorithm>\n#include <iostream>\n#include <string>\n#include <vector>\n\nstruct Request {\n    std::string id;\n    std::string model;\n    double latency_ms;\n};\n\nvoid sort_and_print(const std::string& label,\n                    std::vector<Request> requests) {\n    std::cout << \"[\" << label << \"] size=\"\n              << requests.size() << \"\\n\";\n\n    std::sort(requests.begin(), requests.end(),\n        [](const Request& a, const Request& b) {\n            return a.latency_ms < b.latency_ms;\n        });\n\n    for (const Request& r : requests) {\n        std::cout << r.id << \" \"\n                  << r.model << \" \"\n                  << r.latency_ms << \"\\n\";\n    }\n}\n\nint main() {\n    sort_and_print(\"ordinary\", {\n        {\"r1\", \"model-A\", 30.0},\n        {\"r2\", \"model-B\", 10.0},\n        {\"r3\", \"model-A\", 20.0}\n    });\n\n    sort_and_print(\"empty\", {});\n\n    sort_and_print(\"single\", {\n        {\"r0\", \"model-A\", 7.0}\n    });\n\n    sort_and_print(\"ties\", {\n        {\"r4\", \"model-A\", 10.0},\n        {\"r5\", \"model-B\", 10.0},\n        {\"r6\", \"model-A\", 5.0}\n    });\n}",
+  "assistant_executed_program": false,
+  "scope": "排序三类输入的四组运行通过；等键顺序理解未通过，待纠错复答。代码为助手提供完整示例后的本人保存运行，不证明独立实现。未扩大为 P0 全部通过。",
+  "correction_followup": {
+    "question": "如果输出为 r6/5、r5/10、r4/10，是否仍符合当前排序要求？为什么？",
+    "learner_answer_verbatim": "符合，因为不保证相同延迟的请求保留原来的相对顺序",
+    "assessment": "通过（讲解后复答）：正确判断该输出合规并说明 std::sort 不保证等键请求原相对顺序。原先错误和讲解保留，不改记为首答正确。",
+    "passed": true
+  }
+}

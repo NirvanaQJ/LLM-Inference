@@ -1,0 +1,113 @@
+{
+  "date": "2026-10-22",
+  "purpose": "按本人要求归档并准备 GitHub 上传，复核历史证据，不新增学习验收。",
+  "file_moves": [],
+  "formatting_only": [
+    {
+      "path": "gpu-kernel-lab/cpp-basics/stl_stats.cpp",
+      "before_sha256": "4da49f047edb499c6cdfab04d01fad7917cbf444a66c68c119cf4363dd297fc3",
+      "after_sha256": "0bd01be5c6e664f1d1b9426a289cb7960ea670e562822420ceb792df38f0a9b1",
+      "equivalence_check": "C++ token text separated by whitespace unchanged; compiler syntax check recorded separately",
+      "changes": "Only trailing whitespace, final newline and C++ call indentation; no behavior change."
+    },
+    {
+      "path": "gpu-kernel-lab/python-basics/is_anagram_ignore_case.py",
+      "before_sha256": "4523e0f0828ecdc3cae874f4039c40f487b907b638013a9fdb5f8fcecbddeb34",
+      "after_sha256": "7173771f7362f7b4f0fc31a0192a681d6df5c212181d5503fa6cfa5d5d30da52",
+      "equivalence_check": "Python AST unchanged",
+      "changes": "Only trailing whitespace, final newline and C++ call indentation; no behavior change."
+    }
+  ],
+  "historical_observations_preserved": true,
+  "runtime_programs_reexecuted": false,
+  "verification": {
+    "markdown_files": 6,
+    "local_link_counts": {
+      "ok": 206,
+      "needs_review": 4
+    },
+    "markdown_fragment_reviews": [
+      {
+        "source": "README.md",
+        "target": "gpu-kernel-lab/python-basics/README.md#pythonc-csv-%E7%BB%9F%E8%AE%A1%E5%AF%B9%E7%85%A7",
+        "verified": true
+      },
+      {
+        "source": "日记/2026-10-22.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-22-stl-stats-cases.md#%E5%BD%93%E5%89%8D%E6%95%99%E5%AD%A6%E6%A3%80%E6%9F%A5%E7%82%B9",
+        "verified": true
+      },
+      {
+        "source": "日记/2026-10-22.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-22-stl-stats-cases.md#%E5%BD%93%E5%89%8D%E6%95%99%E5%AD%A6%E6%A3%80%E6%9F%A5%E7%82%B9",
+        "verified": true
+      },
+      {
+        "source": "日记/2026-10-22.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-22-stl-stats-cases.md#%E5%BD%93%E5%89%8D%E6%95%99%E5%AD%A6%E6%A3%80%E6%9F%A5%E7%82%B9",
+        "verified": true
+      }
+    ],
+    "raw_json_files": 6,
+    "historical_source_snapshot_hashes_valid": true,
+    "cpp_syntax_check": {
+      "command": "g++ -std=c++17 -Wall -Wextra -fsyntax-only gpu-kernel-lab/cpp-basics/stl_stats.cpp",
+      "exit_code": 0,
+      "diagnostics": []
+    },
+    "python_ast_equivalence": true,
+    "upload_manifest": [
+      "README.md",
+      "日记/README.md",
+      "日记/2026-10-22.md",
+      "gpu-kernel-lab/cpp-basics/stl_stats.cpp",
+      "gpu-kernel-lab/python-basics/is_anagram_ignore_case.py",
+      "gpu-kernel-lab/tests/2026-10-22-stl-stats-cases.md",
+      "gpu-kernel-lab/tests/2026-10-22-stl-stats-limits.md",
+      "gpu-kernel-lab/tests/2026-10-22-anagram-ignore-case-cases.md",
+      "gpu-kernel-lab/results/raw/2026-10-22-anagram-ignore-case-learner-observation.json",
+      "gpu-kernel-lab/results/raw/2026-10-22-archive-audit.json",
+      "gpu-kernel-lab/results/raw/2026-10-22-stl-group-limit-learner-observation.json",
+      "gpu-kernel-lab/results/raw/2026-10-22-stl-groups-learner-observation.json",
+      "gpu-kernel-lab/results/raw/2026-10-22-stl-sort-boundaries-learner-observation.json",
+      "gpu-kernel-lab/results/raw/2026-10-22-stl-sort-ordinary-learner-observation.json"
+    ],
+    "credential_marker_scan": "no matches"
+  },
+  "privacy_redaction": {
+    "scope": "Only the 14 files in upload_manifest for the 2026-10-22 study archive.",
+    "redacted_files": [
+      "gpu-kernel-lab/results/raw/2026-10-22-anagram-ignore-case-learner-observation.json",
+      "gpu-kernel-lab/results/raw/2026-10-22-stl-groups-learner-observation.json",
+      "gpu-kernel-lab/results/raw/2026-10-22-stl-sort-ordinary-learner-observation.json"
+    ],
+    "removed_categories": [
+      "machine username in home-directory path",
+      "personal absolute project-root prefix"
+    ],
+    "preserved": [
+      "source code behavior",
+      "test inputs",
+      "expected and observed outputs",
+      "learner answers and corrections",
+      "historical source snapshots and their hashes"
+    ],
+    "unredacted_originals": "Retained locally only in an ignored private backup; not included in the upload.",
+    "commit_identity_policy": "Use the repository owner public handle and GitHub noreply email for both author and committer.",
+    "history_policy": "Replace the single unpublished archive commit; do not publish a follow-up commit whose parent contains the unredacted archive.",
+    "screenshot_policy": "No screenshot image files are included in the publication.",
+    "verification": {
+      "files_scanned": 14,
+      "identifying_pattern_matches": [],
+      "private_backup_excluded": true,
+      "historical_source_hashes_valid": true,
+      "program_source_hashes_unchanged": true,
+      "redaction_limited_to_command_paths_and_metadata": true,
+      "local_link_counts": {
+        "ok": 206,
+        "needs_review": 4
+      },
+      "markdown_fragments_verified": 4
+    }
+  }
+}

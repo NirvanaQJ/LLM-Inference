@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-22",
+  "evidence_type": "learner_screenshot_with_assistant_read_only_source_check",
+  "compile_command_visible": "g++ -std=c++17 -Wall -Wextra \"./gpu-kernel-lab/cpp-basics/stl_stats.cpp\" -o /tmp/stl_stats",
+  "run_command_visible": "/tmp/stl_stats",
+  "observed_group_output_lines": [
+    "[mixed] requests=3 groups=2",
+    "model-B count=1",
+    "  r2 model-B 10",
+    "model-A count=2",
+    "  r1 model-A 30",
+    "  r3 model-A 20",
+    "[empty] requests=0 groups=0",
+    "[same_model] requests=2 groups=1",
+    "model-A count=2",
+    "  r7 model-A 8",
+    "  r8 model-A 3"
+  ],
+  "expected_defined_before_run": {
+    "mixed": {
+      "requests": 3,
+      "groups": 2,
+      "model-A": [
+        [
+          "r1",
+          "model-A",
+          30
+        ],
+        [
+          "r3",
+          "model-A",
+          20
+        ]
+      ],
+      "model-B": [
+        [
+          "r2",
+          "model-B",
+          10
+        ]
+      ]
+    },
+    "empty": {
+      "requests": 0,
+      "groups": 0
+    },
+    "same_model": {
+      "requests": 2,
+      "groups": 1,
+      "model-A": [
+        [
+          "r7",
+          "model-A",
+          8
+        ],
+        [
+          "r8",
+          "model-A",
+          3
+        ]
+      ]
+    },
+    "group_iteration_order_required": false,
+    "within_group_order": "same as input traversal"
+  },
+  "case_results": {
+    "mixed": "passed",
+    "empty": "passed",
+    "same_model": "passed"
+  },
+  "numeric_exit_code": null,
+  "notes": [
+    "截图本轮同时包含四组排序输出，均与先前预期相符。",
+    "model-B 先于 model-A 打印符合规格；每条请求字段和组内顺序符合原始输入。",
+    "未显示数字退出码，不补写为 0。示例由助手提供，运行及保存由本人完成。"
+  ],
+  "source_path": "gpu-kernel-lab/cpp-basics/stl_stats.cpp",
+  "source_sha256": "fb29be5fe937c5c231f9951457de34249cee677aef88d4e14b512c4c08f0dc50",
+  "source_snapshot": "#include <algorithm>\n#include <iostream>\n#include <string>\n#include <vector>\n#include <unordered_map>\n\nstruct Request {\n    std::string id;\n    std::string model;\n    double latency_ms;\n};\n\nvoid sort_and_print(const std::string& label,\n                    std::vector<Request> requests) {\n    std::cout << \"[\" << label << \"] size=\"\n              << requests.size() << \"\\n\";\n\n    std::sort(requests.begin(), requests.end(),\n        [](const Request& a, const Request& b) {\n            return a.latency_ms < b.latency_ms;\n        });\n\n    for (const Request& r : requests) {\n        std::cout << r.id << \" \"\n                  << r.model << \" \"\n                  << r.latency_ms << \"\\n\";\n    }\n}\n\nvoid group_and_print(const std::string& label,\n                     const std::vector<Request>& requests) {\n    std::unordered_map<std::string, std::vector<Request>> groups;\n\n    for (const Request& r : requests) {\n        groups[r.model].push_back(r);\n    }\n\n    std::cout << \"[\" << label << \"] requests=\"\n              << requests.size()\n              << \" groups=\" << groups.size() << \"\\n\";\n\n    for (const auto& entry : groups) {\n        std::cout << entry.first\n                  << \" count=\" << entry.second.size() << \"\\n\";\n\n        for (const Request& r : entry.second) {\n            std::cout << \"  \" << r.id << \" \"\n                      << r.model << \" \"\n                      << r.latency_ms << \"\\n\";\n        }\n    }\n}\nint main() {\n    sort_and_print(\"ordinary\", {\n        {\"r1\", \"model-A\", 30.0},\n        {\"r2\", \"model-B\", 10.0},\n        {\"r3\", \"model-A\", 20.0}\n    });\n\n    sort_and_print(\"empty\", {});\n\n    sort_and_print(\"single\", {\n        {\"r0\", \"model-A\", 7.0}\n    });\n\n    sort_and_print(\"ties\", {\n        {\"r4\", \"model-A\", 10.0},\n        {\"r5\", \"model-B\", 10.0},\n        {\"r6\", \"model-A\", 5.0}\n    });\n        group_and_print(\"mixed\", {\n        {\"r1\", \"model-A\", 30.0},\n        {\"r2\", \"model-B\", 10.0},\n        {\"r3\", \"model-A\", 20.0}\n    });\n\n    group_and_print(\"empty\", {});\n\n    group_and_print(\"same_model\", {\n        {\"r7\", \"model-A\", 8.0},\n        {\"r8\", \"model-A\", 3.0}\n    });\n}",
+  "assistant_executed_program": false,
+  "scope": "排序与分组各三类运行通过；迭代器失效解释、固定项和 P1 仍待验证。",
+  "privacy_redaction": {
+    "applied": true,
+    "removed": "Machine-specific home directory and project-root prefix in transcribed commands.",
+    "replacement": "Project-relative source path beginning with ./; flags and executable names preserved.",
+    "evidence_integrity": "Inputs, expected/actual outputs, learner answers, source snapshots and their hashes are unchanged.",
+    "originals": "Unredacted originals retained locally only and excluded from publication."
+  }
+}

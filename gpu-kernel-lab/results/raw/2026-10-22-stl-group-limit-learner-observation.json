@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-22",
+  "evidence_type": "learner_screenshot_and_conversation_with_assistant_read_only_source_check",
+  "run_command_visible": "/tmp/stl_stats",
+  "compile_command_visible_in_this_screenshot": false,
+  "counterexample_input": [
+    [
+      "q1",
+      "model-A",
+      40
+    ],
+    [
+      "q2",
+      "model-A",
+      5
+    ]
+  ],
+  "expected_from_append_in_input_order": [
+    "[group_order_limit] requests=2 groups=1",
+    "model-A count=2",
+    "  q1 model-A 40",
+    "  q2 model-A 5"
+  ],
+  "observed_counterexample_output": [
+    "[group_order_limit] requests=2 groups=1",
+    "model-A count=2",
+    "  q1 model-A 40",
+    "  q2 model-A 5"
+  ],
+  "output_matches_expected": true,
+  "learner_answers_verbatim": [
+    "没有",
+    "同一个model编号内无法按升序排列，仅适合不同model编号的升序排列",
+    "需要给同一个model编号内也增加排序操作"
+  ],
+  "assessment": {
+    "within_group_ascending_judgment": "通过：当前输出 40/5 非升序。",
+    "limitation_and_scope": "未通过：分组函数不会自动排序组内，也不保证不同模型组之间顺序。当前无排序不等于无法添加排序。",
+    "required_additional_operation": "通过：要组内升序，需要增加组内排序。"
+  },
+  "next_checkpoint": "本人判断仅按模型归类且组内保持输入顺序的需求是否适用，以及能否保证 model-A 先于 model-B 输出，并说明理由。",
+  "source_path": "gpu-kernel-lab/cpp-basics/stl_stats.cpp",
+  "source_sha256": "4da49f047edb499c6cdfab04d01fad7917cbf444a66c68c119cf4363dd297fc3",
+  "source_snapshot": "#include <algorithm>\n#include <iostream>\n#include <string>\n#include <vector>\n#include <unordered_map>\n\nstruct Request {\n    std::string id;\n    std::string model;\n    double latency_ms;\n};\n\nvoid sort_and_print(const std::string& label,\n                    std::vector<Request> requests) {\n    std::cout << \"[\" << label << \"] size=\"\n              << requests.size() << \"\\n\";\n\n    std::sort(requests.begin(), requests.end(),\n        [](const Request& a, const Request& b) {\n            return a.latency_ms < b.latency_ms;\n        });\n\n    for (const Request& r : requests) {\n        std::cout << r.id << \" \"\n                  << r.model << \" \"\n                  << r.latency_ms << \"\\n\";\n    }\n}\n\nvoid group_and_print(const std::string& label,\n                     const std::vector<Request>& requests) {\n    std::unordered_map<std::string, std::vector<Request>> groups;\n\n    for (const Request& r : requests) {\n        groups[r.model].push_back(r);\n    }\n\n    std::cout << \"[\" << label << \"] requests=\"\n              << requests.size()\n              << \" groups=\" << groups.size() << \"\\n\";\n\n    for (const auto& entry : groups) {\n        std::cout << entry.first\n                  << \" count=\" << entry.second.size() << \"\\n\";\n\n        for (const Request& r : entry.second) {\n            std::cout << \"  \" << r.id << \" \"\n                      << r.model << \" \"\n                      << r.latency_ms << \"\\n\";\n        }\n    }\n}\nint main() {\n    sort_and_print(\"ordinary\", {\n        {\"r1\", \"model-A\", 30.0},\n        {\"r2\", \"model-B\", 10.0},\n        {\"r3\", \"model-A\", 20.0}\n    });\n\n    sort_and_print(\"empty\", {});\n\n    sort_and_print(\"single\", {\n        {\"r0\", \"model-A\", 7.0}\n    });\n\n    sort_and_print(\"ties\", {\n        {\"r4\", \"model-A\", 10.0},\n        {\"r5\", \"model-B\", 10.0},\n        {\"r6\", \"model-A\", 5.0}\n    });\n        group_and_print(\"mixed\", {\n        {\"r1\", \"model-A\", 30.0},\n        {\"r2\", \"model-B\", 10.0},\n        {\"r3\", \"model-A\", 20.0}\n    });\n\n    group_and_print(\"empty\", {});\n\n    group_and_print(\"same_model\", {\n        {\"r7\", \"model-A\", 8.0},\n        {\"r8\", \"model-A\", 3.0}\n    });\n        group_and_print(\"group_order_limit\", {\n        {\"q1\", \"model-A\", 40.0},\n        {\"q2\", \"model-A\", 5.0}\n    });\n}",
+  "numeric_exit_code": null,
+  "assistant_executed_program": false,
+  "scope": "P0 已通过；P1 反例运行和补充排序判断通过，限制及适用范围解释需纠错。未宣布全日完成。",
+  "correction_followup": {
+    "questions": [
+      "仅按模型归类并保留组内输入顺序，当前函数能满足吗？",
+      "要求 model-A 组先于 model-B 组，当前函数能保证吗？为什么？"
+    ],
+    "learner_answers_verbatim": [
+      "能",
+      "不能，因为当前函数只能按模型归类，无法保证模型组顺序"
+    ],
+    "assessment": "通过（讲解后纠错复答）：正确区分归类能力、组内保序与组间无顺序保证；结合前次组内升序需补排序的回答，P1 反例/限制及适用范围全部通过。",
+    "passed": true
+  }
+}
