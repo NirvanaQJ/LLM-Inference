@@ -1,0 +1,21 @@
+{
+  "task_date": "2026-10-23",
+  "operator": "learner",
+  "observation_source": "learner screenshot plus assistant read of saved source and compiler log",
+  "guidance": "assistant provided Item and deliberately invalid call",
+  "working_directory": "project root",
+  "command": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/templates.cpp -o /tmp/templates-2026-10-23 2> gpu-kernel-lab/results/raw/2026-10-23-template-error.txt",
+  "expected": "nonzero compiler status; my_min instantiated with Item; no matching operator< in body",
+  "actual_compiler_status": 1,
+  "compiler_log": "gpu-kernel-lab/cpp-basics/templates.cpp: In instantiation of ‘T my_min(T, T) [with T = Item]’:\ngpu-kernel-lab/cpp-basics/templates.cpp:95:7:   required from here\n   95 | my_min(first, second);\n      | ~~~~~~^~~~~~~~~~~~~~~\ngpu-kernel-lab/cpp-basics/templates.cpp:7:11: error: no match for ‘operator<’ (operand types are ‘Item’ and ‘Item’)\n    7 |     if (a < b) {\n      |         ~~^~~\n",
+  "source_sha256": "f93aec045ef4d1d0a23e02eb3eceb68e393667f38b0d129477ba1e5431766394",
+  "source_snapshot": "#include <iostream>\n#include <vector>\n#include <cassert>\n\ntemplate<typename T>\nT my_min(T a, T b) {\n    if (a < b) {\n        return a;\n    }\n    return b;\n}\n\ntemplate<typename T>\nT my_max(T a, T b) {\n    if (a > b) {\n        return a;\n    }\n    return b;\n}\ntemplate<typename T, typename Pred>\nstd::vector<T> filter_keep(const std::vector<T>& values, Pred keep) {\n    std::vector<T> result;\n\n    for (const T& value : values) {\n        if (keep(value)) {\n            result.push_back(value);\n        }\n    }\n\n    return result;\n}\nstruct Item {\n    int value;\n};\n\nint main() {\n    std::cout << my_min(8, 3) << '\\n';\n    std::cout << my_max(8, 3) << '\\n';\n    std::cout << my_min(2.5, 4.0) << '\\n';\n    std::cout << my_max(2.5, 4.0) << '\\n';\n    std::cout << my_min(3, 8) << ' ' << my_max(3, 8) << '\\n';\nstd::cout << my_min(-2, -7) << ' ' << my_max(-2, -7) << '\\n';\nstd::cout << my_min(5, 5) << ' ' << my_max(5, 5) << '\\n';\n\nstd::cout << my_min(4.0, 2.5) << ' ' << my_max(4.0, 2.5) << '\\n';\nstd::cout << my_min(-1.5, -3.5) << ' ' << my_max(-1.5, -3.5) << '\\n';\nstd::cout << my_min(2.5, 2.5) << ' ' << my_max(2.5, 2.5) << '\\n';\nstd::vector<int> values{-2, 0, 3, 1};\n\nauto is_positive = [](int x) {\n    return x > 0;\n};\n\nauto positives = filter_keep(values, is_positive);\n\nstd::cout << \"positive: \";\nfor (int value : positives) {\n    std::cout << value << ' ';\n}\nstd::cout << '\\n';\nstd::vector<double> readings{-0.5, 0.0, 2.5, 0.5};\n\nauto positive_readings = filter_keep(readings, [](double x) {\n    return x > 0.0;\n});\n\nstd::cout << \"double_positive: \";\nfor (double value : positive_readings) {\n    std::cout << value << ' ';\n}\nstd::cout << '\\n';\nauto keep_double = [](double x) {\n    return x > 0.0;\n};\n\n// int：空输入、全部保留、全部剔除\nassert(filter_keep(std::vector<int>{}, is_positive).empty());\nassert((filter_keep(std::vector<int>{3, 1}, is_positive)\n        == std::vector<int>{3, 1}));\nassert(filter_keep(std::vector<int>{-2, 0}, is_positive).empty());\n\n// double：空输入、全部保留、全部剔除\nassert(filter_keep(std::vector<double>{}, keep_double).empty());\nassert((filter_keep(std::vector<double>{2.5, 0.5}, keep_double)\n        == std::vector<double>{2.5, 0.5}));\nassert(filter_keep(std::vector<double>{-0.5, 0.0}, keep_double).empty());\n\n// 核对前面过滤过的原输入仍保持不变\nassert((values == std::vector<int>{-2, 0, 3, 1}));\nassert((readings == std::vector<double>{-0.5, 0.0, 2.5, 0.5}));\n\nstd::cout << \"filter checks PASS\\n\";\nItem first{8};\nItem second{3};\nmy_min(first, second);\n}",
+  "learner_answer": "T是int 95行调用错误 第7行的a<b操作失败了",
+  "assessment": {
+    "call_site": "correct: line 95 my_min(first, second)",
+    "body_operation": "correct: line 7 a < b",
+    "template_type": "incorrect: T is Item, not the int member type"
+  },
+  "next_step": "explain object versus member, replace call with my_min(first.value, second.value), ask learner type and reason and verify successful compile/run",
+  "assistant_compiled_or_ran": false
+}

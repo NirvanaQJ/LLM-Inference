@@ -1,0 +1,76 @@
+{
+  "task_date": "2026-10-23",
+  "operator": "learner",
+  "observation_source": "learner screenshot latest lower compile/run batch; assistant read saved source",
+  "guidance": "assistant supplied eight assertions; learner saved and ran",
+  "working_directory": "project root",
+  "command": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/templates.cpp -o /tmp/templates-2026-10-23 && /tmp/templates-2026-10-23",
+  "expected_final_line": "filter checks PASS",
+  "actual_final_line": "filter checks PASS",
+  "actual_status": 0,
+  "previous_outputs": "all twelve previous lines visible and match their earlier expected outputs",
+  "assertions": {
+    "int_empty": {
+      "input": [],
+      "expected": []
+    },
+    "int_keep_all": {
+      "input": [
+        3,
+        1
+      ],
+      "expected": [
+        3,
+        1
+      ]
+    },
+    "int_keep_none": {
+      "input": [
+        -2,
+        0
+      ],
+      "expected": []
+    },
+    "double_empty": {
+      "input": [],
+      "expected": []
+    },
+    "double_keep_all": {
+      "input": [
+        2.5,
+        0.5
+      ],
+      "expected": [
+        2.5,
+        0.5
+      ]
+    },
+    "double_keep_none": {
+      "input": [
+        -0.5,
+        0.0
+      ],
+      "expected": []
+    },
+    "original_int_unchanged": {
+      "expected": [
+        -2,
+        0,
+        3,
+        1
+      ]
+    },
+    "original_double_unchanged": {
+      "expected": [
+        -0.5,
+        0.0,
+        2.5,
+        0.5
+      ]
+    }
+  },
+  "assertion_result": "all eight assertions reached and passed; NDEBUG neither in source nor visible command",
+  "source_sha256": "1bcddd15e557739b7276abc2d56f9a32d7803c1e76b987e98b8e21dc48c1b555",
+  "source_snapshot": "#include <iostream>\n#include <vector>\n#include <cassert>\n\ntemplate<typename T>\nT my_min(T a, T b) {\n    if (a < b) {\n        return a;\n    }\n    return b;\n}\n\ntemplate<typename T>\nT my_max(T a, T b) {\n    if (a > b) {\n        return a;\n    }\n    return b;\n}\ntemplate<typename T, typename Pred>\nstd::vector<T> filter_keep(const std::vector<T>& values, Pred keep) {\n    std::vector<T> result;\n\n    for (const T& value : values) {\n        if (keep(value)) {\n            result.push_back(value);\n        }\n    }\n\n    return result;\n}\n\nint main() {\n    std::cout << my_min(8, 3) << '\\n';\n    std::cout << my_max(8, 3) << '\\n';\n    std::cout << my_min(2.5, 4.0) << '\\n';\n    std::cout << my_max(2.5, 4.0) << '\\n';\n    std::cout << my_min(3, 8) << ' ' << my_max(3, 8) << '\\n';\nstd::cout << my_min(-2, -7) << ' ' << my_max(-2, -7) << '\\n';\nstd::cout << my_min(5, 5) << ' ' << my_max(5, 5) << '\\n';\n\nstd::cout << my_min(4.0, 2.5) << ' ' << my_max(4.0, 2.5) << '\\n';\nstd::cout << my_min(-1.5, -3.5) << ' ' << my_max(-1.5, -3.5) << '\\n';\nstd::cout << my_min(2.5, 2.5) << ' ' << my_max(2.5, 2.5) << '\\n';\nstd::vector<int> values{-2, 0, 3, 1};\n\nauto is_positive = [](int x) {\n    return x > 0;\n};\n\nauto positives = filter_keep(values, is_positive);\n\nstd::cout << \"positive: \";\nfor (int value : positives) {\n    std::cout << value << ' ';\n}\nstd::cout << '\\n';\nstd::vector<double> readings{-0.5, 0.0, 2.5, 0.5};\n\nauto positive_readings = filter_keep(readings, [](double x) {\n    return x > 0.0;\n});\n\nstd::cout << \"double_positive: \";\nfor (double value : positive_readings) {\n    std::cout << value << ' ';\n}\nstd::cout << '\\n';\nauto keep_double = [](double x) {\n    return x > 0.0;\n};\n\n// int：空输入、全部保留、全部剔除\nassert(filter_keep(std::vector<int>{}, is_positive).empty());\nassert((filter_keep(std::vector<int>{3, 1}, is_positive)\n        == std::vector<int>{3, 1}));\nassert(filter_keep(std::vector<int>{-2, 0}, is_positive).empty());\n\n// double：空输入、全部保留、全部剔除\nassert(filter_keep(std::vector<double>{}, keep_double).empty());\nassert((filter_keep(std::vector<double>{2.5, 0.5}, keep_double)\n        == std::vector<double>{2.5, 0.5}));\nassert(filter_keep(std::vector<double>{-0.5, 0.0}, keep_double).empty());\n\n// 核对前面过滤过的原输入仍保持不变\nassert((values == std::vector<int>{-2, 0, 3, 1}));\nassert((readings == std::vector<double>{-0.5, 0.0, 2.5, 0.5}));\n\nstd::cout << \"filter checks PASS\\n\";\n}",
+  "assistant_compiled_or_ran": false
+}

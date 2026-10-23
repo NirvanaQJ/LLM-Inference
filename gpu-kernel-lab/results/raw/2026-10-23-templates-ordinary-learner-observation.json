@@ -1,0 +1,26 @@
+{
+  "task_date": "2026-10-23",
+  "observation_source": "learner-provided terminal screenshot; current source read by assistant",
+  "operator": "learner",
+  "guidance": "assistant supplied my_min and main; learner filled my_max comparison and return variables",
+  "working_directory": "project root",
+  "command": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/templates.cpp -o /tmp/templates-2026-10-23 && /tmp/templates-2026-10-23",
+  "expected_stdout": [
+    "3",
+    "8",
+    "2.5",
+    "4"
+  ],
+  "actual_stdout": [
+    "3",
+    "8",
+    "2.5",
+    "4"
+  ],
+  "status_query": "echo $?",
+  "actual_status": 0,
+  "compile_success_evidence": "&& command reached program execution; no compiler diagnostic visible in submitted batch",
+  "scope": "bottom screenshot batch only; earlier STL outputs excluded; ordinary cases only; assistant did not compile or run",
+  "source_sha256": "9df0017bde3f747b6b108c616924064d2285f06eee2e25236e9c582f4c5f2f72",
+  "source_snapshot": "#include <iostream>\n\ntemplate<typename T>\nT my_min(T a, T b) {\n    if (a < b) {\n        return a;\n    }\n    return b;\n}\n\ntemplate<typename T>\nT my_max(T a, T b) {\n    if (a > b) {\n        return a;\n    }\n    return b;\n}\n\nint main() {\n    std::cout << my_min(8, 3) << '\\n';\n    std::cout << my_max(8, 3) << '\\n';\n    std::cout << my_min(2.5, 4.0) << '\\n';\n    std::cout << my_max(2.5, 4.0) << '\\n';\n}"
+}

@@ -1,0 +1,91 @@
+{
+  "archive_date": "2026-10-23",
+  "task_date": "2026-10-23",
+  "operator": "assistant",
+  "scope": "Archive, public-content redaction and validation; no additional learner mastery inferred",
+  "moves": [],
+  "source_formatting": {
+    "path": "gpu-kernel-lab/cpp-basics/templates.cpp",
+    "before_sha256": "aae079f49078d0f55e3ef8b709b493c701163dd5a49b273348057cd1b5862f9b",
+    "after_sha256": "a318e9bca5dd9411173f946696cd41ec810935001137f28ef3a007dd6b710290",
+    "cpp_lexical_tokens_equal": true,
+    "changes": "indentation, blank lines and final newline only"
+  },
+  "historical_evidence": {
+    "learner_observation_files": 7,
+    "all_embedded_source_hashes_valid": true,
+    "snapshots_and_original_error_line_numbers_preserved": true,
+    "before_source_matches_last_successful_learner_snapshot": true
+  },
+  "redaction": {
+    "removed_or_generalized": "personal job location preference and attendance communication details in the current public journal/test text",
+    "public_files_contain_no_personal_home_or_host_identifiers": true,
+    "historical_outputs_and_learner_answers_preserved": true,
+    "raw_screenshots_private": true,
+    "private_material_and_editor_config_excluded": true,
+    "identity_policy": "public GitHub handle and GitHub noreply email"
+  },
+  "checks": {
+    "cpp_command": "g++ -std=c++17 -Wall -Wextra -fsyntax-only gpu-kernel-lab/cpp-basics/templates.cpp",
+    "cpp_exit_status": 0,
+    "learning_program_rerun": false,
+    "markdown_fragments_reviewed": [
+      {
+        "source": "README.md",
+        "target": "gpu-kernel-lab/python-basics/README.md#pythonc-csv-统计对照",
+        "verified": true
+      },
+      {
+        "source": "日记/2026-10-23.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-23-templates-cases.md#当前教学检查点",
+        "verified": true
+      },
+      {
+        "source": "日记/2026-10-23.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-23-templates-cases.md#检查点-4过滤结果预测正确真假值待补答",
+        "verified": true
+      },
+      {
+        "source": "日记/2026-10-23.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-23-templates-cases.md#检查点-5规则返回值预测通过准备过滤器骨架",
+        "verified": true
+      },
+      {
+        "source": "日记/2026-10-23.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-23-templates-cases.md#检查点-11对象成员类型变式复答通过c-主任务通过",
+        "verified": true
+      },
+      {
+        "source": "gpu-kernel-lab/tests/2026-10-23-earliest-failure-recheck.md",
+        "target": "2026-10-19-file-guard-cases.md#检查点-1输出预测与作用域定位",
+        "verified": true
+      }
+    ],
+    "external_links": "Not all re-fetched during archive; no external reachability claim",
+    "local_link_counts": {
+      "ok": 213,
+      "needs_review": 6,
+      "external_unchecked": 5
+    },
+    "markdown_documents_checked": 5,
+    "markdown_fragments_manually_verified": 6,
+    "privacy_scan": "All 15 publication files passed the configured home path, host identity, personal background and credential marker scan; content scope also reviewed."
+  },
+  "publication_files": [
+    "README.md",
+    "日记/README.md",
+    "日记/2026-10-23.md",
+    "gpu-kernel-lab/cpp-basics/templates.cpp",
+    "gpu-kernel-lab/tests/2026-10-23-earliest-failure-recheck.md",
+    "gpu-kernel-lab/tests/2026-10-23-templates-cases.md",
+    "gpu-kernel-lab/results/raw/2026-10-23-filter-boundaries-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-23-filter-double-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-23-filter-int-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-23-template-error-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-23-template-error.txt",
+    "gpu-kernel-lab/results/raw/2026-10-23-template-fixed-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-23-templates-boundaries-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-23-templates-ordinary-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-23-archive-audit.json"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "task_date": "2026-10-23",
+  "operator": "learner",
+  "observation_source": "learner terminal screenshot latest lower batch and assistant read of saved source",
+  "guidance": "assistant supplied double call and output loop; learner saved and ran",
+  "working_directory": "project root",
+  "command": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/templates.cpp -o /tmp/templates-2026-10-23 && /tmp/templates-2026-10-23",
+  "expected_stdout_normalized": [
+    "3",
+    "8",
+    "2.5",
+    "4",
+    "3 8",
+    "-7 -2",
+    "5 5",
+    "2.5 4",
+    "-3.5 -1.5",
+    "2.5 2.5",
+    "positive: 3 1",
+    "double_positive: 2.5 0.5"
+  ],
+  "actual_stdout_normalized": [
+    "3",
+    "8",
+    "2.5",
+    "4",
+    "3 8",
+    "-7 -2",
+    "5 5",
+    "2.5 4",
+    "-3.5 -1.5",
+    "2.5 2.5",
+    "positive: 3 1",
+    "double_positive: 2.5 0.5"
+  ],
+  "normalization": "trailing whitespace ignored",
+  "actual_status": 0,
+  "learner_answer": "double类型,不会被修改",
+  "answer_assessment": "correct for T and input modification prediction; dynamic input-unchanged comparison pending",
+  "source_sha256": "6a0ea853cebab78b8947fc47a3334eed1454acb9a829a2b81fdab351642b60aa",
+  "source_snapshot": "#include <iostream>\n#include <vector>\n\ntemplate<typename T>\nT my_min(T a, T b) {\n    if (a < b) {\n        return a;\n    }\n    return b;\n}\n\ntemplate<typename T>\nT my_max(T a, T b) {\n    if (a > b) {\n        return a;\n    }\n    return b;\n}\ntemplate<typename T, typename Pred>\nstd::vector<T> filter_keep(const std::vector<T>& values, Pred keep) {\n    std::vector<T> result;\n\n    for (const T& value : values) {\n        if (keep(value)) {\n            result.push_back(value);\n        }\n    }\n\n    return result;\n}\n\nint main() {\n    std::cout << my_min(8, 3) << '\\n';\n    std::cout << my_max(8, 3) << '\\n';\n    std::cout << my_min(2.5, 4.0) << '\\n';\n    std::cout << my_max(2.5, 4.0) << '\\n';\n    std::cout << my_min(3, 8) << ' ' << my_max(3, 8) << '\\n';\nstd::cout << my_min(-2, -7) << ' ' << my_max(-2, -7) << '\\n';\nstd::cout << my_min(5, 5) << ' ' << my_max(5, 5) << '\\n';\n\nstd::cout << my_min(4.0, 2.5) << ' ' << my_max(4.0, 2.5) << '\\n';\nstd::cout << my_min(-1.5, -3.5) << ' ' << my_max(-1.5, -3.5) << '\\n';\nstd::cout << my_min(2.5, 2.5) << ' ' << my_max(2.5, 2.5) << '\\n';\nstd::vector<int> values{-2, 0, 3, 1};\n\nauto is_positive = [](int x) {\n    return x > 0;\n};\n\nauto positives = filter_keep(values, is_positive);\n\nstd::cout << \"positive: \";\nfor (int value : positives) {\n    std::cout << value << ' ';\n}\nstd::cout << '\\n';\nstd::vector<double> readings{-0.5, 0.0, 2.5, 0.5};\n\nauto positive_readings = filter_keep(readings, [](double x) {\n    return x > 0.0;\n});\n\nstd::cout << \"double_positive: \";\nfor (double value : positive_readings) {\n    std::cout << value << ' ';\n}\nstd::cout << '\\n';\n}",
+  "assistant_compiled_or_ran": false
+}

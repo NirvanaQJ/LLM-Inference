@@ -1,0 +1,7 @@
+gpu-kernel-lab/cpp-basics/templates.cpp: In instantiation of ‘T my_min(T, T) [with T = Item]’:
+gpu-kernel-lab/cpp-basics/templates.cpp:95:7:   required from here
+   95 | my_min(first, second);
+      | ~~~~~~^~~~~~~~~~~~~~~
+gpu-kernel-lab/cpp-basics/templates.cpp:7:11: error: no match for ‘operator<’ (operand types are ‘Item’ and ‘Item’)
+    7 |     if (a < b) {
+      |         ~~^~~
