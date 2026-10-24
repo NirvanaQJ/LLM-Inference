@@ -3,6 +3,7 @@
 #include <memory>
 #include <utility>
 #include <vector>
+#include <cassert>
 
 struct Buffer {
     std::size_t size;
@@ -13,26 +14,27 @@ struct Buffer {
     }
     inline static int copies = 0;
 
-Buffer(const Buffer& other)
-    : size(other.size),
-      data(std::make_unique<int[]>(other.size)) {
-    for (std::size_t i = 0; i < size; ++i) {
-        data[i] = other.data[i];
+    Buffer(const Buffer& other)
+        : size(other.size),
+          data(std::make_unique<int[]>(other.size)) {
+        for (std::size_t i = 0; i < size; ++i) {
+            data[i] = other.data[i];
+        }
+
+        ++copies;
+        std::cout << "copy\n";
     }
 
-    ++copies;
-    std::cout << "copy\n";
-}
-inline static int moves = 0;
+    inline static int moves = 0;
 
-Buffer(Buffer&& other) noexcept
-    : size(other.size),
-      data(std::move(other.data)) {
-    other.size = 0;
+    Buffer(Buffer&& other) noexcept
+        : size(other.size),
+          data(std::move(other.data)) {
+        other.size = 0;
 
-    ++moves;
-    std::cout << "move\n";
-}
+        ++moves;
+        std::cout << "move\n";
+    }
 };
 
 void copy_move_demo() {
@@ -79,6 +81,85 @@ void vector_demo() {
     std::cout << "moves=" << Buffer::moves << '\n';
 }
 
+void check_copy(std::size_t n) {
+    assert(n > 0);
+    Buffer a(n);
+
+    // 长度为 n，内容为 1、2、……、n。
+    for (std::size_t i = 0; i < n; ++i) {
+        a.data[i] = static_cast<int>(i + 1);
+    }
+
+    Buffer b = a;
+
+    assert(b.size == n);
+    assert(b.data.get() != a.data.get());
+
+    for (std::size_t i = 0; i < n; ++i) {
+        assert(b.data[i] == static_cast<int>(i + 1));
+    }
+
+    b.data[n - 1] = 99;
+    assert(a.data[n - 1] == static_cast<int>(n));
+
+    std::cout << "copy n=" << n << " PASS\n";
+}
+
+void check_move(std::size_t n) {
+    assert(n > 0);
+    Buffer a(n);
+
+    for (std::size_t i = 0; i < n; ++i) {
+        a.data[i] = static_cast<int>(i + 1);
+    }
+
+    int* old = a.data.get();  // 保存转移前的地址。
+    Buffer b = std::move(a);
+
+    assert(b.size == n);
+    assert(b.data.get() == old);
+    assert(a.size == 0);
+    assert(a.data == nullptr);
+
+    for (std::size_t i = 0; i < n; ++i) {
+        assert(b.data[i] == static_cast<int>(i + 1));
+    }
+
+    std::cout << "move n=" << n << " PASS\n";
+}
+
+void check_empty() {
+    {
+        Buffer a(0);
+        assert(a.size == 0);
+
+        Buffer b = a;
+        assert(b.size == 0);
+
+        int* old = b.data.get();
+        Buffer c = std::move(b);
+
+        assert(b.size == 0);
+        assert(b.data == nullptr);
+        assert(c.size == 0);
+        assert(c.data.get() == old);
+    }  // a、b、c 在这里析构。
+
+    std::cout << "empty n=0 PASS\n";
+}
+
 int main() {
     vector_demo();
+
+    check_copy(1);
+    check_copy(2);
+    check_copy(4);
+    check_copy(8);
+    check_copy(16);
+    check_move(1);
+    check_move(2);
+    check_move(4);
+    check_move(8);
+    check_move(16);
+    check_empty();
 }

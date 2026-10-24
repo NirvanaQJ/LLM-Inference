@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-24",
+  "evidence_kind": "learner_run_and_assistant_read_only_check",
+  "learner_reported_exit_status": 1,
+  "source": "gpu-kernel-lab/cpp-basics/sanitizer_demo.cpp",
+  "source_snapshot": "gpu-kernel-lab/results/raw/2026-10-24-uaf-source.txt",
+  "source_sha256": "52c43bedd2d9354f207642e5053c9cd39d70a0272e2724acbee4fb85036d7e7e",
+  "log": "gpu-kernel-lab/results/raw/2026-10-24-uaf.txt",
+  "diagnostic": "AddressSanitizer: heap-use-after-free",
+  "read_line": 12,
+  "free_line": 10,
+  "allocate_line": 8,
+  "assistant_compiled_or_ran_program": false,
+  "limits": "Code and commands supplied by tutor. ASan runtime report observed; separate UBSan error detection not yet exercised."
+}

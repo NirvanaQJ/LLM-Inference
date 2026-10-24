@@ -1,0 +1,163 @@
+2026-10-24 内存错误检查学习记录（已完成）
+
+最终状态：P0、P1、必要理解及固定记录全部通过；本人报告全日实际用时 90 分钟。
+下文按课堂先后保留历史状态，最终验收见第 12 项。代码与测试由导师给定，复制断言及检测结论经过纠正，不扩大为独立实现或排错能力。
+
+环境：g++ 15.2.0，CMake 4.2.3，C++17，CPU 教学示例。
+源码与命令由导师提供，本人保存编译运行；助手仅只读核对与保存记录。
+
+1. 最小 use-after-free 捕获：通过
+
+项目根目录编译命令：
+g++ -std=c++17 -Wall -Wextra -g -O0 -fsanitize=address,undefined -fno-omit-frame-pointer gpu-kernel-lab/cpp-basics/sanitizer_demo.cpp -o /tmp/sanitizer-demo
+
+本人运行：
+/tmp/sanitizer-demo > gpu-kernel-lab/results/raw/2026-10-24-uaf.txt 2>&1
+echo $?
+cat gpu-kernel-lab/results/raw/2026-10-24-uaf.txt
+
+预期：heap-use-after-free，非零退出。
+实际：AddressSanitizer: heap-use-after-free；本人报告退出状态 1。
+日志：../results/raw/2026-10-24-uaf.txt
+故障源码快照：../results/raw/2026-10-24-uaf-source.txt
+本人运行观察：../results/raw/2026-10-24-uaf-learner-observation.json
+报告对应快照第 8 行分配、第 10 行释放、第 12 行读取。
+ASan 已运行；启用 UBSan 的编译命令不等于已验证独立 UBSan 错误检测。
+
+2. 最小示例修复：通过
+
+本人将 cout 读取移入 owner 作用域，使用同样 sanitizer 编译选项重新编译运行。
+预期：7，状态 0，无 sanitizer 诊断。
+实际：日志为 7，截图状态 0，无 sanitizer 诊断。
+本人解释：因为此时owner没有析构，watch指向的地址仍然有效。
+日志：../results/raw/2026-10-24-uaf-fixed.txt
+修复源码快照：../results/raw/2026-10-24-uaf-fixed-source.txt
+本人观察：../results/raw/2026-10-24-uaf-fixed-learner-observation.json
+助手只读核对，未代编译或代运行。本步仅为单一最小示例，不折算为 10 组测试。
+
+3. 已有 Buffer 程序的 CMake sanitizer 构建：通过
+
+本人创建 CMakeLists.txt 后，在项目根目录配置：
+cmake -S gpu-kernel-lab/cpp-basics -B /tmp/llm-inference-sanitizer-20261024
+
+本人构建并记录：
+cmake --build /tmp/llm-inference-sanitizer-20261024 --verbose > gpu-kernel-lab/results/raw/2026-10-24-cmake-build.txt 2>&1
+echo $?
+cat gpu-kernel-lab/results/raw/2026-10-24-cmake-build.txt
+
+实际：本人报告状态 0，Built target buffer_sanitized；编译和链接命令均含 -fsanitize=address,undefined。
+构建日志：../results/raw/2026-10-24-cmake-build.txt
+本人观察：../results/raw/2026-10-24-cmake-learner-observation.json
+目标运行仍待本人反馈，构建成功不等于 10 组测试通过。
+
+4. 已有 Buffer 基础运行：通过
+
+本人运行：
+/tmp/llm-inference-sanitizer-20261024/buffer_sanitized > gpu-kernel-lab/results/raw/2026-10-24-buffer-run.txt 2>&1
+echo $?
+cat gpu-kernel-lab/results/raw/2026-10-24-buffer-run.txt
+
+先验条件：size 前后均为 2，capacity 增长，values=7,9，copies=0，moves=2，状态 0，无 sanitizer 诊断。
+实际：size 2→2，capacity 2→3，其余符合预期；截图状态 0，原始日志无诊断。
+日志：../results/raw/2026-10-24-buffer-run.txt
+本人观察：../results/raw/2026-10-24-buffer-baseline-learner-observation.json
+未检测到错误不等于证明安全，不能外推全部输入。
+
+5. 五组复制测试初次运行：断言检查未通过，需修正重测
+
+本人运行五组 n=1/2/4/8/16，状态 0、五条 PASS、无 sanitizer 诊断。
+助手核对源码发现 b.data[i] 与自身比较，a.data[n-1] 与自身比较，未按先验协议验证内容和原件不变。当前不能记作五组测试验收通过。
+预期应独立于 actual，分别使用 i+1 和 n。断言未被 NDEBUG 禁用；此处是测试检查无效，不是已证实 Buffer 内存错误。
+原始源码：../results/raw/2026-10-24-copy-selfcompare-source.txt
+原始输出：../results/raw/2026-10-24-copy-selfcompare-output.txt
+本人观察：../results/raw/2026-10-24-copy-selfcompare-learner-observation.json
+下一步：本人修正两条断言，重跑并保存 ../results/raw/2026-10-24-copy-cases-fixed.txt。
+
+6. 五组复制纠正后复测：通过
+
+本人将元素预期改为 i+1，原件末项预期改为 n，重新构建运行。
+实际：n=1/2/4/8/16 均 PASS，本人报告状态 0，无 sanitizer 诊断。
+助手核对源码断言及实际构建 flags，无 NDEBUG；长度、存储独立、内容和原件不变检查均有效。
+本人解释深拷贝使 a 与 b 数据互不影响，原件末项仍为 n；题设 n=4，即 4。
+日志：../results/raw/2026-10-24-copy-cases-fixed.txt
+源码快照：../results/raw/2026-10-24-copy-fixed-source.txt
+本人观察：../results/raw/2026-10-24-copy-fixed-learner-observation.json
+复制五组经提示纠正后通过，移动五组尚待运行，不扩大为独立测试设计。
+
+7. 十组复制/移动测试合并运行：通过
+
+本人增加 check_move(n) 并运行现有 CMake 目标，状态 0。
+预期：n=1/2/4/8/16 各一组复制与移动，合计十组 PASS，无 sanitizer 诊断。
+实际：十组均 PASS，无诊断；源码、断言、构建 flags 已由助手只读核对，未代运行。
+复制检查：长度、不同地址、元素 i+1、修改副本后原件末项仍为 n。
+移动检查：长度、地址转移、元素 i+1、源 size=0 且源 data=nullptr；不解引用移动后的源。
+本人正确说明 old 不拥有内存，b 负责释放。
+日志：../results/raw/2026-10-24-ten-cases.txt
+源码快照：../results/raw/2026-10-24-ten-cases-source.txt
+本人观察：../results/raw/2026-10-24-ten-cases-learner-observation.json
+原文十组验收通过，测试由导师给出，复制断言曾经纠正，不记录为独立设计。
+
+8. P1 空输入运行前预测：通过，实际运行待验证
+
+只扩展 n=0。本人预测 size=0，不能访问 data[0]，直接 check_copy(0) 会被 assert(n>0) 阻止，三项正确。
+补充说明：没有可访问元素，不代表分配返回的指针一定为空。
+预期专门空输入测试：构造/复制/移动的 size 均为 0；移动后源 data=nullptr，目标保存转移前地址；不访问元素；正常析构后打印 empty n=0 PASS，状态 0，无 sanitizer 诊断。
+计划日志：../results/raw/2026-10-24-empty-buffer.txt
+实际运行与本人对局限的说明仍待反馈。
+
+9. P1 空输入运行：通过，局限待具体化
+
+本人添加 check_empty() 并在原十组后调用，重新构建运行。
+实际：状态 0，原十组仍通过，新增 copy / move / empty n=0 PASS，无 sanitizer 诊断。
+源码核对：a/b/c 长度为 0，b 移动后为空，c 保存转移前地址，无元素访问，内层作用域结束后才打印 PASS，正常析构释放已覆盖。断言未禁用，助手未代运行。
+日志：../results/raw/2026-10-24-empty-buffer.txt
+源码快照：../results/raw/2026-10-24-empty-buffer-source.txt
+本人观察：../results/raw/2026-10-24-empty-buffer-learner-observation.json
+本人局限原答“删除测试”不够具体；正常析构已覆盖，手动提前释放或重复释放故障路径未测。等待本人具体表述，不删除代码或证据，也不新增故障实验。
+
+10. P1 局限具体化：通过
+
+本人补答明确未测试手动提前释放、重复释放等错误路径。与已记录的 n=0 预期和实际结合，P1 通过。
+该表述在导师说明正常析构已覆盖后完成，不记作独立实验设计；不新增错误路径实测。
+
+11. 工具分类：通过；检测结论：仍需纠正
+
+本人正确回答释放后访问用 ASan，有符号整数溢出用 UBSan。
+本人第三项原答：“不能，应该给出当前的输入，说明在现在情况下，当前输入安全”。记录输入的想法正确，但无诊断仍不能证明当前输入安全；准确结论应为指定输入/配置的本次执行未被已启用工具检测出错误。
+等待本人在固定记录中复答，不提前判完整理解通过。
+
+12. 最终理解复答、固定记录与全日验收：通过
+
+本人记录五组复制、五组移动与空输入；准确结论为“在这些输入和配置下，本次执行未被已启用的检查工具检测出错误”。本人确认没有报错不能说明没有错误，检测结论经纠正通过。
+本人下一步：复习 C++ 学到的各种结构和代码。导师建议先复习 Buffer 复制/移动构造、所有权和独立预期断言，此细化为导师建议，不记作本人已完成。
+原始日志、本人结果与重要纠错、下一步均已保存，固定记录内容通过。原预算 10 分钟；本人报告全日 90 分钟，未单独报告固定项实际分钟数。
+最终本人记录：../results/raw/2026-10-24-final-learning-record.json
+正式逐项验收：../tests/2026-10-24-sanitizer-cases.md
+当日日记：../../日记/2026-10-24.md
+本日全项通过，无新增实验待补；尚未同步路线图网页勾选。未做独立 UBSan 故障实测，不作已实测结论。
+当前源码可能在后续课堂中修复；重现原故障应使用上述故障源码快照。
+
+13. 归档后复现说明（2026-10-24）
+
+工作目录：仓库根目录。g++ 15.2.0，CMake 4.2.3；仅 CPU 基础程序，无 GPU 性能结论。
+当前源码只整理缩进、末尾换行及已过时注释，可执行 token 不变；原始故障与本人运行时源码快照保持不变。ASan 报告行号对应当时快照。
+构建日志公开版中的本机项目根目录已替换为 <PROJECT_ROOT>，编译/链接选项和输出未改变；未脱敏原件仅保存在本地私有目录。
+
+复现当前十一组检查（五组复制、五组移动、一个空输入）：
+cmake -S gpu-kernel-lab/cpp-basics -B /tmp/llm-inference-sanitizer-repro -DCMAKE_BUILD_TYPE=Debug
+cmake --build /tmp/llm-inference-sanitizer-repro
+/tmp/llm-inference-sanitizer-repro/buffer_sanitized
+
+预期：size 2→2、capacity 增长、values=7,9、copies=0、moves=2；随后十组复制/移动 PASS 和 empty n=0 PASS，状态 0，无 sanitizer 诊断。确切 capacity 以实际标准库为准。
+
+复现修复后的最小示例：
+g++ -std=c++17 -Wall -Wextra -g -O0 -fsanitize=address,undefined -fno-omit-frame-pointer gpu-kernel-lab/cpp-basics/sanitizer_demo.cpp -o /tmp/sanitizer-demo-repro
+/tmp/sanitizer-demo-repro
+预期：输出 7，状态 0。
+
+复现原故障，需将 .txt 快照明确按 C++ 编译：
+g++ -x c++ -std=c++17 -g -O0 -fsanitize=address,undefined -fno-omit-frame-pointer gpu-kernel-lab/results/raw/2026-10-24-uaf-source.txt -o /tmp/sanitizer-uaf-repro
+/tmp/sanitizer-uaf-repro
+预期：heap-use-after-free，非零退出；这是故意保留的历史故障。
+
+上述复现命令是根据已验收源码编写的运行说明，归档时未重新运行学习程序。具体语法、快照和链接核对结果见 ../results/raw/2026-10-24-archive-audit.json。

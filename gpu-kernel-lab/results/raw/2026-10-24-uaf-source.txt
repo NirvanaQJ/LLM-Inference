@@ -1,0 +1,13 @@
+#include <iostream>
+#include <memory>
+
+int main() {
+    int* watch = nullptr;
+
+    {
+        auto owner = std::make_unique<int>(7);
+        watch = owner.get();
+    }
+
+    std::cout << *watch << '\n';  // 故意保留错误
+}

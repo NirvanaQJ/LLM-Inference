@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.16)
+project(CppMemoryChecks LANGUAGES CXX)
+
+add_executable(buffer_sanitized buffer.cpp)
+
+target_compile_features(buffer_sanitized PRIVATE cxx_std_17)
+
+target_compile_options(buffer_sanitized PRIVATE
+    -Wall
+    -Wextra
+    -g
+    -O0
+    -fsanitize=address,undefined
+    -fno-omit-frame-pointer
+    -fno-sanitize-recover=all
+)
+
+target_link_options(buffer_sanitized PRIVATE
+    -fsanitize=address,undefined
+)

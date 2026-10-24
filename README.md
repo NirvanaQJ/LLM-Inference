@@ -2,7 +2,7 @@
 
 这是我从 2026 年 10 月开始，面向 **LLM Inference Systems / GPU Systems** 岗位的学习、实验与求职工作区。学习主线为 Python / C++ / Linux → CUDA / Triton → 大模型推理 → vLLM / SGLang → GPU 性能分析；NCCL 与集群通信是与推理性能相连接的扩展方向。
 
-> **截至 2026-10-23：**23 日「template 基础」的 P0、固定项与 P1 全部通过：min/max 与过滤器的 int/double、边界及输入不变检查、实例化错误复现和修正、类型辨认纠错、析构作用域旧错复验与岗位核查均已有证据，见[当日日记](日记/2026-10-23.md)。本人按骨架填空并运行给定测试，不扩大为全程独立实现或排错掌握；实际用时尚未报告。此前 [22 日 STL 与 lambda](日记/2026-10-22.md)、[21 日移动语义及智能指针次日复答](日记/2026-10-21.md)和 [W02 周验收](week-02-review.md)的完整证据继续保留。
+> **截至 2026-10-24：**24 日「内存错误检查」的 P0、P1、固定记录与必要理解全部通过：CMake 在编译和链接阶段启用 ASan/UBSan，捕获并修复释放后访问，五组复制及五组移动测试无报错，另完成空输入扩展与局限记录，见[当日日记](日记/2026-10-24.md)。本人报告实际用时 90 分钟；按骨架填空、运行给定测试，断言和检测结论经过纠正，不扩大为独立实现或独立排错能力。此前 [23 日模板](日记/2026-10-23.md)、[22 日 STL 与 lambda](日记/2026-10-22.md)、[21 日移动语义](日记/2026-10-21.md)和 [W02 周验收](week-02-review.md)的完整证据继续保留。
 
 此前 10 月 5—8 日和 10—16 日均有 P0、P1 与固定项通过证据，13 日次日复答已于 14 日完成。9 日 P0 已通过，P1 与岗位核查固定项仍待验证，今日成果不自动补算旧欠账。当前成果主要是基础编程、日志统计和**模拟**延迟分析，尚无 CUDA、Triton、模型推理或通信性能实测。
 
@@ -11,7 +11,7 @@
 | 想找什么 | 入口 |
 | --- | --- |
 | 每天的任务、阶段目标和验收标准 | [交互式学习路线图](LLM-Inference-GPU-Systems-Roadmap-2026-2028.html) |
-| 实际完成情况、未通过项和完整证据链 | [日记索引](日记/README.md)；最近记录：[10 月 22 日](日记/2026-10-22.md)、[10 月 23 日](日记/2026-10-23.md) |
+| 实际完成情况、未通过项和完整证据链 | [日记索引](日记/README.md)；最近记录：[10 月 23 日](日记/2026-10-23.md)、[10 月 24 日](日记/2026-10-24.md) |
 | 两个实验项目的目标、目录及现状 | [LLM 推理实验](llm-inference-lab/README.md) · [GPU 算子实验](gpu-kernel-lab/README.md) |
 | 起点与路线图审核 | [基线技能记录](baseline-skills.md) · [路线图审核记录](Red-Team-Audit-2026-10-03.md) |
 
@@ -50,6 +50,7 @@
 | 两道哈希旧题复做 | [异位词复做](gpu-kernel-lab/python-basics/is_anagram_redo.py) · [两数求和复做](gpu-kernel-lab/python-basics/two_sum_hash_redo.py) | [八组异位词及复杂度](gpu-kernel-lab/tests/2026-10-21-anagram-redo-cases.md) · [P1 两边界、返回约定及复杂度](gpu-kernel-lab/tests/2026-10-21-two-sum-hash-redo-cases.md) |
 | STL 请求排序、分组与顺序限制 | [C++ 实现及测试调用](gpu-kernel-lab/cpp-basics/stl_stats.cpp) | [排序分组及迭代器验收](gpu-kernel-lab/tests/2026-10-22-stl-stats-cases.md) · [分组限制反例](gpu-kernel-lab/tests/2026-10-22-stl-stats-limits.md) · [10 月 22 日日记](日记/2026-10-22.md) |
 | 函数模板、可调用对象过滤器与实例化错误 | [min/max、过滤器与本人测试调用](gpu-kernel-lab/cpp-basics/templates.cpp) · [编译失败诊断](gpu-kernel-lab/results/raw/2026-10-23-template-error.txt) | [逐项验收与类型纠错](gpu-kernel-lab/tests/2026-10-23-templates-cases.md) · [析构旧错复验](gpu-kernel-lab/tests/2026-10-23-earliest-failure-recheck.md) · [10 月 23 日日记](日记/2026-10-23.md) |
+| CMake sanitizer、释放后访问与复制/移动测试 | [构建说明](gpu-kernel-lab/cpp-basics/CMakeLists.txt) · [操作与结果](gpu-kernel-lab/cpp-basics/sanitizer.txt) · [Buffer 测试](gpu-kernel-lab/cpp-basics/buffer.cpp) | [逐项验收及纠错](gpu-kernel-lab/tests/2026-10-24-sanitizer-cases.md) · [十组结果](gpu-kernel-lab/results/raw/2026-10-24-ten-cases.txt) · [空输入结果](gpu-kernel-lab/results/raw/2026-10-24-empty-buffer.txt) · [10 月 24 日日记](日记/2026-10-24.md) |
 | 大小写不敏感异位词变式 | [lower 后排序比较](gpu-kernel-lab/python-basics/is_anagram_ignore_case.py) | [六组边界、复杂度及纠错](gpu-kernel-lab/tests/2026-10-22-anagram-ignore-case-cases.md)；采用排序方案，不记作哈希实现证据 |
 
 10 月 3—4 日的路线图、审核、环境及最小 C++ 结果，见[日记索引](日记/README.md)和上方基线入口。表中 10 月 10 日生成、18 日沿用的延迟来自固定种子的随机数，**不是 GPU 测量结果**；两组数据的差异不代表性能变化，跨语言统计 PASS 也不能说明程序谁更快。

@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-24",
+  "evidence_kind": "learner_report_and_assistant_read_only_file_check",
+  "learner_reported_build_exit_status": 0,
+  "target": "buffer_sanitized",
+  "build_log": "gpu-kernel-lab/results/raw/2026-10-24-cmake-build.txt",
+  "cmake_snapshot": "gpu-kernel-lab/results/raw/2026-10-24-cmake-source.txt",
+  "cmake_sha256": "efb317efa17603cfe0b119ad7431a0bc5fba78557a37776d48e14457259ad5a9",
+  "compile_sanitizers_observed": "address,undefined",
+  "link_sanitizers_observed": "address,undefined",
+  "compile_flags_observed": [
+    "-Wall",
+    "-Wextra",
+    "-g",
+    "-O0",
+    "-fno-omit-frame-pointer",
+    "-fno-sanitize-recover=all"
+  ],
+  "cpp17_requirement": "target_compile_features cxx_std_17; no explicit -std flag in actual compiler command because compiler default can satisfy feature requirement",
+  "assistant_compiled_or_ran_program": false,
+  "limits": "Build passed; execution of this target and ten test cases still pending.",
+  "publication_copy": {
+    "date": "2026-10-24",
+    "redacted_log_field": "build_log",
+    "replacement": "local personal project root replaced with <PROJECT_ROOT> in four occurrences",
+    "unchanged": "compile/link flags, outputs and diagnostic content",
+    "original": "retained locally outside publication scope"
+  }
+}

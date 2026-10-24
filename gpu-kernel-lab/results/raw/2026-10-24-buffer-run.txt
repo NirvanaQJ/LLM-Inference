@@ -1,0 +1,7 @@
+before size=2 capacity=2
+move
+move
+after size=2 capacity=3
+values=7,9
+copies=0
+moves=2

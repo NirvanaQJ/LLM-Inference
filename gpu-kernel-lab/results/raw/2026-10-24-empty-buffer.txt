@@ -1,0 +1,30 @@
+before size=2 capacity=2
+move
+move
+after size=2 capacity=3
+values=7,9
+copies=0
+moves=2
+copy
+copy n=1 PASS
+copy
+copy n=2 PASS
+copy
+copy n=4 PASS
+copy
+copy n=8 PASS
+copy
+copy n=16 PASS
+move
+move n=1 PASS
+move
+move n=2 PASS
+move
+move n=4 PASS
+move
+move n=8 PASS
+move
+move n=16 PASS
+copy
+move
+empty n=0 PASS

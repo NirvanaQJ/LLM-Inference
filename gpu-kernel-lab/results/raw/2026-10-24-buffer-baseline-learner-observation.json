@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-24",
+  "evidence_kind": "learner_screenshot_and_assistant_read_only_file_check",
+  "exit_status_visible_in_screenshot": 0,
+  "log": "gpu-kernel-lab/results/raw/2026-10-24-buffer-run.txt",
+  "actual_log_text": "before size=2 capacity=2\nmove\nmove\nafter size=2 capacity=3\nvalues=7,9\ncopies=0\nmoves=2\n",
+  "expected": {
+    "size_before": 2,
+    "size_after": 2,
+    "capacity_relation": "after > before",
+    "values": [
+      7,
+      9
+    ],
+    "copies": 0,
+    "moves": 2,
+    "sanitizer_diagnostics": "none"
+  },
+  "actual": {
+    "size_before": 2,
+    "size_after": 2,
+    "capacity_before": 2,
+    "capacity_after": 3,
+    "values": [
+      7,
+      9
+    ],
+    "copies": 0,
+    "moves": 2,
+    "sanitizer_diagnostics": "none"
+  },
+  "source_snapshot": "gpu-kernel-lab/results/raw/2026-10-24-buffer-baseline-source.txt",
+  "source_sha256": "c6471f89300cb01fb939b9db7e4be7acd488fa89b3a4fc1262ed63d666488b83",
+  "learner_answer": "不能，因为这次运行只能证明当前输入没有内存问题",
+  "judgment": "Run matches prior expectation. Correctly rejects proof for all inputs; phrase proving current input safety corrected to no error detected in this execution.",
+  "assistant_compiled_or_ran_program": false
+}

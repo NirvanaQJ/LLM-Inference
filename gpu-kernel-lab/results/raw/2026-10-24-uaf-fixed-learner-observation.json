@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-24",
+  "evidence_kind": "learner_screenshot_and_assistant_read_only_file_check",
+  "exit_status_visible_in_screenshot": 0,
+  "expected_output": "7\n",
+  "actual_log_text": "7\n",
+  "source_snapshot": "gpu-kernel-lab/results/raw/2026-10-24-uaf-fixed-source.txt",
+  "source_sha256": "20cc13f993f1d41abbd56fb40e3829c8b2823a41448f3f0002104d146c151541",
+  "learner_explanation": "因为此时owner没有析构，watch指向的地址仍然有效",
+  "judgment": "Minimal example repair and explanation passed; not the required 10 cases.",
+  "assistant_compiled_or_ran_program": false,
+  "source_note": "Read moved inside owner scope. Old comment still says intentionally retain error; comment now outdated."
+}
