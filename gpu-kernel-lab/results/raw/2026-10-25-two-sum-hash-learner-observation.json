@@ -1,0 +1,29 @@
+{
+  "task_date": "2026-10-25",
+  "actor": "learner",
+  "evidence": "User terminal screenshot and explanation; assistant read-only source check, no repeated function execution.",
+  "working_directory": "<PROJECT_ROOT>",
+  "run_command": "python3 gpu-kernel-lab/python-basics/two_sum_hash_week03.py",
+  "expected_stdout": "ordinary: (1, 2)\nempty: None\nsingle: None\nduplicate: (0, 1)\nno_solution: None\nnegative: (0, 1)\nzero: (0, 2)\n",
+  "actual_stdout": "ordinary: (1, 2)\nempty: None\nsingle: None\nduplicate: (0, 1)\nno_solution: None\nnegative: (0, 1)\nzero: (0, 2)\n",
+  "run_exit_status": 0,
+  "learner_explanation": "为了避免自己加自己，返回相同的两个下标",
+  "assessment": {
+    "seven_outputs": "passed",
+    "run_exit_status": "passed",
+    "check_before_insert": "passed",
+    "complexity": "passed"
+  },
+  "source_path": "gpu-kernel-lab/python-basics/two_sum_hash_week03.py",
+  "source_sha256": "2e2ff4921ca1e13ffee92d7d79d1ba3d02e9e202f7d26d9b12fc1c2d0d439aad",
+  "source_snapshot": "def two_sum_hash(nums,target):\n    num_to_index={}\n    for i,num in enumerate(nums):\n        complement=target-num\n        if complement in num_to_index:\n            return (num_to_index[complement],i)\n        num_to_index[num]=i\n    return None\n\n\nprint(\"ordinary:\", two_sum_hash([8, 3, 6, 2], 9))\nprint(\"empty:\", two_sum_hash([], 9))\nprint(\"single:\", two_sum_hash([4], 8))\nprint(\"duplicate:\", two_sum_hash([4, 4], 8))\nprint(\"no_solution:\", two_sum_hash([1, 2, 4], 10))\nprint(\"negative:\", two_sum_hash([-3, 7, 2, 9], 4))\nprint(\"zero:\", two_sum_hash([0, 5, 0], 0))",
+  "function_ast_unchanged_from_assistant_check": true,
+  "guidance": "Learner supplied function; tutor supplied seven print calls. Whether learner consulted prior implementation was not reported.",
+  "complexity_followup": {
+    "learner_answer": "O（n）执行n次，最坏情况下比遍历了整个列表\nO（n） n条 最坏情况下记录了整个列表",
+    "assumption": "Dictionary lookup/write average O(1); n is input length.",
+    "assessment": "Passed: average time O(n), at most n iterations; worst additional space O(n), at most n dictionary entries.",
+    "tutor_precision": "Loops/entries can be fewer due to early return and duplicate keys; n is an upper bound, not an exact count on every input."
+  },
+  "overall_status": "passed"
+}

@@ -1,0 +1,105 @@
+{
+  "task_date": "2026-10-25",
+  "actor": "assistant",
+  "checkpoint": "two_sum_hash_first_function_check",
+  "source_path": "gpu-kernel-lab/python-basics/two_sum_hash_week03.py",
+  "source_sha256": "65fc226b767546806a1201ec2427d2b551d8b87f0c952a9808aa2e3f624e3ee7",
+  "source_snapshot": "def two_sum_hash(nums,target):\n    num_to_index={}\n    for i,num in enumerate(nums):\n        complement=target-num\n        if complement in num_to_index:\n            return (num_to_index[complement],i)\n        num_to_index[num]=i\n    return None",
+  "cases": [
+    {
+      "name": "ordinary",
+      "nums": [
+        8,
+        3,
+        6,
+        2
+      ],
+      "target": 9,
+      "expected_repr": "(1, 2)",
+      "actual_repr": "(1, 2)",
+      "actual_type": "tuple",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "nums": [],
+      "target": 9,
+      "expected_repr": "None",
+      "actual_repr": "None",
+      "actual_type": "NoneType",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "single",
+      "nums": [
+        4
+      ],
+      "target": 8,
+      "expected_repr": "None",
+      "actual_repr": "None",
+      "actual_type": "NoneType",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "duplicate",
+      "nums": [
+        4,
+        4
+      ],
+      "target": 8,
+      "expected_repr": "(0, 1)",
+      "actual_repr": "(0, 1)",
+      "actual_type": "tuple",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "no_solution",
+      "nums": [
+        1,
+        2,
+        4
+      ],
+      "target": 10,
+      "expected_repr": "None",
+      "actual_repr": "None",
+      "actual_type": "NoneType",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "negative",
+      "nums": [
+        -3,
+        7,
+        2,
+        9
+      ],
+      "target": 4,
+      "expected_repr": "(0, 1)",
+      "actual_repr": "(0, 1)",
+      "actual_type": "tuple",
+      "input_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "zero",
+      "nums": [
+        0,
+        5,
+        0
+      ],
+      "target": 0,
+      "expected_repr": "(0, 2)",
+      "actual_repr": "(0, 2)",
+      "actual_type": "tuple",
+      "input_unchanged": true,
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "limits": "Assistant auxiliary execution only; learner runtime, explanation and actual study time pending. No learner function edits by assistant."
+}

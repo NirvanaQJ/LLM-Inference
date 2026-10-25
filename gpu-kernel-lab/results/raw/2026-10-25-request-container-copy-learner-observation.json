@@ -1,0 +1,39 @@
+{
+  "task_date": "2026-10-25",
+  "checkpoint": "request_container_copy",
+  "actor": "learner",
+  "evidence": "User terminal screenshot and text answer; assistant read-only source check. No assistant compilation or execution.",
+  "working_directory": "<PROJECT_ROOT>",
+  "compile_command": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/request_container_week03.cpp -o /tmp/request_container_week03",
+  "compile_exit_status": 0,
+  "run_command": "/tmp/request_container_week03",
+  "expected_stdout": "2\nr1 model-A 30\nr1\nr9\n",
+  "actual_stdout": "2\nr1 model-A 30\nr1\nr9\n",
+  "run_exit_status": null,
+  "run_exit_status_note": "Latest run exit status is not displayed; earlier zeros belong to earlier runs or compilation.",
+  "learner_explanation": "因为修改副本不会影响原容器",
+  "assessment": {
+    "stdout": "passed",
+    "source_copy_and_mutation": "passed",
+    "run_exit_status": "passed_by_followup_confirmation",
+    "causal_explanation": "passed_after_teaching_via_reference_variant"
+  },
+  "source_path": "gpu-kernel-lab/cpp-basics/request_container_week03.cpp",
+  "source_sha256": "420b7b704b59c069ee2fb2b2e9f985d77325b4c886eaeb21b1921bc5aff995ad",
+  "source_snapshot": "#include <iostream>\n#include <vector>   \n#include <string>\n\nstruct Request {\n\n    std::string id;\n    std::string model;\n    double latency_ms;\n};\n\n\n\nint main(){\n    std::vector<Request> request_container;\n    request_container.reserve(2);\n    request_container.push_back({\"r1\", \"model-A\", 30.0});\n    request_container.push_back({\"r2\", \"model-B\", 10.0});\n\n    const auto& req = request_container;\n    std::cout <<request_container.size() << std::endl;\n    std::cout << req[0].id << \" \"\n              << req[0].model << \" \"\n              << req[0].latency_ms << \"\\n\";\n    std::vector<Request> copied = request_container;\n    copied[0].id=\"r9\";\n    std::cout << req[0].id << \"\\n\"\n                << copied[0].id << \"\\n\";\n}",
+  "source_notes": [
+    "req now aliases the complete original container; req[0] correctly reads the first original element.",
+    "copied is a separate vector value; only copied[0].id is modified."
+  ],
+  "followup_confirmation": {
+    "evidence": "Next user screenshot shows echo $? immediately after the latest copy-test run, with 0.",
+    "run_exit_status": 0,
+    "learner_reference_variant_answers": [
+      "r9",
+      "是原容器的别名"
+    ],
+    "reference_variant": "std::vector<Request>& copied = request_container; copied[0].id = \"r9\";",
+    "assessment": "Copy-vs-reference contrast understood after explanation; both answers correct. Paper prediction only; source retained value copy.",
+    "source_unchanged_since_copy_run": true
+  }
+}

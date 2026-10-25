@@ -1,0 +1,30 @@
+{
+  "task_date": "2026-10-25",
+  "checkpoint": "request_container_empty_guard",
+  "actor": "learner",
+  "evidence": "User terminal screenshot; assistant read-only source check. No assistant compilation or execution.",
+  "working_directory": "<PROJECT_ROOT>",
+  "compile_command": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/request_container_week03.cpp -o /tmp/request_container_week03",
+  "compile_exit_status": null,
+  "compile_observation": "Compile command shown, no diagnostic displayed, followed by program invocation. Numeric compile exit status not displayed.",
+  "run_command": "/tmp/request_container_week03",
+  "run_exit_status": 0,
+  "expected_stdout": "2\nr1 model-A 30\nr1\nr9\n0\nEMPTY\n",
+  "actual_stdout": "2\nr1 model-A 30\nr1\nr9\n0\nEMPTY\n",
+  "source_path": "gpu-kernel-lab/cpp-basics/request_container_week03.cpp",
+  "source_snapshot": "#include <iostream>\n#include <vector>   \n#include <string>\n\nstruct Request {\n\n    std::string id;\n    std::string model;\n    double latency_ms;\n};\n\nvoid print_first(const std::vector<Request>& requests) {\n    std::cout << requests.size() <<\"\\n\";\n    if (requests.empty()) {\n        std::cout << \"EMPTY\\n\";\n        return;\n    }\n    std::cout << requests[0].id << \" \"\n              << requests[0].model << \" \"\n              << requests[0].latency_ms << \"\\n\";\n}\n\n\n\nint main(){\n    std::vector<Request> request_container;\n    request_container.reserve(2);\n    request_container.push_back({\"r1\", \"model-A\", 30.0});\n    request_container.push_back({\"r2\", \"model-B\", 10.0});\n\n    const auto& req = request_container;\n    print_first(request_container);\n    std::vector<Request> copied = request_container;\n    copied[0].id=\"r9\";\n    std::cout << req[0].id << \"\\n\"\n                << copied[0].id << \"\\n\";\n    std::vector<Request> empty={};\n    print_first(empty);\n}",
+  "source_sha256": "f257c27e0466c252b1a7344a26cfacaaf613ef568b8760c4087ddda820cf770a",
+  "assessment": {
+    "ordinary_and_copy_stdout": "passed",
+    "empty_stdout": "passed",
+    "empty_guard_source": "passed; return occurs before requests[0] access",
+    "run_exit_status": "passed"
+  },
+  "guidance": "Function signature, required branch behavior and expected outputs were provided; learner filled function body and calls.",
+  "limits": [
+    "Normal and empty containers call the same helper; no test of empty access itself.",
+    "No sanitizer flags in the shown compile command.",
+    "Ownership cleanup and dangling-pointer understanding pending.",
+    "No claim of entirely unguided implementation."
+  ]
+}

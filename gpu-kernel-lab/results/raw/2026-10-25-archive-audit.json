@@ -1,0 +1,184 @@
+{
+  "date": "2026-10-25",
+  "purpose": "Daily learning archive and public redaction before user-authorized GitHub upload",
+  "moves": [],
+  "placement": "Existing project paths retained; no learning artifact needed moving.",
+  "formatting": [
+    {
+      "path": "gpu-kernel-lab/cpp-basics/request_container_week03.cpp",
+      "method": "C++ lexical token equality (including string literals and include order)",
+      "passed": true,
+      "before_sha256": "f257c27e0466c252b1a7344a26cfacaaf613ef568b8760c4087ddda820cf770a",
+      "after_sha256": "49e7474cf81127b57c83cf7c33babd0aadbd25181fde174d6d9dacad2a770549"
+    },
+    {
+      "path": "gpu-kernel-lab/python-basics/two_sum_hash_week03.py",
+      "method": "Python AST equality",
+      "passed": true,
+      "before_sha256": "2e2ff4921ca1e13ffee92d7d79d1ba3d02e9e202f7d26d9b12fc1c2d0d439aad",
+      "after_sha256": "03fafac2f06f9c090918b465b7d22f5dd89279788d2ed03d353994272d8297e5"
+    },
+    {
+      "path": "gpu-kernel-lab/python-basics/is_anagram_week03.py",
+      "method": "Python AST equality",
+      "passed": true,
+      "before_sha256": "f3d080a0fab9688ea83007d4f36fa3441d0d060f4c5c4c7a266971fcaf558268",
+      "after_sha256": "ca8bf5b588b5d63a19ef87baea69a349ad473ee7c3dc57637f815dbe7eb8770b"
+    }
+  ],
+  "historical_evidence": "All earlier source snapshots, results, wrong answers, corrections and missing-status observations are retained. Current source differs only in formatting; use historical snapshots for original line positions.",
+  "redaction": {
+    "changed_public_files": [
+      "week-03-review.md",
+      "日记/2026-10-25.md",
+      "gpu-kernel-lab/results/raw/2026-10-25-final-learning-record.json"
+    ],
+    "changes": "Personal schedule feedback omitted; unredacted originals retained locally in ignored private storage. Learning answers, numerical results, exit statuses and 90/30-minute report unchanged.",
+    "excluded": [
+      "private calendar and other career-private material",
+      "hardware configuration",
+      "editor configuration",
+      "virtual environment",
+      "temporary builds",
+      "screenshots"
+    ],
+    "private_backups_linked_from_public_files": false,
+    "scan_findings": [],
+    "scan_scope": "Only the explicit current-day upload manifest; no claim to retroactively redact existing published history."
+  },
+  "validation": {
+    "cpp": "C++17 -Wall -Wextra syntax-only check passed after formatting.",
+    "python": "Both files parse and whole-module AST equals pre-format versions.",
+    "cpp_equivalence": "C++ token stream equals pre-format version, including literals and include order.",
+    "historical_json": "Existing records parse; source snapshots retain their original hashes.",
+    "program_reruns": "None during this archive; reuse recorded learner and assistant checks.",
+    "links": {
+      "checker_counts": {
+        "ok": 301,
+        "needs_review": 10
+      },
+      "markdown_fragments_reviewed": 10,
+      "all_fragments_matched": true,
+      "errors": [],
+      "external_links": "Not fetched; no new or changed external URLs."
+    },
+    "historical_snapshot_hashes_checked": 7,
+    "json_records_checked": 9
+  },
+  "publish_identity": "GitHub public login with verified account-id-based noreply address; no change to global Git identity or existing history.",
+  "files": [
+    {
+      "path": "README.md",
+      "before_sha256": "8494a3cf9221cdffbff0774761c94e7089e9225e77e385e45053037e0875cfcd",
+      "after_sha256": "8494a3cf9221cdffbff0774761c94e7089e9225e77e385e45053037e0875cfcd"
+    },
+    {
+      "path": "日记/README.md",
+      "before_sha256": "47787d7411f5727caebc7f88aea75a594b54a85f2fb454873a0c8c58a5568bf8",
+      "after_sha256": "47787d7411f5727caebc7f88aea75a594b54a85f2fb454873a0c8c58a5568bf8"
+    },
+    {
+      "path": "gpu-kernel-lab/tests/algorithm-errors.md",
+      "before_sha256": "6d9e46776d4d375508ae0c58756bf35ece122f6815581fc78d59f54821dbd173",
+      "after_sha256": "6d9e46776d4d375508ae0c58756bf35ece122f6815581fc78d59f54821dbd173"
+    },
+    {
+      "path": "week-03-review.md",
+      "before_sha256": "aec974097bd108ae5345759555fe791ba86af2955302383cba98f34ddbbb8343",
+      "after_sha256": "d775e8b2edd7c727874f0724f2290a1be854a7f2a585313cb9ef0bd3c728ad12"
+    },
+    {
+      "path": "日记/2026-10-25.md",
+      "before_sha256": "11fa4861ed8fabe43d460166064d8f682b1a139ad1c83ac4f4eaa41e68de9d71",
+      "after_sha256": "168876a22c2c2d35d4fa96917fac9e5c1a4b455554c48310d62a42c40147a747"
+    },
+    {
+      "path": "gpu-kernel-lab/cpp-basics/request_container_week03.cpp",
+      "before_sha256": "f257c27e0466c252b1a7344a26cfacaaf613ef568b8760c4087ddda820cf770a",
+      "after_sha256": "49e7474cf81127b57c83cf7c33babd0aadbd25181fde174d6d9dacad2a770549"
+    },
+    {
+      "path": "gpu-kernel-lab/python-basics/two_sum_hash_week03.py",
+      "before_sha256": "2e2ff4921ca1e13ffee92d7d79d1ba3d02e9e202f7d26d9b12fc1c2d0d439aad",
+      "after_sha256": "03fafac2f06f9c090918b465b7d22f5dd89279788d2ed03d353994272d8297e5"
+    },
+    {
+      "path": "gpu-kernel-lab/python-basics/is_anagram_week03.py",
+      "before_sha256": "f3d080a0fab9688ea83007d4f36fa3441d0d060f4c5c4c7a266971fcaf558268",
+      "after_sha256": "ca8bf5b588b5d63a19ef87baea69a349ad473ee7c3dc57637f815dbe7eb8770b"
+    },
+    {
+      "path": "gpu-kernel-lab/tests/2026-10-25-week03-two-sum-cases.md",
+      "before_sha256": "59270c7680d73c6c3a7d73a77c0b92add2e92e69ce01ff55be8123691b29c78a",
+      "after_sha256": "59270c7680d73c6c3a7d73a77c0b92add2e92e69ce01ff55be8123691b29c78a"
+    },
+    {
+      "path": "gpu-kernel-lab/tests/2026-10-25-week03-anagram-cases.md",
+      "before_sha256": "f338efd3d10b75679706befeb506fc89561b89eab490bc52fe628fd1f2653bc2",
+      "after_sha256": "f338efd3d10b75679706befeb506fc89561b89eab490bc52fe628fd1f2653bc2"
+    },
+    {
+      "path": "gpu-kernel-lab/results/raw/2026-10-25-anagram-assistant-check.json",
+      "before_sha256": "df4f04f23933f14228d7b84b76df5463ce05baad67836e1b70f7e0d82ee1181a",
+      "after_sha256": "df4f04f23933f14228d7b84b76df5463ce05baad67836e1b70f7e0d82ee1181a"
+    },
+    {
+      "path": "gpu-kernel-lab/results/raw/2026-10-25-anagram-learner-observation.json",
+      "before_sha256": "080b56f027c6c19c1e898e859cc0d384c8025ac597198a4f46edb3460d6c0204",
+      "after_sha256": "080b56f027c6c19c1e898e859cc0d384c8025ac597198a4f46edb3460d6c0204"
+    },
+    {
+      "path": "gpu-kernel-lab/results/raw/2026-10-25-final-learning-record.json",
+      "before_sha256": "9be58fde79a7b7dfd65859b8ea59a21f7cd32f6005528561f1849bf3b1ec9fd6",
+      "after_sha256": "2b13841b2d92d192e81f4f829c10ca51917fe7ed2bd89bbdebc2988569857940"
+    },
+    {
+      "path": "gpu-kernel-lab/results/raw/2026-10-25-request-container-copy-learner-observation.json",
+      "before_sha256": "2659ab4c496caa65803bf6586b2bfc2365dfe57c7da1b5a582c24b819dae32b2",
+      "after_sha256": "2659ab4c496caa65803bf6586b2bfc2365dfe57c7da1b5a582c24b819dae32b2"
+    },
+    {
+      "path": "gpu-kernel-lab/results/raw/2026-10-25-request-container-empty-learner-observation.json",
+      "before_sha256": "aa505fc46f5448a284b019403fd62e97a6144fa3d9435099b5c91f28cd5ef7c2",
+      "after_sha256": "aa505fc46f5448a284b019403fd62e97a6144fa3d9435099b5c91f28cd5ef7c2"
+    },
+    {
+      "path": "gpu-kernel-lab/results/raw/2026-10-25-request-container-ordinary-learner-observation.json",
+      "before_sha256": "4957574ebcc09ccfbd21a7d5f44c2b2e7697fba2374d1932507aa71a21a1d24a",
+      "after_sha256": "4957574ebcc09ccfbd21a7d5f44c2b2e7697fba2374d1932507aa71a21a1d24a"
+    },
+    {
+      "path": "gpu-kernel-lab/results/raw/2026-10-25-two-sum-hash-assistant-check.json",
+      "before_sha256": "d50ca4d95c4bd08f4b66533b346a08af12e740709389b484f322f7ee23fe87af",
+      "after_sha256": "d50ca4d95c4bd08f4b66533b346a08af12e740709389b484f322f7ee23fe87af"
+    },
+    {
+      "path": "gpu-kernel-lab/results/raw/2026-10-25-two-sum-hash-learner-observation.json",
+      "before_sha256": "24d49b67fe85abb2639a0a50fce0dd68a96b0b260055ce73317ac93aac9fdb98",
+      "after_sha256": "24d49b67fe85abb2639a0a50fce0dd68a96b0b260055ce73317ac93aac9fdb98"
+    }
+  ],
+  "self_hash_note": "Audit excludes its own content hash to avoid recursion; final tree content is tracked by Git.",
+  "upload_file_count": 19,
+  "upload_manifest": [
+    "README.md",
+    "日记/README.md",
+    "gpu-kernel-lab/tests/algorithm-errors.md",
+    "week-03-review.md",
+    "日记/2026-10-25.md",
+    "gpu-kernel-lab/cpp-basics/request_container_week03.cpp",
+    "gpu-kernel-lab/python-basics/two_sum_hash_week03.py",
+    "gpu-kernel-lab/python-basics/is_anagram_week03.py",
+    "gpu-kernel-lab/tests/2026-10-25-week03-two-sum-cases.md",
+    "gpu-kernel-lab/tests/2026-10-25-week03-anagram-cases.md",
+    "gpu-kernel-lab/results/raw/2026-10-25-anagram-assistant-check.json",
+    "gpu-kernel-lab/results/raw/2026-10-25-anagram-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-25-final-learning-record.json",
+    "gpu-kernel-lab/results/raw/2026-10-25-request-container-copy-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-25-request-container-empty-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-25-request-container-ordinary-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-25-two-sum-hash-assistant-check.json",
+    "gpu-kernel-lab/results/raw/2026-10-25-two-sum-hash-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-25-archive-audit.json"
+  ]
+}

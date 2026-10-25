@@ -1,0 +1,23 @@
+{
+  "task_date": "2026-10-25",
+  "checkpoint": "ordinary_request_container",
+  "actor": "learner",
+  "evidence": "User-provided terminal screenshot; assistant read-only source verification. Assistant did not compile or run.",
+  "working_directory": "<PROJECT_ROOT>",
+  "compile_command": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/request_container_week03.cpp -o /tmp/request_container_week03",
+  "compile_exit_status": 0,
+  "run_command": "/tmp/request_container_week03",
+  "expected_stdout": "2\nr1 model-A 30\n",
+  "actual_stdout": "2\nr1 model-A 30\n",
+  "run_exit_status": 0,
+  "status": "passed_after_local_guidance",
+  "source_path": "gpu-kernel-lab/cpp-basics/request_container_week03.cpp",
+  "source_sha256": "53ec615011ddb9f5417d34a4668be7f7847697a846029fde58f9970c2c6e5a06",
+  "source_snapshot": "#include <iostream>\n#include <vector>   \n#include <string>\n\nstruct Request {\n\n    std::string id;\n    std::string model;\n    double latency_ms;\n};\n\n\n\nint main(){\n    std::vector<Request> request_container;\n    request_container.reserve(2);\n    request_container.push_back({\"r1\", \"model-A\", 30.0});\n    request_container.push_back({\"r2\", \"model-B\", 10.0});\n\n    const auto& req = request_container[0];\n    std::cout <<request_container.size() << std::endl;\n    std::cout << req.id << \" \"\n              << req.model << \" \"\n              << req.latency_ms << \"\\n\";\n}",
+  "limits": [
+    "Ordinary two-request case only.",
+    "Copy independence, empty input, cleanup and reference lifetime understanding remain pending.",
+    "No sanitizer enabled in this compile command.",
+    "No claim of fully unguided independent implementation."
+  ]
+}

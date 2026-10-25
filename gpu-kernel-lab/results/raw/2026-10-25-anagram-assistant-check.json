@@ -1,0 +1,84 @@
+{
+  "task_date": "2026-10-25",
+  "actor": "assistant",
+  "evidence": "Assistant auxiliary execution of the learner saved function; no edits to learner implementation.",
+  "source_path": "gpu-kernel-lab/python-basics/is_anagram_week03.py",
+  "source_snapshot": "def is_anagram(s,t):\n    count_s={}\n    count_t={}\n\n    for ch in s:\n        count_s[ch]=count_s.get(ch,0)+1\n    for ch in t:\n        count_t[ch]=count_t.get(ch,0)+1\n    return count_s==count_t",
+  "source_sha256": "6d160b8d316c80437d6a7ce426397f4ac1d6cd2066b63d7ac28667eb5094329d",
+  "cases": [
+    {
+      "name": "ordinary",
+      "s": "tea",
+      "t": "eat",
+      "expected": true,
+      "actual": true,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "different_counts",
+      "s": "aab",
+      "t": "abb",
+      "expected": false,
+      "actual": false,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "both_empty",
+      "s": "",
+      "t": "",
+      "expected": true,
+      "actual": true,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "one_empty",
+      "s": "",
+      "t": "a",
+      "expected": false,
+      "actual": false,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "repeated",
+      "s": "aabb",
+      "t": "baba",
+      "expected": true,
+      "actual": true,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "different_lengths",
+      "s": "ab",
+      "t": "aab",
+      "expected": false,
+      "actual": false,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "different_letters",
+      "s": "ab",
+      "t": "ac",
+      "expected": false,
+      "actual": false,
+      "actual_type": "bool",
+      "passed": true
+    },
+    {
+      "name": "identical",
+      "s": "abc",
+      "t": "abc",
+      "expected": true,
+      "actual": true,
+      "actual_type": "bool",
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "limits": "Learner runtime and complexity explanation pending; tutor did not provide function body. Whether learner referred to prior code is not reported."
+}

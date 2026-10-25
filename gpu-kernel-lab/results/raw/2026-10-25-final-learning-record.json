@@ -1,0 +1,21 @@
+{
+  "task_date": "2026-10-25",
+  "actual_study_date": "2026-10-25",
+  "source": "Direct user reply to closing questions; public copy redacts personal calendar details only.",
+  "learner_reply": "[个人安排已省略；未脱敏原件仅留本地]\n今天90分钟，30分钟\n按你的安排",
+  "total_minutes_reported": 90,
+  "redo_and_week_review_minutes_reported": 30,
+  "subset_of_total": true,
+  "measurement": "Learner estimate/report; no independent timer or separate per-task measurements.",
+  "next_task_date": "2026-10-26",
+  "next_task_title": "进程与 syscall",
+  "next_focus_preference": "按你的安排",
+  "calendar_update": "Local private weekly calendar updated; personal schedule details withheld from public copy.",
+  "next_class_started": false,
+  "browser_progress_synced": false,
+  "redaction": {
+    "personal_schedule_details": "omitted from public JSON and public Markdown",
+    "learning_answers_and_timings": "unchanged",
+    "unredacted_backup": "retained locally in ignored private storage; not linked or uploaded"
+  }
+}
