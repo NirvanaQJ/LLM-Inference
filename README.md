@@ -1,23 +1,76 @@
-# LLM Inference / GPU Systems 学习与实验项目
+# LLM Inference / GPU Systems
 
-这是我从 2026 年 10 月开始，面向 **LLM Inference Systems / GPU Systems** 岗位的学习、实验与求职工作区。学习主线为 Python / C++ / Linux → CUDA / Triton → 大模型推理 → vLLM / SGLang → GPU 性能分析；NCCL 与集群通信是与推理性能相连接的扩展方向。
+面向 **LLM Inference Systems / GPU Systems** 岗位的个人学习与实验仓库，始于 2026 年 10 月。
 
-> **截至 2026-10-26：**当天「进程与 syscall」的 P0、P1、固定链表/栈模板及必要理解全部通过：本人按骨架和局部示例编写并运行 fork/exec/waitpid 程序，保存真实 strace，辨认 clone/execve/wait4；核对本实验无遗留僵尸进程，完成不存在执行路径的边界与退出码测试；栈空值/零值、链表空链/单节点/重复值及原节点复用检查均通过，复杂度理由经纠正后复答通过。本人报告全日学习 **2 小时（120 分钟）**，详见[当日日记与逐项验收](日记/2026-10-26.md)。教学含骨架、文字提示和纠错，不扩大为无提示独立掌握。此前 [W03 周验收](week-03-review.md)与历史证据保留。下一课为 27 日「文件描述符」，尚未启动。
+学习主线：**Python / C++ / Linux → CUDA / Triton → 大模型推理 → vLLM / SGLang → GPU 性能分析**。NCCL 与集群通信作为连接推理性能的扩展方向。
 
-此前 10 月 5—8 日和 10—16 日均有 P0、P1 与固定项通过证据，13 日次日复答已于 14 日完成。9 日 P0 已通过，P1 与岗位核查固定项仍待验证，今日成果不自动补算旧欠账。当前成果主要是基础编程、日志统计和**模拟**延迟分析，尚无 CUDA、Triton、模型推理或通信性能实测。
+[学习路线图](LLM-Inference-GPU-Systems-Roadmap-2026-2028.html) · [学习日记](日记/README.md) · [核心项目](#两个核心项目) · [代表成果](#代表性成果) · [完整索引](#完整成果索引)
 
-## 从哪里开始
+## 当前进度
 
-| 想找什么 | 入口 |
+> **最近完成：2026-10-26「进程与 syscall」**。P0、P1、链表与栈固定练习及必要理解全部通过，实际学习 2 小时。[查看当日成果与验收](日记/2026-10-26.md)
+
+| 项目 | 当前状态 |
 | --- | --- |
-| 每天的任务、阶段目标和验收标准 | [交互式学习路线图](LLM-Inference-GPU-Systems-Roadmap-2026-2028.html) |
-| 实际完成情况、未通过项和完整证据链 | [日记索引](日记/README.md)；最近记录：[10 月 25 日](日记/2026-10-25.md)、[10 月 26 日](日记/2026-10-26.md) |
-| 两个实验项目的目标、目录及现状 | [LLM 推理实验](llm-inference-lab/README.md) · [GPU 算子实验](gpu-kernel-lab/README.md) |
-| 起点与路线图审核 | [基线技能记录](baseline-skills.md) · [路线图审核记录](Red-Team-Audit-2026-10-03.md) |
+| 所处阶段 | A 阶段 · W04：Linux、进程与第一版简历 |
+| 已有成果 | Python 数据处理与算法模板、C++ 内存与工具链练习、Linux 进程实验 |
+| 最近周验收 | [W03：请求容器与哈希复做](week-03-review.md)通过；[W01](week-01-review.md)、[W02](week-02-review.md)记录保留 |
+| 下一任务 | 2026-10-27「文件描述符」：文件读写、pipe 与重定向，尚未启动 |
+| 待验证范围 | CUDA / Triton 算子性能、模型推理服务性能及多卡通信性能尚无实测成果 |
 
-**阅读方式：**路线图写计划；日记记录实际操作和验收，补学明确区分任务日期与实际学习日期；下面的主题索引只选关键文件。需要复现时，从对应日记进入测试记录和原始数据。路线图网页中的勾选状态保存在浏览器本地，不会因提交日记而自动同步。
+通过记录包含骨架、示例指导与纠错，具体帮助程度见各次验收。10 月 9 日的 P1 与岗位核查固定项仍待验证，后续完成记录不补算历史欠账。
 
-## 成果索引（按主题）
+## 两个核心项目
+
+| 项目 | 目标 | 目前进展 |
+| --- | --- | --- |
+| [GPU 算子实验](gpu-kernel-lab/README.md) | 从正确性与边界测试出发，用 CUDA / Triton 实现并测量算子 | 已有 Python、C++、Linux 基础代码和测试；后续开展 GPU 实验 |
+| [LLM 推理性能实验](llm-inference-lab/README.md) | 建立可复现的单卡服务基线，结合负载、源码和性能分析验证改进假设 | 已建立目录与实验约定；模型服务基线和优化实验尚未形成 |
+
+两个项目共享“**实现 → 测试 → 原始结果 → 分析**”的记录方式；各子项目 README 说明文件放置与实验要求。
+
+## 代表性成果
+
+先从下面几项了解当前工作。详细输入、运行输出、边界条件与理解检查均可从验收记录继续追溯。
+
+| 方向 | 实现 / 数据 | 验证内容 |
+| --- | --- | --- |
+| Linux 进程与系统调用 | [进程程序](gpu-kernel-lab/cpp-basics/process.cpp) · [真实 strace](gpu-kernel-lab/profiles/2026-10-26/trace.txt) | [父子 PID、执行替换、回收与失败路径](gpu-kernel-lab/tests/2026-10-26-process-cases.md) |
+| C++ 内存安全与构建 | [CMake](gpu-kernel-lab/cpp-basics/CMakeLists.txt) · [Buffer](gpu-kernel-lab/cpp-basics/buffer.cpp) | [sanitizer 定位、复制/移动与十组测试](gpu-kernel-lab/tests/2026-10-24-sanitizer-cases.md) |
+| 资源与所有权 | [文件句柄 RAII](gpu-kernel-lab/cpp-basics/file_guard.cpp) · [智能指针](gpu-kernel-lab/cpp-basics/ownership.cpp) | [正常/异常关闭与拷贝保护](gpu-kernel-lab/tests/2026-10-19-file-guard-cases.md) · [循环引用与弱观察](gpu-kernel-lab/tests/2026-10-20-ownership-cases.md) |
+| Python / C++ 数据对照 | [C++ CSV 统计](gpu-kernel-lab/cpp-basics/stats_cli.cpp) · [Python 自动对照](gpu-kernel-lab/python-basics/compare.py) | [同输入统计、边界与类型转换](gpu-kernel-lab/tests/2026-10-17-python-cpp-cases.md) |
+| 基础数据结构 | [安全出栈](gpu-kernel-lab/python-basics/stack_basics.py) · [原地链表反转](gpu-kernel-lab/python-basics/linked_list_basics.py) | [空栈与零值](gpu-kernel-lab/tests/2026-10-26-stack-cases.md) · [链表边界、节点身份与复杂度](gpu-kernel-lab/tests/2026-10-26-linked-list-cases.md) |
+| 模拟延迟分析 | [分析脚本](gpu-kernel-lab/python-basics/analyze.py) · [分布图](gpu-kernel-lab/results/figures/latency.svg) | [固定种子数据的统计与排序核对](gpu-kernel-lab/tests/2026-10-10-latency-cases.md) |
+
+延迟分析使用固定种子的随机数，属于**模拟数据**。100 条与 120 条两组结果的差异不代表性能变化，跨语言统计一致也不能说明程序谁更快。
+
+## 学习与复现
+
+| 目的 | 从这里进入 |
+| --- | --- |
+| 查看每天的任务、预算和验收标准 | [交互式学习路线图](LLM-Inference-GPU-Systems-Roadmap-2026-2028.html)，下载后用浏览器打开 |
+| 接着上次进度学习 | [日记索引](日记/README.md) → 最近记录的“备注”；[10 月 26 日](日记/2026-10-26.md)已保存下一课起点 |
+| 重跑已有练习 | 对应日记中的复现命令 → 源码与测试 → 原始 expected/actual；[最近实验复现入口](日记/2026-10-26.md#复现入口与关键环境) |
+| 查看周总结与能力边界 | [W01](week-01-review.md) · [W02](week-02-review.md) · [W03](week-03-review.md) |
+| 了解起点与路线审核 | [基线技能](baseline-skills.md) · [路线图审核](Red-Team-Audit-2026-10-03.md) |
+
+路线图记录计划，日记记录实际完成情况；运行命令、依赖和输入以对应实验记录为准。补学会分别注明任务日期与实际学习日期。
+
+## 阶段路线
+
+| 时间 | 重点 | 计划产出 |
+| --- | --- | --- |
+| 2026 年 10—12 月 | Python、C++、Linux 与 GPU 基础 | 基础练习与首批 CUDA Kernel 实验 |
+| 2026 年 12 月—2027 年 2 月 | Triton、推理机制、vLLM 源码与单卡服务 | 两个核心项目第一版、简历迭代 |
+| 2027 年 2—6 月 | 性能实验迭代、算法、模拟面试与实习投递 | 可复现项目与面试准备记录 |
+| 2027 年夏—2028 年毕业 | 实习转正、提前批、秋招与毕业要求 | 持续维护的项目和求职材料 |
+
+具体日任务、优先级与延期调整以[路线图](LLM-Inference-GPU-Systems-Roadmap-2026-2028.html)为准；未来招聘时间需核对企业官方公告。
+
+## 完整成果索引
+
+<details>
+<summary>展开全部主题、实现文件与验收证据</summary>
 
 | 主题 | 实现与数据 | 验收和日期 |
 | --- | --- | --- |
@@ -56,32 +109,32 @@
 | 栈与单链表反转模板 | [安全出栈](gpu-kernel-lab/python-basics/stack_basics.py) · [原地链表反转](gpu-kernel-lab/python-basics/linked_list_basics.py) | [栈边界与复杂度](gpu-kernel-lab/tests/2026-10-26-stack-cases.md) · [链表边界、节点身份与复杂度](gpu-kernel-lab/tests/2026-10-26-linked-list-cases.md) |
 | 大小写不敏感异位词变式 | [lower 后排序比较](gpu-kernel-lab/python-basics/is_anagram_ignore_case.py) | [六组边界、复杂度及纠错](gpu-kernel-lab/tests/2026-10-22-anagram-ignore-case-cases.md)；采用排序方案，不记作哈希实现证据 |
 
-10 月 3—4 日的路线图、审核、环境及最小 C++ 结果，见[日记索引](日记/README.md)和上方基线入口。表中 10 月 10 日生成、18 日沿用的延迟来自固定种子的随机数，**不是 GPU 测量结果**；两组数据的差异不代表性能变化，跨语言统计 PASS 也不能说明程序谁更快。
+</details>
 
-## 项目结构与记录规则
+早期路线、环境与最小 C++ 结果见[日记索引](日记/README.md)。复做与同题族变式保留各自证据，不重复计作多道独立新题。
 
-| 目录 | 用途与详细说明 |
-| --- | --- |
-| [`llm-inference-lab/`](llm-inference-lab/) | 模型推理实验；配置、负载、脚本、原始结果、图表、性能分析、源码阅读和通信分析的放置规则见[项目 README](llm-inference-lab/README.md)。目前尚无可复现的推理性能结果。 |
-| [`gpu-kernel-lab/`](gpu-kernel-lab/) | Python / C++ 基础练习及后续 CUDA / Triton 算子实验；代码、测试、基准、原始结果和图表的放置规则见[项目 README](gpu-kernel-lab/README.md)。目前尚无已验证的 GPU 算子性能结果。 |
-| [`日记/`](日记/) | 按 Asia/Shanghai 日期保存真实成果、验收状态、复现信息和待办；完整日期列表见[日记索引](日记/README.md)。 |
+## 目录与记录约定
 
-现有基础练习已放在对应项目目录；其余子目录供后续任务使用，空目录通过 `.gitkeep` 保留。新增成果先保存代码、输入、原始结果和分析，再从当日日记链接过去。性能结论需要硬件与软件版本、测试参数、计时方法及原始数据；失败或没有收益的结果也如实记录。
+```text
+.
+├── README.md                                      # 项目总览与成果入口
+├── LLM-Inference-GPU-Systems-Roadmap-2026-2028.html  # 交互式学习计划
+├── gpu-kernel-lab/                                 # 基础练习与后续 GPU 算子实验
+├── llm-inference-lab/                              # 推理服务、源码与性能实验
+├── 日记/                                          # 按实际学习日期记录成果与待办
+└── week-*-review.md                                # 每周验收与复盘
+```
 
-## 阶段目标
+**文件归属：**源码放在相应项目的代码目录，测试放 `tests/`，原始结果放 `results/raw/`，图表放 `results/figures/`，跟踪记录放 `profiles/`；其余目录约定见各子项目说明。预留空目录由 `.gitkeep` 保留。
 
-1. **2026 年 10—12 月：**补 Python、C++、Linux 和 GPU 基础，开始 CUDA Kernel 实验。
-2. **2026 年 12 月—2027 年 2 月：**完成 Triton、推理机制、vLLM 源码阅读和单卡推理性能项目的第一版；同步准备简历。
-3. **2027 年 2—6 月：**迭代两个核心项目，同时投递暑期实习、练习算法和模拟面试。
-4. **2027 年夏—2028 年毕业：**围绕实习转正、提前批与秋招推进，维护可复现项目和毕业要求。
+**实验记录：**保存工作目录、命令、版本、输入、预期与实际结果，再从日记链接过去。性能结论还需硬件、负载、计时方法与原始数据；失败、零收益和负收益同样记录。
 
-逐日任务、优先级与延期后的调整方式以[交互式学习路线图](LLM-Inference-GPU-Systems-Roadmap-2026-2028.html)为准；未来招聘日期需以企业官方公告核对。
+<details>
+<summary>本地资料与路线图进度备份</summary>
 
-## 本地私有资料与网页进度
+- `career-private/` 保存简历、投递、面试与备份；`llm-inference-lab/configs/hardware.json` 是本机环境快照，均只在本地保存。
+- `work/` 用于页面构建、截图与临时验证。上述内容通过 [`.gitignore`](.gitignore) 排除，公开提交前仍需核对文件内容。
+- 路线图的勾选、周记录和岗位信息保存在当前浏览器的本地存储中；日记归档不会自动同步网页状态。
+- 每周从路线图导出 JSON 到本地私有目录；更换浏览器、设备或文件路径后，通过页面导入功能恢复进度。
 
-- `career-private/` 保存简历、投递、面试、规划与备份；10 月 9 日的岗位筛选报告也在这里。报告已有岗位要求对照和下一步，个人资格与可出勤时间仍待核查。这些资料不提交公开仓库。
-- `llm-inference-lab/configs/hardware.json` 是本机硬件与软件环境快照，只在本地保存；公开性能报告可另写经过筛选的硬件摘要。
-- `work/` 用于页面构建、截图和临时验证，不作为项目成果提交。
-- 路线图中的勾选、周记录和岗位信息保存在**当前浏览器的本地存储**中。每周从页面导出 JSON 备份并放在本地私有目录；更换浏览器、设备或文件路径后，使用页面的导入功能恢复。
-
-上述私有路径已写入 [`.gitignore`](.gitignore)。公开提交前仍要检查待提交文件，确认没有个人资料、凭据或不准备公开的数据。
+</details>
