@@ -1,0 +1,51 @@
+{
+  "archive_date": "2026-10-26",
+  "operator": "assistant",
+  "task": "Archive verified daily learning results; prepare local Git commit for user to push.",
+  "learning_status": "P0, P1, stack and linked-list routine, and necessary understanding checks passed with recorded guidance.",
+  "learner_reported_total_minutes": 120,
+  "file_moves": [],
+  "local_link_check": {
+    "tool": "roadmap-daily-journal/scripts/check_local_links.py",
+    "files_checked": [
+      "README.md",
+      "日记/README.md",
+      "日记/2026-10-26.md",
+      "gpu-kernel-lab/tests/2026-10-26-process-cases.md",
+      "gpu-kernel-lab/tests/2026-10-26-stack-cases.md",
+      "gpu-kernel-lab/tests/2026-10-26-linked-list-cases.md"
+    ],
+    "automatic_counts": {
+      "ok": 253,
+      "needs_review": 3,
+      "external_unchecked": 7
+    },
+    "manual_anchor_reviews": [
+      {
+        "source": "README.md",
+        "target": "gpu-kernel-lab/python-basics/README.md#pythonc-csv-%E7%BB%9F%E8%AE%A1%E5%AF%B9%E7%85%A7",
+        "result": "heading anchor verified"
+      },
+      {
+        "source": "日记/2026-10-26.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-26-process-cases.md#%E8%B5%B7%E5%A7%8B%E6%A3%80%E6%9F%A5%E7%82%B9",
+        "result": "heading anchor verified"
+      },
+      {
+        "source": "日记/2026-10-26.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-26-process-cases.md#%E5%BD%93%E5%89%8D%E7%90%86%E8%A7%A3%E6%A3%80%E6%9F%A5%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%8E%E5%B7%B2%E9%80%80%E5%87%BA%E5%AD%90%E8%BF%9B%E7%A8%8B",
+        "result": "heading anchor verified"
+      }
+    ],
+    "result": "Local targets and reviewed Markdown heading anchors passed; external URLs were not fetched."
+  },
+  "snapshot_hashes_verified": 12,
+  "experiment_reruns_during_archival": false,
+  "privacy": "Personal absolute working_directory replaced by <PROJECT_ROOT> in the linked-list observation; original retained privately. Code and trace snapshots remain unchanged. Ignored private materials are excluded from this commit.",
+  "limitations": [
+    "External source URLs not revalidated during archival.",
+    "Numeric exit statuses absent from final stack and linked-list screenshots remain unrecorded.",
+    "EINTR retry branch not exercised.",
+    "Browser roadmap progress not synchronized."
+  ]
+}

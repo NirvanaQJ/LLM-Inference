@@ -1,0 +1,33 @@
+{
+  "task_date": "2026-10-26",
+  "checkpoint": "decoded child exit status, ordinary echo run",
+  "operator": "learner",
+  "evidence": "Learner screenshot transcribed; saved source inspected read-only. No assistant compile or run.",
+  "guidance": "Tutor provided parent branch with status decoding, exit propagation and EINTR retry.",
+  "expected_before_run": {
+    "output_sequence": [
+      "child PID/PPID",
+      "hello from exec",
+      "parent PID/child",
+      "reaped PID",
+      "child exit:0"
+    ],
+    "compound_command_exit_status": 0
+  },
+  "actual": {
+    "stdout": "child PID:16437 PPID:16436\nhello from exec\nparent PID:16436 child:16437\nreaped:16437\nchild exit:0\n",
+    "parent_pid": 16436,
+    "child_pid": 16437,
+    "child_ppid": 16436,
+    "reaped_pid": 16437,
+    "child_exit_code": 0,
+    "compound_command_exit_status": 0,
+    "compiler_diagnostics_visible": false
+  },
+  "learner_text": "0\n0",
+  "understanding_assessment": "Text matches the normal actual output; unclear whether intended as the separate _exit(127) prediction. Do not mark failure-code prediction passed. Tutor will explain 127 propagation and request a new variant.",
+  "assessment": "Ordinary exit decoding passed. EINTR retry is present but was not exercised. Nonzero child exit propagation awaits boundary run; trace and live-parent process-state check remain pending.",
+  "source_file": "gpu-kernel-lab/cpp-basics/process.cpp",
+  "source_snapshot": "#include <cstdio>\n#include <iostream>\n#include <unistd.h>\n#include <sys/wait.h>\n#include <cerrno>\nint main() {\n    pid_t child = fork();\n\n    if (child == -1) {\n        std::perror(\"fork\");\n        return 1;\n    }\n\n   if (child == 0) {\n    std::cout << \"child PID:\" << getpid()\n              << \" PPID:\" << getppid() << std::endl;\n\n    execl(\"/bin/echo\", \"echo\", \"hello from exec\",\n          static_cast<char*>(nullptr));\n\n    std::perror(\"execl\");\n    _exit(127);\n}\n\n   int status = 0;\npid_t reaped;\n\ndo {\n    reaped = waitpid(child, &status, 0);\n} while (reaped == -1 && errno == EINTR);\n\nif (reaped == -1) {\n    std::perror(\"waitpid\");\n    return 1;\n}\n\nstd::cout << \"parent PID:\" << getpid()\n          << \" child:\" << child << '\\n';\nstd::cout << \"reaped:\" << reaped << '\\n';\n\nif (WIFEXITED(status)) {\n    int exit_code = WEXITSTATUS(status);\n    std::cout << \"child exit:\" << exit_code << '\\n';\n    return exit_code;\n}\n\nstd::cerr << \"child did not exit normally\\n\";\nreturn 1;\n}",
+  "source_sha256": "54edbb0161c38a4902cc92ec629f7af04cc108f6cc65a2638ce4d78e60cabdb8"
+}

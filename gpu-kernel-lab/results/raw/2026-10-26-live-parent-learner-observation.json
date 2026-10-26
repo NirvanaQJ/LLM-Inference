@@ -1,0 +1,59 @@
+{
+  "task_date": "2026-10-26",
+  "checkpoint": "live parent after reaping; awaiting ps",
+  "operator": "learner",
+  "evidence": "Learner screenshot shows observation prompt and no shell prompt; saved temporary observation source inspected read-only. Assistant did not compile or run.",
+  "guidance": "Tutor supplied temporary prompt and std::cin.get; learner inserted, compiled and ran.",
+  "expected_before_run": {
+    "parent_waits_for_input_after_reaping": true,
+    "child_exit_code": 0
+  },
+  "actual": {
+    "stdout_so_far": "child PID:18545 PPID:18544\nhello from exec\nparent PID:18544 child:18545\nreaped:18545\nchild exit:0\nParent alive; press Enter to exit\n",
+    "parent_pid": 18544,
+    "child_pid": 18545,
+    "reaped_pid": 18545,
+    "child_exit_code": 0,
+    "final_process_exit_status": 0
+  },
+  "ps_check": {
+    "command": "ps -p 18544,18545 -o pid,ppid,stat,comm",
+    "expected": "parent 18544 exists; child 18545 is absent",
+    "actual": {
+      "stdout": "    PID    PPID STAT COMMAND\n  18544   10572 S+   process_2026102\n",
+      "selected_pids": [
+        18544,
+        18545
+      ],
+      "rows": [
+        {
+          "pid": 18544,
+          "ppid": 10572,
+          "stat": "S+",
+          "comm": "process_2026102"
+        }
+      ],
+      "child_pid_18545_present": false,
+      "ps_exit_status": null,
+      "evidence": "Learner second-terminal screenshot; numeric ps exit status not shown."
+    },
+    "assessment": "passed: parent remains alive in S+ while the successfully reaped target child is absent"
+  },
+  "assessment": "Live-parent ps and successful child reaping passed for the target child. Learner reports observation parent exited with status 0. Temporary source input wait removed by assistant; fixed linked-list/stack exercise still pending.",
+  "source_file": "gpu-kernel-lab/cpp-basics/process.cpp",
+  "source_snapshot": "#include <cstdio>\n#include <iostream>\n#include <unistd.h>\n#include <sys/wait.h>\n#include <cerrno>\nint main() {\n    pid_t child = fork();\n\n    if (child == -1) {\n        std::perror(\"fork\");\n        return 1;\n    }\n\n   if (child == 0) {\n    std::cout << \"child PID:\" << getpid()\n              << \" PPID:\" << getppid() << std::endl;\nexecl(\"/bin/echo\", \"echo\", \"hello from exec\",\n          static_cast<char*>(nullptr));\n\n    std::perror(\"execl\");\n    _exit(127);\n}\n\n   int status = 0;\npid_t reaped;\n\ndo {\n    reaped = waitpid(child, &status, 0);\n} while (reaped == -1 && errno == EINTR);\n\nif (reaped == -1) {\n    std::perror(\"waitpid\");\n    return 1;\n}\n\nstd::cout << \"parent PID:\" << getpid()\n          << \" child:\" << child << '\\n';\nstd::cout << \"reaped:\" << reaped << '\\n';\n\nif (WIFEXITED(status)) {\n    int exit_code = WEXITSTATUS(status);\n    std::cout << \"child exit:\" << exit_code << '\\n';\n\nstd::cout << \"Parent alive; press Enter to exit\" << std::endl;\nstd::cin.get();\n\nreturn exit_code;\n}\n\nstd::cerr << \"child did not exit normally\\n\";\nreturn 1;\n}",
+  "source_sha256": "ce2168e07624458be6541776ea3414254a1975287b9e6836c060ea83417d2f8e",
+  "observation_cleanup": {
+    "operator": "assistant",
+    "action": "Removed only temporary Parent alive output and std::cin.get from source, restoring automatic parent exit; did not rebuild or rerun.",
+    "running_process_note": "Existing process still runs the previously compiled observation version and must be ended with Enter.",
+    "restored_source_snapshot": "#include <cstdio>\n#include <iostream>\n#include <unistd.h>\n#include <sys/wait.h>\n#include <cerrno>\nint main() {\n    pid_t child = fork();\n\n    if (child == -1) {\n        std::perror(\"fork\");\n        return 1;\n    }\n\n   if (child == 0) {\n    std::cout << \"child PID:\" << getpid()\n              << \" PPID:\" << getppid() << std::endl;\nexecl(\"/bin/echo\", \"echo\", \"hello from exec\",\n          static_cast<char*>(nullptr));\n\n    std::perror(\"execl\");\n    _exit(127);\n}\n\n   int status = 0;\npid_t reaped;\n\ndo {\n    reaped = waitpid(child, &status, 0);\n} while (reaped == -1 && errno == EINTR);\n\nif (reaped == -1) {\n    std::perror(\"waitpid\");\n    return 1;\n}\n\nstd::cout << \"parent PID:\" << getpid()\n          << \" child:\" << child << '\\n';\nstd::cout << \"reaped:\" << reaped << '\\n';\n\nif (WIFEXITED(status)) {\n    int exit_code = WEXITSTATUS(status);\n    std::cout << \"child exit:\" << exit_code << '\\n';\n\nreturn exit_code;\n}\n\nstd::cerr << \"child did not exit normally\\n\";\nreturn 1;\n}\n",
+    "restored_source_sha256": "43ae9c40f12b510ba9ba9a77861ce600179fb9cb51cf2e77d99d473a715f9feb"
+  },
+  "termination_confirmation": {
+    "operator": "learner",
+    "evidence": "Learner text reply 0 after requested Enter and immediate echo $?.",
+    "exit_status": 0,
+    "source": "learner report; no new screenshot supplied"
+  }
+}

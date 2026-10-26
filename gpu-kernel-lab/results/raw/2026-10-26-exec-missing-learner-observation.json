@@ -1,0 +1,47 @@
+{
+  "task_date": "2026-10-26",
+  "checkpoint": "P1 missing executable boundary",
+  "operator": "learner",
+  "evidence": "Learner terminal screenshot transcribed; boundary source inspected read-only. Assistant did not compile or run.",
+  "guidance": "Tutor specified absent executable path and expected behavior before run; learner changed path and ran.",
+  "input": {
+    "executable_path": "/no-such-program-20261026"
+  },
+  "expected_before_run": {
+    "exec_error_category": "file not found",
+    "hello_from_exec_present": false,
+    "reaped_equals_child_pid": true,
+    "child_exit_code": 127,
+    "shell_exit_status": 127
+  },
+  "actual": {
+    "stdout": "child PID:17603 PPID:17602\nparent PID:17602 child:17603\nreaped:17603\nchild exit:127\n",
+    "stderr": "execl: No such file or directory\n",
+    "display_order": [
+      "child PID:17603 PPID:17602",
+      "execl: No such file or directory",
+      "parent PID:17602 child:17603",
+      "reaped:17603",
+      "child exit:127"
+    ],
+    "child_pid": 17603,
+    "parent_pid": 17602,
+    "reaped_pid": 17603,
+    "child_exit_code": 127,
+    "shell_exit_status": 127,
+    "hello_from_exec_present": false,
+    "compiler_diagnostics_visible": false
+  },
+  "understanding": {
+    "question": "If only parent return exit_code were replaced by return 0, with child exit 127, what would printed child exit and shell status be?",
+    "learner_answer": [
+      "127",
+      "0"
+    ],
+    "assessment": "passed; paper variant only, not an actual code modification"
+  },
+  "assessment": "P1 expected/actual boundary passed, including error reporting, child reaping and nonzero exit propagation. Actual source retains parent return exit_code. Trace and live-parent process-state corroboration still pending for full P0.",
+  "source_file": "gpu-kernel-lab/cpp-basics/process.cpp",
+  "source_snapshot": "#include <cstdio>\n#include <iostream>\n#include <unistd.h>\n#include <sys/wait.h>\n#include <cerrno>\nint main() {\n    pid_t child = fork();\n\n    if (child == -1) {\n        std::perror(\"fork\");\n        return 1;\n    }\n\n   if (child == 0) {\n    std::cout << \"child PID:\" << getpid()\n              << \" PPID:\" << getppid() << std::endl;\n\n    execl(\"/no-such-program-20261026\", \"echo\", \"hello from exec\",\n      static_cast<char*>(nullptr));\n\n    std::perror(\"execl\");\n    _exit(127);\n}\n\n   int status = 0;\npid_t reaped;\n\ndo {\n    reaped = waitpid(child, &status, 0);\n} while (reaped == -1 && errno == EINTR);\n\nif (reaped == -1) {\n    std::perror(\"waitpid\");\n    return 1;\n}\n\nstd::cout << \"parent PID:\" << getpid()\n          << \" child:\" << child << '\\n';\nstd::cout << \"reaped:\" << reaped << '\\n';\n\nif (WIFEXITED(status)) {\n    int exit_code = WEXITSTATUS(status);\n    std::cout << \"child exit:\" << exit_code << '\\n';\n    return exit_code;\n}\n\nstd::cerr << \"child did not exit normally\\n\";\nreturn 1;\n}",
+  "source_sha256": "6dfbc39fe92844e5d896f5e424efbfff4be2bdde39fd6eca76847422aa051ea5"
+}

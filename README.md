@@ -2,7 +2,7 @@
 
 这是我从 2026 年 10 月开始，面向 **LLM Inference Systems / GPU Systems** 岗位的学习、实验与求职工作区。学习主线为 Python / C++ / Linux → CUDA / Triton → 大模型推理 → vLLM / SGLang → GPU 性能分析；NCCL 与集群通信是与推理性能相连接的扩展方向。
 
-> **截至 2026-10-25：**[W03 周验收](week-03-review.md)的 P0、P1、固定复做/周复盘与必要理解全部通过：本人编写请求容器，运行普通、复制和空输入实例，解释所有权；复做哈希两数求和七组与异位词八组，复杂度通过，日历和下周起点已更新。本人报告总学习约 90 分钟，其中复做/周复盘约 30 分钟，已包含在总时长内，见[当日日记](日记/2026-10-25.md)。请求容器含局部提示和悬空指针纠错，两道 Python 函数由本人提供、调用由导师给出，不扩大为全程无提示独立掌握。此前 [24 日内存检查](日记/2026-10-24.md)、[23 日模板](日记/2026-10-23.md)、[22 日 STL 与 lambda](日记/2026-10-22.md)及 [21 日移动语义](日记/2026-10-21.md)的完整证据继续保留。下一课为 26 日「进程与 syscall」，尚未启动。
+> **截至 2026-10-26：**当天「进程与 syscall」的 P0、P1、固定链表/栈模板及必要理解全部通过：本人按骨架和局部示例编写并运行 fork/exec/waitpid 程序，保存真实 strace，辨认 clone/execve/wait4；核对本实验无遗留僵尸进程，完成不存在执行路径的边界与退出码测试；栈空值/零值、链表空链/单节点/重复值及原节点复用检查均通过，复杂度理由经纠正后复答通过。本人报告全日学习 **2 小时（120 分钟）**，详见[当日日记与逐项验收](日记/2026-10-26.md)。教学含骨架、文字提示和纠错，不扩大为无提示独立掌握。此前 [W03 周验收](week-03-review.md)与历史证据保留。下一课为 27 日「文件描述符」，尚未启动。
 
 此前 10 月 5—8 日和 10—16 日均有 P0、P1 与固定项通过证据，13 日次日复答已于 14 日完成。9 日 P0 已通过，P1 与岗位核查固定项仍待验证，今日成果不自动补算旧欠账。当前成果主要是基础编程、日志统计和**模拟**延迟分析，尚无 CUDA、Triton、模型推理或通信性能实测。
 
@@ -11,7 +11,7 @@
 | 想找什么 | 入口 |
 | --- | --- |
 | 每天的任务、阶段目标和验收标准 | [交互式学习路线图](LLM-Inference-GPU-Systems-Roadmap-2026-2028.html) |
-| 实际完成情况、未通过项和完整证据链 | [日记索引](日记/README.md)；最近记录：[10 月 24 日](日记/2026-10-24.md)、[10 月 25 日](日记/2026-10-25.md) |
+| 实际完成情况、未通过项和完整证据链 | [日记索引](日记/README.md)；最近记录：[10 月 25 日](日记/2026-10-25.md)、[10 月 26 日](日记/2026-10-26.md) |
 | 两个实验项目的目标、目录及现状 | [LLM 推理实验](llm-inference-lab/README.md) · [GPU 算子实验](gpu-kernel-lab/README.md) |
 | 起点与路线图审核 | [基线技能记录](baseline-skills.md) · [路线图审核记录](Red-Team-Audit-2026-10-03.md) |
 
@@ -52,6 +52,8 @@
 | 函数模板、可调用对象过滤器与实例化错误 | [min/max、过滤器与本人测试调用](gpu-kernel-lab/cpp-basics/templates.cpp) · [编译失败诊断](gpu-kernel-lab/results/raw/2026-10-23-template-error.txt) | [逐项验收与类型纠错](gpu-kernel-lab/tests/2026-10-23-templates-cases.md) · [析构旧错复验](gpu-kernel-lab/tests/2026-10-23-earliest-failure-recheck.md) · [10 月 23 日日记](日记/2026-10-23.md) |
 | CMake sanitizer、释放后访问与复制/移动测试 | [构建说明](gpu-kernel-lab/cpp-basics/CMakeLists.txt) · [操作与结果](gpu-kernel-lab/cpp-basics/sanitizer.txt) · [Buffer 测试](gpu-kernel-lab/cpp-basics/buffer.cpp) | [逐项验收及纠错](gpu-kernel-lab/tests/2026-10-24-sanitizer-cases.md) · [十组结果](gpu-kernel-lab/results/raw/2026-10-24-ten-cases.txt) · [空输入结果](gpu-kernel-lab/results/raw/2026-10-24-empty-buffer.txt) · [10 月 24 日日记](日记/2026-10-24.md) |
 | W03 请求容器与两道哈希复做 | [请求容器](gpu-kernel-lab/cpp-basics/request_container_week03.cpp) · [两数求和](gpu-kernel-lab/python-basics/two_sum_hash_week03.py) · [异位词](gpu-kernel-lab/python-basics/is_anagram_week03.py) | [周验收与周证据](week-03-review.md) · [两数求和验收](gpu-kernel-lab/tests/2026-10-25-week03-two-sum-cases.md) · [异位词验收](gpu-kernel-lab/tests/2026-10-25-week03-anagram-cases.md) · [10 月 25 日日记](日记/2026-10-25.md) |
+| Linux 进程、执行替换与回收 | [进程程序](gpu-kernel-lab/cpp-basics/process.cpp) · [真实 strace](gpu-kernel-lab/profiles/2026-10-26/trace.txt) | [进程与 P1 逐项验收](gpu-kernel-lab/tests/2026-10-26-process-cases.md) · [10 月 26 日日记](日记/2026-10-26.md) |
+| 栈与单链表反转模板 | [安全出栈](gpu-kernel-lab/python-basics/stack_basics.py) · [原地链表反转](gpu-kernel-lab/python-basics/linked_list_basics.py) | [栈边界与复杂度](gpu-kernel-lab/tests/2026-10-26-stack-cases.md) · [链表边界、节点身份与复杂度](gpu-kernel-lab/tests/2026-10-26-linked-list-cases.md) |
 | 大小写不敏感异位词变式 | [lower 后排序比较](gpu-kernel-lab/python-basics/is_anagram_ignore_case.py) | [六组边界、复杂度及纠错](gpu-kernel-lab/tests/2026-10-22-anagram-ignore-case-cases.md)；采用排序方案，不记作哈希实现证据 |
 
 10 月 3—4 日的路线图、审核、环境及最小 C++ 结果，见[日记索引](日记/README.md)和上方基线入口。表中 10 月 10 日生成、18 日沿用的延迟来自固定种子的随机数，**不是 GPU 测量结果**；两组数据的差异不代表性能变化，跨语言统计 PASS 也不能说明程序谁更快。

@@ -1,0 +1,24 @@
+{
+  "task_date": "2026-10-26",
+  "checkpoint": "getpid/getppid minimal program",
+  "operator": "learner",
+  "evidence": "Learner-provided terminal screenshot; assistant transcribed only relevant output and checked saved source. Assistant did not compile or run.",
+  "guidance": "Tutor supplied the complete minimal example and compile/run command.",
+  "command_portable": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/process.cpp -o /tmp/process_20261026 && /tmp/process_20261026",
+  "expected_before_run": {
+    "lines": [
+      "PID: <actual own process ID>",
+      "PPID: <actual parent process ID>"
+    ],
+    "exit_status": 0
+  },
+  "actual": {
+    "stdout": "PID: 13465\nPPID: 10572\n",
+    "compound_command_exit_status": 0,
+    "compiler_diagnostics_visible": false
+  },
+  "assessment": "PID reading checkpoint passed. No fork, exec, child reaping or trace demonstrated yet.",
+  "source_file": "gpu-kernel-lab/cpp-basics/process.cpp",
+  "source_snapshot": "#include <iostream>\n#include <unistd.h>\n\nint main() {\n    std::cout << \"PID: \" << getpid() << '\\n';\n    std::cout << \"PPID: \" << getppid() << '\\n';\n    return 0;\n}",
+  "source_sha256": "2b7f89dba1198b1a61d2b586407a58dbbab8dc12225c22370fe45b8666c18086"
+}

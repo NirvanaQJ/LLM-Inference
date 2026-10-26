@@ -1,0 +1,15 @@
+17913 execve("/tmp/process_20261026", ["/tmp/process_20261026"], 0x7ffc12b95ad8 /* 74 vars */) = 0
+17913 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7309f9539a50) = 17914
+17913 wait4(17914 <unfinished ...>
+17914 write(1, "child PID:17914 PPID:17913\n", 27) = 27
+17914 execve("/bin/echo", ["echo", "hello from exec"], 0x7ffdeac553d8 /* 74 vars */) = 0
+17914 write(1, "hello from exec\n", 16) = 16
+17914 exit_group(0)                     = ?
+17914 +++ exited with 0 +++
+17913 <... wait4 resumed>, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 17914
+17913 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=17914, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+17913 write(1, "parent PID:17913 child:17914\n", 29) = 29
+17913 write(1, "reaped:17914\n", 13)    = 13
+17913 write(1, "child exit:0\n", 13)    = 13
+17913 exit_group(0)                     = ?
+17913 +++ exited with 0 +++

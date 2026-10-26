@@ -1,0 +1,52 @@
+{
+  "task_date": "2026-10-26",
+  "checkpoint": "strace normal echo run",
+  "operator": "learner",
+  "evidence": "Learner screenshot and saved real trace read by assistant; source checked read-only. No assistant compile/run.",
+  "guidance": "Tutor supplied tracing command; learner restored normal executable path, compiled and ran strace.",
+  "trace_options": [
+    "-f",
+    "-e",
+    "trace=%process,write",
+    "-o",
+    "gpu-kernel-lab/profiles/2026-10-26/trace.txt"
+  ],
+  "expected_before_run": {
+    "normal_echo_present": true,
+    "child_exit_code": 0,
+    "shell_exit_status": 0,
+    "trace_covers_parent_and_child": true,
+    "trace_contains_creation_exec_wait_exit": true
+  },
+  "actual": {
+    "stdout": "child PID:17914 PPID:17913\nhello from exec\nparent PID:17913 child:17914\nreaped:17914\nchild exit:0\n",
+    "parent_pid": 17913,
+    "child_pid": 17914,
+    "reaped_pid": 17914,
+    "child_exit_code": 0,
+    "shell_exit_status": 0,
+    "compiler_diagnostics_visible": false
+  },
+  "trace_observations_by_assistant": {
+    "creation": "parent 17913 clone returns 17914",
+    "exec": "child 17914 execve /bin/echo succeeds; subsequent write still PID 17914",
+    "reaping": "parent 17913 wait4 resumes with WIFEXITED and WEXITSTATUS 0, returns 17914 before parent exits",
+    "exit": "both traced processes exit with 0"
+  },
+  "assessment": "Trace generation, core execution and learner identification of three real syscalls passed. Live-parent process-state corroboration remains pending. Fixed linked-list/stack exercise not yet started.",
+  "source_file": "gpu-kernel-lab/cpp-basics/process.cpp",
+  "source_snapshot": "#include <cstdio>\n#include <iostream>\n#include <unistd.h>\n#include <sys/wait.h>\n#include <cerrno>\nint main() {\n    pid_t child = fork();\n\n    if (child == -1) {\n        std::perror(\"fork\");\n        return 1;\n    }\n\n   if (child == 0) {\n    std::cout << \"child PID:\" << getpid()\n              << \" PPID:\" << getppid() << std::endl;\nexecl(\"/bin/echo\", \"echo\", \"hello from exec\",\n          static_cast<char*>(nullptr));\n\n    std::perror(\"execl\");\n    _exit(127);\n}\n\n   int status = 0;\npid_t reaped;\n\ndo {\n    reaped = waitpid(child, &status, 0);\n} while (reaped == -1 && errno == EINTR);\n\nif (reaped == -1) {\n    std::perror(\"waitpid\");\n    return 1;\n}\n\nstd::cout << \"parent PID:\" << getpid()\n          << \" child:\" << child << '\\n';\nstd::cout << \"reaped:\" << reaped << '\\n';\n\nif (WIFEXITED(status)) {\n    int exit_code = WEXITSTATUS(status);\n    std::cout << \"child exit:\" << exit_code << '\\n';\n    return exit_code;\n}\n\nstd::cerr << \"child did not exit normally\\n\";\nreturn 1;\n}",
+  "source_sha256": "b72015d137db2a1cdba361be4acac045f9ca7556bfef67022c03d0566302951c",
+  "trace_file": "gpu-kernel-lab/profiles/2026-10-26/trace.txt",
+  "trace_snapshot": "17913 execve(\"/tmp/process_20261026\", [\"/tmp/process_20261026\"], 0x7ffc12b95ad8 /* 74 vars */) = 0\n17913 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7309f9539a50) = 17914\n17913 wait4(17914 <unfinished ...>\n17914 write(1, \"child PID:17914 PPID:17913\\n\", 27) = 27\n17914 execve(\"/bin/echo\", [\"echo\", \"hello from exec\"], 0x7ffdeac553d8 /* 74 vars */) = 0\n17914 write(1, \"hello from exec\\n\", 16) = 16\n17914 exit_group(0)                     = ?\n17914 +++ exited with 0 +++\n17913 <... wait4 resumed>, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 17914\n17913 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=17914, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---\n17913 write(1, \"parent PID:17913 child:17914\\n\", 29) = 29\n17913 write(1, \"reaped:17914\\n\", 13)    = 13\n17913 write(1, \"child exit:0\\n\", 13)    = 13\n17913 exit_group(0)                     = ?\n17913 +++ exited with 0 +++\n",
+  "trace_sha256": "99dd4d853c965eb673ac4254c1b5562a8180aa6eb51ed03de61372b1324aa914",
+  "learner_syscall_understanding": {
+    "answers": [
+      "clone 表示子进程的进程id",
+      "execve 不改变",
+      "wait4 表示所回收的进程id"
+    ],
+    "assessment": "passed after tutor explanation: identifies actual create/exec/reap syscall names, created and reaped child PID meanings, and unchanged PID across exec",
+    "scope": "Guided application to the learner trace; does not establish independent syscall tracing expertise or an answer about unfinished/resumed formatting."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "task_date": "2026-10-26",
+  "checkpoint": "fork and waitpid ordinary run",
+  "operator": "learner",
+  "evidence": "Learner terminal screenshot, transcribed relevant output; saved source inspected read-only by assistant. No assistant compile/run.",
+  "guidance": "Tutor supplied fork/waitpid skeleton; learner filled three output statements.",
+  "command_portable": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/process.cpp -o /tmp/process_20261026 && /tmp/process_20261026",
+  "expected_before_run": {
+    "relations": [
+      "child PPID equals parent PID",
+      "parent child value equals child PID",
+      "reaped equals child PID",
+      "parent PID differs from child PID"
+    ],
+    "order": [
+      "child output",
+      "parent output",
+      "reaped output"
+    ],
+    "compound_command_exit_status": 0
+  },
+  "actual": {
+    "stdout": "child PID:15326PPID:15325\nparent PID:15325 child:15326\nreaped:15326\n",
+    "child_pid": 15326,
+    "child_ppid": 15325,
+    "parent_pid": 15325,
+    "parent_child_value": 15326,
+    "reaped_pid": 15326,
+    "compound_command_exit_status": 0,
+    "compiler_diagnostics_visible": false
+  },
+  "assessment": "All four predeclared PID relations and output order passed. waitpid successfully reaped the named child in this run. Exit status decoding, trace and live-parent process-state corroboration remain pending for the complete no-leftover-zombie acceptance.",
+  "source_file": "gpu-kernel-lab/cpp-basics/process.cpp",
+  "source_snapshot": "#include <cstdio>\n#include <iostream>\n#include <unistd.h>\n#include <sys/wait.h>\n\nint main() {\n    pid_t child = fork();\n\n    if (child == -1) {\n        std::perror(\"fork\");\n        return 1;\n    }\n\n    if (child == 0) {\n        // ① 输出子进程自己的 PID，以及它的 PPID\n        std::cout << \"child PID:\" <<getpid() << \"PPID:\" << getppid() << \"\\n\";\n        return 0;\n    }\n\n    pid_t reaped = waitpid(child, nullptr, 0);\n    if (reaped == -1) {\n        std::perror(\"waitpid\");\n        return 1;\n    }\n\n    // ② 输出父进程自己的 PID，以及变量 child 的值\n    std::cout << \"parent PID:\" << getpid() << \" child:\" << child << \"\\n\";\n    // ③ 输出变量 reaped 的值\n    std::cout << \"reaped:\" << reaped << \"\\n\";\n    return 0;\n}",
+  "source_sha256": "d8ddc11d6070f4a5500ec2b9410efa2353154e3adffa4f625fb5e3947074f434",
+  "minor_formatting": "No separator between child PID digits and PPID label; labels remain unambiguous. No source mutation by assistant."
+}

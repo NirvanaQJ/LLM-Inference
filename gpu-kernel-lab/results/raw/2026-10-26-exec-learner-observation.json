@@ -1,0 +1,38 @@
+{
+  "task_date": "2026-10-26",
+  "checkpoint": "execl ordinary echo run",
+  "operator": "learner",
+  "evidence": "Learner screenshot transcribed; saved source inspected read-only. Assistant did not compile or run.",
+  "guidance": "Tutor supplied child-branch replacement; learner saved and ran it.",
+  "expected_before_run": {
+    "output_sequence": [
+      "child PID and PPID",
+      "hello from exec",
+      "parent PID and child PID",
+      "reaped child PID"
+    ],
+    "relations": [
+      "child PPID equals parent PID",
+      "parent child and reaped equal child PID"
+    ],
+    "compound_command_exit_status": 0
+  },
+  "actual": {
+    "stdout": "child PID:16103 PPID:16102\nhello from exec\nparent PID:16102 child:16103\nreaped:16103\n",
+    "parent_pid": 16102,
+    "child_pid": 16103,
+    "child_ppid": 16102,
+    "reaped_pid": 16103,
+    "compound_command_exit_status": 0,
+    "compiler_diagnostics_visible": false
+  },
+  "understanding": {
+    "question": "Does successful execl execute the following perror and _exit?",
+    "learner_answer": "不会",
+    "assessment": "passed"
+  },
+  "assessment": "Ordinary exec output, PID relations, reaping and success-does-not-return understanding passed. Child exit status is not yet decoded by this source. Trace and live-parent process-state check remain pending.",
+  "source_file": "gpu-kernel-lab/cpp-basics/process.cpp",
+  "source_snapshot": "#include <cstdio>\n#include <iostream>\n#include <unistd.h>\n#include <sys/wait.h>\n\nint main() {\n    pid_t child = fork();\n\n    if (child == -1) {\n        std::perror(\"fork\");\n        return 1;\n    }\n\n   if (child == 0) {\n    std::cout << \"child PID:\" << getpid()\n              << \" PPID:\" << getppid() << std::endl;\n\n    execl(\"/bin/echo\", \"echo\", \"hello from exec\",\n          static_cast<char*>(nullptr));\n\n    std::perror(\"execl\");\n    _exit(127);\n}\n\n    pid_t reaped = waitpid(child, nullptr, 0);\n    if (reaped == -1) {\n        std::perror(\"waitpid\");\n        return 1;\n    }\n\n    // ② 输出父进程自己的 PID，以及变量 child 的值\n    std::cout << \"parent PID:\" << getpid() << \" child:\" << child << \"\\n\";\n    // ③ 输出变量 reaped 的值\n    std::cout << \"reaped:\" << reaped << \"\\n\";\n    return 0;\n}",
+  "source_sha256": "3e4392c25dbc235344fa5362894f127f33fa39d13fe46aaee45aab80613c3c76"
+}
