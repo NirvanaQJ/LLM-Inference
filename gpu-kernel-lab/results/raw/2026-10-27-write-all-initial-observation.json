@@ -1,0 +1,46 @@
+{
+  "task_date": "2026-10-27",
+  "evidence_type": "本人提交的表达式与已保存源码，助手只读核对，未运行",
+  "learner_answer_verbatim": "ssize_t written = write(out_fd, data, total-done);\ndone += written;",
+  "source_snapshot": "#include <fcntl.h>   // open、O_RDONLY\n#include <unistd.h>  // close\n#include <cstdio>    // printf、perror\n#include <cerrno>\n\nbool write_all(int out_fd, const char* data, size_t total) {\n    size_t done = 0;\n\n    while (done < total) {\n        ssize_t written = write(out_fd, data, total-done);\n\n        if (written < 0) {\n            if (errno == EINTR) {\n                continue;\n            }\n            std::perror(\"write\");\n            return false;\n        }\n\n        if (written == 0) {\n            std::fprintf(stderr, \"write: no progress\\n\");\n            return false;\n        }\n\n        done += written;\n    }\n\n    return true;\n}\nint main() {\n    int fd = open(\"gpu-kernel-lab/results/raw/2026-10-27-fd-input.txt\", O_RDONLY);\n    if (fd < 0) {\n        std::perror(\"open\");\n        return 1;\n    }\n\n    std::printf(\"fd=%d\\n\", fd);\n   char buf[4];\n\nwhile (true) {\n    ssize_t n = read(fd, buf, sizeof(buf));\n\n    if (n < 0) {\n        std::perror(\"read\");\n        close(fd);\n        return 1;\n    }\n\n    std::printf(\"read=%zd\\n\", n);\n\n    if (n == 0) {\n        break;\n    }\n}\n\n    if (close(fd) < 0) {\n        std::perror(\"close\");\n        return 1;\n    }\n\n    return 0;\n}",
+  "assessment": {
+    "remaining_length": "通过",
+    "progress_increment": "通过",
+    "data_start": "通过（按局部示例修正后）：当前源码为data+done；初始错误保留",
+    "cumulative_done_understanding": "通过（纠正后再次变式复答）；保留此前错误与纠错过程"
+  },
+  "correction": "write(out_fd, data + done, total - done)",
+  "runtime_test": {
+    "normal_copy_evidence": "2026-10-27-fd-copy-first-learner-observation.json",
+    "normal_copy_assessment": "通过",
+    "controlled_short_write": "待验证",
+    "EINTR_and_zero_progress": "待验证"
+  },
+  "retry_question": "data为ABCDEF，total=6，done=3，本轮从哪个字符开始、请求多少字节？若written=2，更新后的done是多少？",
+  "retry_expected": {
+    "start_character": "D",
+    "requested_bytes": 3,
+    "done_after": 5
+  },
+  "retry_actual": {
+    "learner_answer_verbatim": "D开始，请求写3个字符\n2",
+    "assessment": {
+      "start_and_length": "通过",
+      "cumulative_done": "未通过：本次written=2，但累计done应为3+2=5"
+    }
+  },
+  "corrected_source_snapshot": "#include <fcntl.h>   // open、O_RDONLY\n#include <unistd.h>  // close\n#include <cstdio>    // printf、perror\n#include <cerrno>\n\nbool write_all(int out_fd, const char* data, size_t total) {\n    size_t done = 0;\n\n    while (done < total) {\n        ssize_t written = write(out_fd, data + done, total - done);\n\n        if (written < 0) {\n            if (errno == EINTR) {\n                continue;\n            }\n            std::perror(\"write\");\n            return false;\n        }\n\n        if (written == 0) {\n            std::fprintf(stderr, \"write: no progress\\n\");\n            return false;\n        }\n\n        done += written;\n    }\n\n    return true;\n}\nint main() {\n    int fd = open(\"gpu-kernel-lab/results/raw/2026-10-27-fd-input.txt\", O_RDONLY);\n    if (fd < 0) {\n        std::perror(\"open\");\n        return 1;\n    }\n\n    std::printf(\"fd=%d\\n\", fd);\n   char buf[4];\n\nwhile (true) {\n    ssize_t n = read(fd, buf, sizeof(buf));\n\n    if (n < 0) {\n        std::perror(\"read\");\n        close(fd);\n        return 1;\n    }\n\n    std::printf(\"read=%zd\\n\", n);\n\n    if (n == 0) {\n        break;\n    }\n}\n\n    if (close(fd) < 0) {\n        std::perror(\"close\");\n        return 1;\n    }\n\n    return 0;\n}",
+  "second_retry": {
+    "question": "total=8，原来done=2，本次written=3，更新后done与剩余字节数分别是多少？",
+    "expected": {
+      "done_after": 5,
+      "remaining": 3
+    },
+    "actual": {
+      "learner_answer_verbatim": "5,还剩3字节没写",
+      "done_after": 5,
+      "remaining": 3,
+      "assessment": "两项正确，累计量理解经纠正后通过"
+    }
+  }
+}

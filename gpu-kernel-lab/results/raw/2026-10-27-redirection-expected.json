@@ -1,0 +1,79 @@
+{
+  "task_date": "2026-10-27",
+  "working_directory": "<PROJECT_ROOT>",
+  "environment": {
+    "bash": "5.3.9(1)-release",
+    "wc": "uutils coreutils 0.10.0"
+  },
+  "cases": [
+    {
+      "name": "pipe标准输出与标准输入重定向",
+      "command": "/tmp/pipe_message_20261027 > gpu-kernel-lab/results/raw/2026-10-27-pipe-stdout.txt",
+      "expected": {
+        "exit": 0,
+        "output_ascii": "received=hello pipe\nbytes=10\nchild_exit=0\n",
+        "size_bytes": 42,
+        "sha256": "d2064df0b1f553ba6dcec96017fdf68e1745dce66403f0d86102eddf4193efeb",
+        "wc_stdin_bytes": 42
+      },
+      "actual": {
+        "learner_reported_exit": 0,
+        "learner_reported_wc": 42,
+        "assistant_readonly_file": {
+          "size_bytes": 42,
+          "sha256": "d2064df0b1f553ba6dcec96017fdf68e1745dce66403f0d86102eddf4193efeb",
+          "content_ascii": "received=hello pipe\nbytes=10\nchild_exit=0\n"
+        },
+        "assessment": "实跑通过"
+      }
+    },
+    {
+      "name": "复制失败的输出流分离",
+      "command": "/tmp/fd_copy_20261027 gpu-kernel-lab/results/raw/2026-10-27-fd-empty.bin gpu-kernel-lab/results/raw/2026-10-27-fd-binary-copy.bin > gpu-kernel-lab/results/raw/2026-10-27-copy-stdout.txt 2> gpu-kernel-lab/results/raw/2026-10-27-copy-stderr.txt",
+      "expected": {
+        "exit": 1,
+        "stdout_size_bytes": 0,
+        "stderr_ascii": "open destination: File exists\n",
+        "destination_unchanged": true
+      },
+      "actual": {
+        "learner_reported_exit": 1,
+        "learner_reported_stdout_wc": 0,
+        "assistant_readonly_stdout": {
+          "size_bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_ascii": ""
+        },
+        "assistant_readonly_stderr": {
+          "size_bytes": 30,
+          "sha256": "641698969d40cbea6423937c705867f05ad5a78400aa98e36d2967960d5adbf4",
+          "content_ascii": "open destination: File exists\n"
+        },
+        "destination_unchanged": true,
+        "assessment": "实跑通过"
+      }
+    }
+  ],
+  "understanding_question": "如果只写 >out.txt，perror 的错误是否也会进入该文件？为什么？",
+  "understanding_actual": {
+    "learner_answer_verbatim": "不会，因为这是标准输出，不是输入",
+    "assessment": "结论正确，理由未通过：应区分标准输出fd1和标准错误fd2，而非输入fd0",
+    "correction": "大于号重定向fd1；perror写fd2，默认仍去终端；标准输入fd0由小于号重定向",
+    "retry_question": "默认stdout/stderr都接终端，执行program >out.txt后printf与perror分别去哪里？",
+    "retry_expected": {
+      "printf": "out.txt",
+      "perror": "终端"
+    },
+    "retry_actual": {
+      "learner_answer_verbatim": "out.txt\n终端",
+      "assessment": "两项正确，重定向理解经纠正后通过"
+    }
+  },
+  "actual_reported_text": "pipe_exit=0\nreceived=hello pipe\nbytes=10\nchild_exit=0\n42\ncopy_exit=1\n0\nopen destination: File exists",
+  "source_sha256": {
+    "fd_copy.cpp": "39a5312317ad879bad5456000d40709f69c933293ccc2f1f859eeac7eac7cc7c",
+    "pipe_message.cpp": "bfe8570a23eaeaf19e29e42c89392dadb028a89cbffff26c25c3192359bada1e"
+  },
+  "evidence_type": "本人文字报告实际运行；助手只读复核三个日志与未覆盖目标，未代跑",
+  "public_archive_note": "Personal project path is rendered as <PROJECT_ROOT>; screenshot attachment paths are placeholders. Original records are retained locally. Experimental values and code snapshots are unchanged."
+}

@@ -1,0 +1,847 @@
+{
+  "evidence_type": "controlled syscall wrapper tests; injected errors are simulated",
+  "source_snapshot": "#include <fcntl.h>   // open、O_RDONLY\n#include <unistd.h>  // close\n#include <cstdio>    // printf、perror\n#include <cerrno>\n\nbool write_all(int out_fd, const char* data, size_t total) {\n    size_t done = 0;\n\n    while (done < total) {\n        ssize_t written = write(out_fd, data + done, total - done);\n\n        if (written < 0) {\n            if (errno == EINTR) {\n                continue;\n            }\n            std::perror(\"write\");\n            return false;\n        }\n\n        if (written == 0) {\n            std::fprintf(stderr, \"write: no progress\\n\");\n            return false;\n        }\n\n        done += written;\n    }\n\n    return true;\n}\nint main(int argc, char* argv[]) {\n    if (argc != 3) {\n        std::fprintf(stderr, \"usage: %s SOURCE DEST\\n\", argv[0]);\n        return 2;\n    }\n\n    int in_fd = open(argv[1], O_RDONLY);\n    if (in_fd < 0) {\n        std::perror(\"open source\");\n        return 1;\n    }\n\n    int out_fd = open(argv[2], O_WRONLY | O_CREAT | O_EXCL, 0600);\n    if (out_fd < 0) {\n        std::perror(\"open destination\");\n        close(in_fd);\n        return 1;\n    }\n\n    char buf[4];\n    int result = 0;\n\n    while (true) {\n        ssize_t n = read(in_fd, buf, sizeof(buf));\n\n        if (n < 0) {\n            if (errno == EINTR) {\n                continue;\n            }\n            std::perror(\"read\");\n            result = 1;\n            break;\n        }\n\n        if (n == 0) {\n            break;\n        }\n\n        if (!write_all(out_fd, buf, static_cast<size_t>(n))) {\n            result = 1;\n            break;\n        }\n    }\n\n    if (close(in_fd) < 0) {\n        std::perror(\"close source\");\n        result = 1;\n    }\n\n    if (close(out_fd) < 0) {\n        std::perror(\"close destination\");\n        result = 1;\n    }\n\n    return result;\n}",
+  "source_sha256": "39a5312317ad879bad5456000d40709f69c933293ccc2f1f859eeac7eac7cc7c",
+  "working_directory": "<PROJECT_ROOT>",
+  "system": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "cases": [
+    {
+      "name": "short_read",
+      "expected": {
+        "program_exit": 0,
+        "output_hex": "414243444546",
+        "output_exists": true,
+        "close_calls": 2
+      },
+      "command": [
+        "/tmp/fd-acceptance-r6f4xbew/fd_fault_driver",
+        "short_read",
+        "/tmp/fd-acceptance-r6f4xbew/short_read/input.bin",
+        "/tmp/fd-acceptance-r6f4xbew/short_read/output.bin"
+      ],
+      "driver_exit": 0,
+      "stdout": "{\"program_exit\":0,\"read_calls\":4,\"write_calls\":3,\"close_calls\":2,\"events\":[{\"operation\":\"read\",\"requested\":4,\"returned\":2,\"errno\":0,\"controlled\":true,\"real_closed\":false},{\"operation\":\"write\",\"requested\":2,\"returned\":2,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"read\",\"requested\":4,\"returned\":2,\"errno\":0,\"controlled\":true,\"real_closed\":false},{\"operation\":\"write\",\"requested\":2,\"returned\":2,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"read\",\"requested\":4,\"returned\":2,\"errno\":0,\"controlled\":true,\"real_closed\":false},{\"operation\":\"write\",\"requested\":2,\"returned\":2,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"read\",\"requested\":4,\"returned\":0,\"errno\":0,\"controlled\":true,\"real_closed\":false},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true}]}\n",
+      "stderr": "",
+      "actual": {
+        "program_exit": 0,
+        "read_calls": 4,
+        "write_calls": 3,
+        "close_calls": 2,
+        "events": [
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 2,
+            "errno": 0,
+            "controlled": true,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 2,
+            "returned": 2,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 2,
+            "errno": 0,
+            "controlled": true,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 2,
+            "returned": 2,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 2,
+            "errno": 0,
+            "controlled": true,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 2,
+            "returned": 2,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 0,
+            "errno": 0,
+            "controlled": true,
+            "real_closed": false
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          }
+        ],
+        "output_hex": "414243444546",
+        "output_exists": true
+      },
+      "passed": true
+    },
+    {
+      "name": "short_write",
+      "expected": {
+        "program_exit": 0,
+        "output_hex": "414243444546",
+        "output_exists": true,
+        "close_calls": 2
+      },
+      "command": [
+        "/tmp/fd-acceptance-r6f4xbew/fd_fault_driver",
+        "short_write",
+        "/tmp/fd-acceptance-r6f4xbew/short_write/input.bin",
+        "/tmp/fd-acceptance-r6f4xbew/short_write/output.bin"
+      ],
+      "driver_exit": 0,
+      "stdout": "{\"program_exit\":0,\"read_calls\":3,\"write_calls\":6,\"close_calls\":2,\"events\":[{\"operation\":\"read\",\"requested\":4,\"returned\":4,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"write\",\"requested\":4,\"returned\":1,\"errno\":0,\"controlled\":true,\"real_closed\":false},{\"operation\":\"write\",\"requested\":3,\"returned\":1,\"errno\":0,\"controlled\":true,\"real_closed\":false},{\"operation\":\"write\",\"requested\":2,\"returned\":1,\"errno\":0,\"controlled\":true,\"real_closed\":false},{\"operation\":\"write\",\"requested\":1,\"returned\":1,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"read\",\"requested\":4,\"returned\":2,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"write\",\"requested\":2,\"returned\":1,\"errno\":0,\"controlled\":true,\"real_closed\":false},{\"operation\":\"write\",\"requested\":1,\"returned\":1,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"read\",\"requested\":4,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true}]}\n",
+      "stderr": "",
+      "actual": {
+        "program_exit": 0,
+        "read_calls": 3,
+        "write_calls": 6,
+        "close_calls": 2,
+        "events": [
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 4,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 4,
+            "returned": 1,
+            "errno": 0,
+            "controlled": true,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 3,
+            "returned": 1,
+            "errno": 0,
+            "controlled": true,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 2,
+            "returned": 1,
+            "errno": 0,
+            "controlled": true,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 1,
+            "returned": 1,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 2,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 2,
+            "returned": 1,
+            "errno": 0,
+            "controlled": true,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 1,
+            "returned": 1,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          }
+        ],
+        "output_hex": "414243444546",
+        "output_exists": true
+      },
+      "passed": true
+    },
+    {
+      "name": "eintr",
+      "expected": {
+        "program_exit": 0,
+        "output_hex": "414243444546",
+        "output_exists": true,
+        "close_calls": 2
+      },
+      "command": [
+        "/tmp/fd-acceptance-r6f4xbew/fd_fault_driver",
+        "eintr",
+        "/tmp/fd-acceptance-r6f4xbew/eintr/input.bin",
+        "/tmp/fd-acceptance-r6f4xbew/eintr/output.bin"
+      ],
+      "driver_exit": 0,
+      "stdout": "{\"program_exit\":0,\"read_calls\":4,\"write_calls\":3,\"close_calls\":2,\"events\":[{\"operation\":\"read\",\"requested\":4,\"returned\":-1,\"errno\":4,\"controlled\":true,\"real_closed\":false},{\"operation\":\"read\",\"requested\":4,\"returned\":4,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"write\",\"requested\":4,\"returned\":-1,\"errno\":4,\"controlled\":true,\"real_closed\":false},{\"operation\":\"write\",\"requested\":4,\"returned\":4,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"read\",\"requested\":4,\"returned\":2,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"write\",\"requested\":2,\"returned\":2,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"read\",\"requested\":4,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true}]}\n",
+      "stderr": "",
+      "actual": {
+        "program_exit": 0,
+        "read_calls": 4,
+        "write_calls": 3,
+        "close_calls": 2,
+        "events": [
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": -1,
+            "errno": 4,
+            "controlled": true,
+            "real_closed": false
+          },
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 4,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 4,
+            "returned": -1,
+            "errno": 4,
+            "controlled": true,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 4,
+            "returned": 4,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 2,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 2,
+            "returned": 2,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          }
+        ],
+        "output_hex": "414243444546",
+        "output_exists": true
+      },
+      "passed": true
+    },
+    {
+      "name": "write_zero",
+      "expected": {
+        "program_exit": 1,
+        "output_hex": "",
+        "output_exists": true,
+        "close_calls": 2
+      },
+      "command": [
+        "/tmp/fd-acceptance-r6f4xbew/fd_fault_driver",
+        "write_zero",
+        "/tmp/fd-acceptance-r6f4xbew/write_zero/input.bin",
+        "/tmp/fd-acceptance-r6f4xbew/write_zero/output.bin"
+      ],
+      "driver_exit": 0,
+      "stdout": "{\"program_exit\":1,\"read_calls\":1,\"write_calls\":1,\"close_calls\":2,\"events\":[{\"operation\":\"read\",\"requested\":4,\"returned\":4,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"write\",\"requested\":4,\"returned\":0,\"errno\":0,\"controlled\":true,\"real_closed\":false},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true}]}\n",
+      "stderr": "write: no progress\n",
+      "actual": {
+        "program_exit": 1,
+        "read_calls": 1,
+        "write_calls": 1,
+        "close_calls": 2,
+        "events": [
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 4,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 4,
+            "returned": 0,
+            "errno": 0,
+            "controlled": true,
+            "real_closed": false
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          }
+        ],
+        "output_hex": "",
+        "output_exists": true
+      },
+      "passed": true
+    },
+    {
+      "name": "write_error",
+      "expected": {
+        "program_exit": 1,
+        "output_hex": "",
+        "output_exists": true,
+        "close_calls": 2
+      },
+      "command": [
+        "/tmp/fd-acceptance-r6f4xbew/fd_fault_driver",
+        "write_error",
+        "/tmp/fd-acceptance-r6f4xbew/write_error/input.bin",
+        "/tmp/fd-acceptance-r6f4xbew/write_error/output.bin"
+      ],
+      "driver_exit": 0,
+      "stdout": "{\"program_exit\":1,\"read_calls\":1,\"write_calls\":1,\"close_calls\":2,\"events\":[{\"operation\":\"read\",\"requested\":4,\"returned\":4,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"write\",\"requested\":4,\"returned\":-1,\"errno\":28,\"controlled\":true,\"real_closed\":false},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true}]}\n",
+      "stderr": "write: No space left on device\n",
+      "actual": {
+        "program_exit": 1,
+        "read_calls": 1,
+        "write_calls": 1,
+        "close_calls": 2,
+        "events": [
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 4,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 4,
+            "returned": -1,
+            "errno": 28,
+            "controlled": true,
+            "real_closed": false
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          }
+        ],
+        "output_hex": "",
+        "output_exists": true
+      },
+      "passed": true
+    },
+    {
+      "name": "read_error",
+      "expected": {
+        "program_exit": 1,
+        "output_hex": "",
+        "output_exists": true,
+        "close_calls": 2
+      },
+      "command": [
+        "/tmp/fd-acceptance-r6f4xbew/fd_fault_driver",
+        "read_error",
+        "/tmp/fd-acceptance-r6f4xbew/read_error/input.bin",
+        "/tmp/fd-acceptance-r6f4xbew/read_error/output.bin"
+      ],
+      "driver_exit": 0,
+      "stdout": "{\"program_exit\":1,\"read_calls\":1,\"write_calls\":0,\"close_calls\":2,\"events\":[{\"operation\":\"read\",\"requested\":4,\"returned\":-1,\"errno\":5,\"controlled\":true,\"real_closed\":false},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true}]}\n",
+      "stderr": "read: Input/output error\n",
+      "actual": {
+        "program_exit": 1,
+        "read_calls": 1,
+        "write_calls": 0,
+        "close_calls": 2,
+        "events": [
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": -1,
+            "errno": 5,
+            "controlled": true,
+            "real_closed": false
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          }
+        ],
+        "output_hex": "",
+        "output_exists": true
+      },
+      "passed": true
+    },
+    {
+      "name": "close_source_error",
+      "expected": {
+        "program_exit": 1,
+        "output_hex": "414243444546",
+        "output_exists": true,
+        "close_calls": 2
+      },
+      "command": [
+        "/tmp/fd-acceptance-r6f4xbew/fd_fault_driver",
+        "close_source_error",
+        "/tmp/fd-acceptance-r6f4xbew/close_source_error/input.bin",
+        "/tmp/fd-acceptance-r6f4xbew/close_source_error/output.bin"
+      ],
+      "driver_exit": 0,
+      "stdout": "{\"program_exit\":1,\"read_calls\":3,\"write_calls\":2,\"close_calls\":2,\"events\":[{\"operation\":\"read\",\"requested\":4,\"returned\":4,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"write\",\"requested\":4,\"returned\":4,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"read\",\"requested\":4,\"returned\":2,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"write\",\"requested\":2,\"returned\":2,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"read\",\"requested\":4,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"close\",\"requested\":0,\"returned\":-1,\"errno\":5,\"controlled\":true,\"real_closed\":true},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true}]}\n",
+      "stderr": "close source: Input/output error\n",
+      "actual": {
+        "program_exit": 1,
+        "read_calls": 3,
+        "write_calls": 2,
+        "close_calls": 2,
+        "events": [
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 4,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 4,
+            "returned": 4,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 2,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 2,
+            "returned": 2,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": -1,
+            "errno": 5,
+            "controlled": true,
+            "real_closed": true
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          }
+        ],
+        "output_hex": "414243444546",
+        "output_exists": true
+      },
+      "passed": true
+    },
+    {
+      "name": "close_destination_error",
+      "expected": {
+        "program_exit": 1,
+        "output_hex": "414243444546",
+        "output_exists": true,
+        "close_calls": 2
+      },
+      "command": [
+        "/tmp/fd-acceptance-r6f4xbew/fd_fault_driver",
+        "close_destination_error",
+        "/tmp/fd-acceptance-r6f4xbew/close_destination_error/input.bin",
+        "/tmp/fd-acceptance-r6f4xbew/close_destination_error/output.bin"
+      ],
+      "driver_exit": 0,
+      "stdout": "{\"program_exit\":1,\"read_calls\":3,\"write_calls\":2,\"close_calls\":2,\"events\":[{\"operation\":\"read\",\"requested\":4,\"returned\":4,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"write\",\"requested\":4,\"returned\":4,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"read\",\"requested\":4,\"returned\":2,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"write\",\"requested\":2,\"returned\":2,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"read\",\"requested\":4,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":false},{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true},{\"operation\":\"close\",\"requested\":0,\"returned\":-1,\"errno\":5,\"controlled\":true,\"real_closed\":true}]}\n",
+      "stderr": "close destination: Input/output error\n",
+      "actual": {
+        "program_exit": 1,
+        "read_calls": 3,
+        "write_calls": 2,
+        "close_calls": 2,
+        "events": [
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 4,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 4,
+            "returned": 4,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 2,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "write",
+            "requested": 2,
+            "returned": 2,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "read",
+            "requested": 4,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": false
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          },
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": -1,
+            "errno": 5,
+            "controlled": true,
+            "real_closed": true
+          }
+        ],
+        "output_hex": "414243444546",
+        "output_exists": true
+      },
+      "passed": true
+    },
+    {
+      "name": "existing_destination",
+      "expected": {
+        "program_exit": 1,
+        "output_hex": "4b454550",
+        "output_exists": true,
+        "close_calls": 1
+      },
+      "command": [
+        "/tmp/fd-acceptance-r6f4xbew/fd_fault_driver",
+        "existing_destination",
+        "/tmp/fd-acceptance-r6f4xbew/existing_destination/input.bin",
+        "/tmp/fd-acceptance-r6f4xbew/existing_destination/output.bin"
+      ],
+      "driver_exit": 0,
+      "stdout": "{\"program_exit\":1,\"read_calls\":0,\"write_calls\":0,\"close_calls\":1,\"events\":[{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true}]}\n",
+      "stderr": "open destination: File exists\n",
+      "actual": {
+        "program_exit": 1,
+        "read_calls": 0,
+        "write_calls": 0,
+        "close_calls": 1,
+        "events": [
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          }
+        ],
+        "output_hex": "4b454550",
+        "output_exists": true
+      },
+      "passed": true
+    },
+    {
+      "name": "missing_source",
+      "expected": {
+        "program_exit": 1,
+        "output_hex": null,
+        "output_exists": false,
+        "close_calls": 0
+      },
+      "command": [
+        "/tmp/fd-acceptance-r6f4xbew/fd_fault_driver",
+        "missing_source",
+        "/tmp/fd-acceptance-r6f4xbew/missing_source/absent.bin",
+        "/tmp/fd-acceptance-r6f4xbew/missing_source/output.bin"
+      ],
+      "driver_exit": 0,
+      "stdout": "{\"program_exit\":1,\"read_calls\":0,\"write_calls\":0,\"close_calls\":0,\"events\":[]}\n",
+      "stderr": "open source: No such file or directory\n",
+      "actual": {
+        "program_exit": 1,
+        "read_calls": 0,
+        "write_calls": 0,
+        "close_calls": 0,
+        "events": [],
+        "output_hex": null,
+        "output_exists": false
+      },
+      "passed": true
+    },
+    {
+      "name": "missing_parent",
+      "expected": {
+        "program_exit": 1,
+        "output_hex": null,
+        "output_exists": false,
+        "close_calls": 1
+      },
+      "command": [
+        "/tmp/fd-acceptance-r6f4xbew/fd_fault_driver",
+        "missing_parent",
+        "/tmp/fd-acceptance-r6f4xbew/missing_parent/input.bin",
+        "/tmp/fd-acceptance-r6f4xbew/missing_parent/absent-parent/output.bin"
+      ],
+      "driver_exit": 0,
+      "stdout": "{\"program_exit\":1,\"read_calls\":0,\"write_calls\":0,\"close_calls\":1,\"events\":[{\"operation\":\"close\",\"requested\":0,\"returned\":0,\"errno\":0,\"controlled\":false,\"real_closed\":true}]}\n",
+      "stderr": "open destination: No such file or directory\n",
+      "actual": {
+        "program_exit": 1,
+        "read_calls": 0,
+        "write_calls": 0,
+        "close_calls": 1,
+        "events": [
+          {
+            "operation": "close",
+            "requested": 0,
+            "returned": 0,
+            "errno": 0,
+            "controlled": false,
+            "real_closed": true
+          }
+        ],
+        "output_hex": null,
+        "output_exists": false
+      },
+      "passed": true
+    },
+    {
+      "name": "usage",
+      "expected": {
+        "program_exit": 2,
+        "output_hex": null,
+        "output_exists": false,
+        "close_calls": 0
+      },
+      "command": [
+        "/tmp/fd-acceptance-r6f4xbew/fd_fault_driver",
+        "usage",
+        "/tmp/fd-acceptance-r6f4xbew/usage/input.bin",
+        "/tmp/fd-acceptance-r6f4xbew/usage/output.bin"
+      ],
+      "driver_exit": 0,
+      "stdout": "{\"program_exit\":2,\"read_calls\":0,\"write_calls\":0,\"close_calls\":0,\"events\":[]}\n",
+      "stderr": "usage: fd_copy_under_test SOURCE DEST\n",
+      "actual": {
+        "program_exit": 2,
+        "read_calls": 0,
+        "write_calls": 0,
+        "close_calls": 0,
+        "events": [],
+        "output_hex": null,
+        "output_exists": false
+      },
+      "passed": true
+    }
+  ],
+  "compile": {
+    "command": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "<PROJECT_ROOT>/gpu-kernel-lab/tests/fd_fault_driver.cpp",
+      "-Wl,--wrap=read",
+      "-Wl,--wrap=write",
+      "-Wl,--wrap=close",
+      "-o",
+      "/tmp/fd-acceptance-r6f4xbew/fd_fault_driver"
+    ],
+    "exit": 0,
+    "stderr": ""
+  },
+  "passed": 12,
+  "total": 12,
+  "all_passed": true,
+  "executed_by": "助手；不是本人运行或独立掌握证据",
+  "task_date": "2026-10-27",
+  "reproduce_command": "python3 gpu-kernel-lab/tests/run_fd_faults.py --output /tmp/fd-faults-replay.json",
+  "limitations": "短读/短写通过测试包装限制实际调用量；EINTR、EIO、ENOSPC、零进展及close错误由包装模拟，不是系统自然故障；资源关闭仍调用真实close。临时输入/输出在测试结束后清理，报告保留独立expected、输出字节、事件及源码。",
+  "understanding_checkpoint": {
+    "question": "written=-1且errno=EINTR时done是否增加及原因？write返回0时为什么不能一直continue？",
+    "actual": {
+      "learner_answers_verbatim": [
+        "不应该，因为此时没有写入",
+        "此时没有写入，一直continue重试也不会写入"
+      ],
+      "assessment": {
+        "EINTR_progress": "通过，返回-1/EINTR未写入，不推进done",
+        "zero_progress": "抓住当前无进展；不能断言后续永远无法写入，已补充持续0会导致无限重试，待复答"
+      },
+      "retry_question": "一次write返回0，能否断定下一次也一定返回0？",
+      "retry_expected": "不能",
+      "retry_actual": {
+        "learner_answer_verbatim": "不一定",
+        "assessment": "正确，零进展理解经精确补充后通过"
+      }
+    }
+  },
+  "public_archive_note": "Personal project path is rendered as <PROJECT_ROOT>; screenshot attachment paths are placeholders. Original records are retained locally. Experimental values and code snapshots are unchanged."
+}

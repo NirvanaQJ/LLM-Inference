@@ -1,0 +1,14 @@
+{
+  "task_date": "2026-10-27",
+  "evidence_type": "本人文字报告运行输出，助手只读核对源码，未代跑",
+  "working_directory": "<PROJECT_ROOT>",
+  "expected": {
+    "read_fd": "非负整数",
+    "write_fd": "不同的非负整数",
+    "exit_code": 0
+  },
+  "actual_reported_text": "read_fd=3 write_fd=4\nexit=0",
+  "source_snapshot": "#include <unistd.h>\n#include <cstdio>\n\nint main() {\n    int p[2];\n\n    if (pipe(p) < 0) {\n        std::perror(\"pipe\");\n        return 1;\n    }\n\n    std::printf(\"read_fd=%d write_fd=%d\\n\", p[0], p[1]);\n\n    int result = 0;\n    if (close(p[0]) < 0) {\n        std::perror(\"close read end\");\n        result = 1;\n    }\n    if (close(p[1]) < 0) {\n        std::perror(\"close write end\");\n        result = 1;\n    }\n\n    return result;\n}",
+  "assessment": "创建/查看/关闭管道两端通过（按最小示例）；尚未fork或传递消息",
+  "public_archive_note": "Personal project path is rendered as <PROJECT_ROOT>; screenshot attachment paths are placeholders. Original records are retained locally. Experimental values and code snapshots are unchanged."
+}

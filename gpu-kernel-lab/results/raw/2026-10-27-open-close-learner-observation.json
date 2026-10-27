@@ -1,0 +1,36 @@
+{
+  "task_date": "2026-10-27",
+  "checkpoint": "最小 open/close 正常路径",
+  "evidence_type": "本人提供的终端截图，助手只读核对源码，未代跑",
+  "working_directory": "<PROJECT_ROOT>",
+  "compile_command": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/fd_copy.cpp -o /tmp/fd_copy_20261027",
+  "run_command": "/tmp/fd_copy_20261027",
+  "expected": {
+    "stdout": "fd= 后接非负整数",
+    "diagnostics": "正常情况下无 open/close 错误",
+    "exit_code": 0
+  },
+  "actual_observed": {
+    "stdout": "fd=3\n",
+    "diagnostics_visible": null,
+    "returned_to_prompt": true,
+    "numeric_exit_status_shown": false
+  },
+  "source_snapshot": "#include <fcntl.h>   // open、O_RDONLY\n#include <unistd.h>  // close\n#include <cstdio>    // printf、perror\n\nint main() {\n    int fd = open(\"gpu-kernel-lab/cpp-basics/process.cpp\", O_RDONLY);\n\n    if (fd < 0) {\n        std::perror(\"open\");\n        return 1;\n    }\n\n    std::printf(\"fd=%d\\n\", fd);\n\n    if (close(fd) < 0) {\n        std::perror(\"close\");\n        return 1;\n    }\n\n    return 0;\n}",
+  "assessment": "正常打开/关闭检查点通过（按示例跟做）；数值退出状态未展示，不补记为实测 0；失败路径、读取及复制尚未验证",
+  "next_missing_path_test": {
+    "input_path": "gpu-kernel-lab/cpp-basics/no_such_fd_input_20261027.txt",
+    "path_absent_checked_by_assistant": true,
+    "expected": {
+      "diagnostic": "open 报文件不存在（具体语言依系统设置）",
+      "fd_line_printed": false,
+      "exit_code": 1
+    },
+    "actual": {
+      "evidence_file": "2026-10-27-open-missing-learner-observation.json",
+      "reported_output": "open: No such file or directory\nexit=1",
+      "assessment": "通过"
+    }
+  },
+  "public_archive_note": "Personal project path is rendered as <PROJECT_ROOT>; screenshot attachment paths are placeholders. Original records are retained locally. Experimental values and code snapshots are unchanged."
+}

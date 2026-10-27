@@ -1,0 +1,43 @@
+{
+  "task_date": "2026-10-27",
+  "evidence_type": "本人文字答案与总用时报告，未作次日复答",
+  "questions_origin": "导师上一轮给定三个具体问题，本人提交参考答案；不记为自主拟题",
+  "answers_verbatim": [
+    "记录已经写入的数量和还需要写入的数量，以及从何处开始",
+    "当所有的写端都关闭时，会返回0",
+    "正常用>保存   错误输出用2>保存"
+  ],
+  "assessment": [
+    "正确概括累计量、剩余量与起点；公式由导师补充对照源码",
+    "需补充管道缓冲区中的剩余数据已读尽；不将仅写端全关等同于立即返回0",
+    "正确：标准输出用>，标准错误用2>"
+  ],
+  "reported_total_time": {
+    "verbatim": "今天学了2个小时",
+    "hours": 2,
+    "minutes": 120,
+    "breakdown_reported": false
+  },
+  "Q2_retry": {
+    "question": "所有写端已关闭，管道仍有3字节，read最多4字节时返回多少？读走后再次read返回多少？",
+    "expected": [
+      3,
+      0
+    ],
+    "actual": {
+      "learner_answer_verbatim": "3\n0",
+      "values": [
+        3,
+        0
+      ],
+      "assessment": "正确；已确认写端全部关闭后仍先读出缓冲数据，读尽后才返回0"
+    }
+  },
+  "next_day_recall": {
+    "date": "2026-10-28",
+    "status": "待验证",
+    "answers": null,
+    "omissions": null
+  },
+  "today_question_answer_preparation": "通过（导师给题、本人答，Q2遗漏经提示和变式补齐）；次日无笔记复答仍待验证"
+}

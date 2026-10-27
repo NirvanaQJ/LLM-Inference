@@ -1,0 +1,67 @@
+{
+  "task_date": "2026-10-27",
+  "evidence_type": "本人文字报告四个退出状态和四个SHA-256；助手只读复核文件，未代跑",
+  "actual_reported_text": "empty_copy_exit=0\nempty_cmp_exit=0\nbinary_copy_exit=0\nbinary_cmp_exit=0\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  gpu-kernel-lab/results/raw/2026-10-27-fd-empty.bin\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  gpu-kernel-lab/results/raw/2026-10-27-fd-empty-copy.bin\n3e068741700d9e13698dde257187f8bdc9180dfa9b3b8dbe9e7ba5a73987f8f8  gpu-kernel-lab/results/raw/2026-10-27-fd-binary.bin\n3e068741700d9e13698dde257187f8bdc9180dfa9b3b8dbe9e7ba5a73987f8f8  gpu-kernel-lab/results/raw/2026-10-27-fd-binary-copy.bin",
+  "cases": [
+    {
+      "description": "空文件",
+      "source_file": "2026-10-27-fd-empty.bin",
+      "destination_file": "2026-10-27-fd-empty-copy.bin",
+      "expected": {
+        "size_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "copy_exit": 0,
+        "cmp_exit": 0
+      },
+      "actual": {
+        "learner_reported_copy_exit": 0,
+        "learner_reported_cmp_exit": 0,
+        "learner_reported_sha256_matches_expected": true,
+        "assistant_readonly_check": {
+          "source": {
+            "file": "2026-10-27-fd-empty.bin",
+            "size_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "destination": {
+            "file": "2026-10-27-fd-empty-copy.bin",
+            "size_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "assessment": "通过"
+      }
+    },
+    {
+      "description": "包含全部256种字节值，跨越多个四字节缓冲区，末块三字节",
+      "source_file": "2026-10-27-fd-binary.bin",
+      "destination_file": "2026-10-27-fd-binary-copy.bin",
+      "expected": {
+        "size_bytes": 1027,
+        "sha256": "3e068741700d9e13698dde257187f8bdc9180dfa9b3b8dbe9e7ba5a73987f8f8",
+        "copy_exit": 0,
+        "cmp_exit": 0
+      },
+      "actual": {
+        "learner_reported_copy_exit": 0,
+        "learner_reported_cmp_exit": 0,
+        "learner_reported_sha256_matches_expected": true,
+        "assistant_readonly_check": {
+          "source": {
+            "file": "2026-10-27-fd-binary.bin",
+            "size_bytes": 1027,
+            "sha256": "3e068741700d9e13698dde257187f8bdc9180dfa9b3b8dbe9e7ba5a73987f8f8"
+          },
+          "destination": {
+            "file": "2026-10-27-fd-binary-copy.bin",
+            "size_bytes": 1027,
+            "sha256": "3e068741700d9e13698dde257187f8bdc9180dfa9b3b8dbe9e7ba5a73987f8f8"
+          }
+        },
+        "assessment": "通过"
+      }
+    }
+  ],
+  "source_snapshot": "#include <fcntl.h>   // open、O_RDONLY\n#include <unistd.h>  // close\n#include <cstdio>    // printf、perror\n#include <cerrno>\n\nbool write_all(int out_fd, const char* data, size_t total) {\n    size_t done = 0;\n\n    while (done < total) {\n        ssize_t written = write(out_fd, data + done, total - done);\n\n        if (written < 0) {\n            if (errno == EINTR) {\n                continue;\n            }\n            std::perror(\"write\");\n            return false;\n        }\n\n        if (written == 0) {\n            std::fprintf(stderr, \"write: no progress\\n\");\n            return false;\n        }\n\n        done += written;\n    }\n\n    return true;\n}\nint main(int argc, char* argv[]) {\n    if (argc != 3) {\n        std::fprintf(stderr, \"usage: %s SOURCE DEST\\n\", argv[0]);\n        return 2;\n    }\n\n    int in_fd = open(argv[1], O_RDONLY);\n    if (in_fd < 0) {\n        std::perror(\"open source\");\n        return 1;\n    }\n\n    int out_fd = open(argv[2], O_WRONLY | O_CREAT | O_EXCL, 0600);\n    if (out_fd < 0) {\n        std::perror(\"open destination\");\n        close(in_fd);\n        return 1;\n    }\n\n    char buf[4];\n    int result = 0;\n\n    while (true) {\n        ssize_t n = read(in_fd, buf, sizeof(buf));\n\n        if (n < 0) {\n            if (errno == EINTR) {\n                continue;\n            }\n            std::perror(\"read\");\n            result = 1;\n            break;\n        }\n\n        if (n == 0) {\n            break;\n        }\n\n        if (!write_all(out_fd, buf, static_cast<size_t>(n))) {\n            result = 1;\n            break;\n        }\n    }\n\n    if (close(in_fd) < 0) {\n        std::perror(\"close source\");\n        result = 1;\n    }\n\n    if (close(out_fd) < 0) {\n        std::perror(\"close destination\");\n        result = 1;\n    }\n\n    return result;\n}",
+  "assessment": "空文件与1027字节二进制输入复制均通过，逐字节比较及独立预存哈希相同；受控短写等仍待验证"
+}

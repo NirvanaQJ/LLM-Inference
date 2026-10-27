@@ -1,0 +1,135 @@
+{
+  "task_date": "2026-10-27",
+  "specification": "输入只含 ()[]{} 六种括号字符；空字符串有效；类型及嵌套顺序均需匹配",
+  "function": "is_valid_parentheses(s)",
+  "cases": [
+    {
+      "input": "",
+      "expected": true,
+      "reason": "没有待匹配括号",
+      "actual": {
+        "learner_screenshot_result": true,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "()",
+      "expected": true,
+      "reason": "一对圆括号",
+      "actual": {
+        "learner_screenshot_result": true,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "()[]{}",
+      "expected": true,
+      "reason": "三种括号顺序配对",
+      "actual": {
+        "learner_screenshot_result": true,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "([])",
+      "expected": true,
+      "reason": "正确嵌套",
+      "actual": {
+        "learner_screenshot_result": true,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "{[()]}",
+      "expected": true,
+      "reason": "三层嵌套",
+      "actual": {
+        "learner_screenshot_result": true,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "(]",
+      "expected": false,
+      "reason": "种类错配",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "([)]",
+      "expected": false,
+      "reason": "嵌套交叉",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": ")(",
+      "expected": false,
+      "reason": "先出现没有左括号的右括号",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "(",
+      "expected": false,
+      "reason": "左括号未关闭",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": ")",
+      "expected": false,
+      "reason": "右括号无对应左括号",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "(()",
+      "expected": false,
+      "reason": "末尾仍有未关闭左括号",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "())",
+      "expected": false,
+      "reason": "多余右括号",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    }
+  ],
+  "expected_origin": "按括号配对和嵌套规则手工确定，未运行实现",
+  "reading_checkpoint": {
+    "question": "([)] 第三个字符 ) 处的栈顶是什么，能否匹配？",
+    "learner_answer_verbatim": "[\n不能",
+    "assessment": "正确，栈顶配对阅读题通过"
+  },
+  "implementation_checkpoint": {
+    "status": "本人按局部修正完成并实跑12组通过；复杂度待回答",
+    "scaffold_fills_expected": [
+      "stack.append(ch)",
+      "pairs[ch]",
+      "not stack（或 len(stack)==0 等布尔等价式）"
+    ],
+    "test_scaffold": "用上述12组手工预期执行函数、打印结果并assert返回bool且等于expected；最后打印12 cases passed",
+    "actual": {
+      "evidence_file": "2026-10-27-parentheses-learner-observation.json",
+      "tests_passed": 12,
+      "exit_code": 0
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "task_date": "2026-10-27",
+  "evidence_type": "本人文字报告实际输出与理解回答；助手只读核对源码，未代跑",
+  "working_directory": "<PROJECT_ROOT>",
+  "input_path": "gpu-kernel-lab/cpp-basics/no_such_fd_input_20261027.txt",
+  "expected": {
+    "diagnostic": "open 报文件不存在",
+    "fd_line_printed": false,
+    "exit_code": 1
+  },
+  "actual_reported_text": "open: No such file or directory\nexit=1",
+  "learner_answer_verbatim": "不会，因为if (fd < 0) {\n        std::perror(\"open\");\n        return 1;\n已经通过return 1f返回了",
+  "source_snapshot": "#include <fcntl.h>   // open、O_RDONLY\n#include <unistd.h>  // close\n#include <cstdio>    // printf、perror\n\nint main() {\n    int fd = open(\"gpu-kernel-lab/cpp-basics/no_such_fd_input_20261027.txt\", O_RDONLY);\n    if (fd < 0) {\n        std::perror(\"open\");\n        return 1;\n    }\n\n    std::printf(\"fd=%d\\n\", fd);\n\n    if (close(fd) < 0) {\n        std::perror(\"close\");\n        return 1;\n    }\n\n    return 0;\n}",
+  "assessment": "缺失文件错误路径与提前返回理解均通过；回答中的 return 1f 按上下文及所贴代码识别为笔误，实际源码为 return 1",
+  "limits": "仅覆盖 open 缺失文件错误，不推定 read/write/close 错误已验证",
+  "public_archive_note": "Personal project path is rendered as <PROJECT_ROOT>; screenshot attachment paths are placeholders. Original records are retained locally. Experimental values and code snapshots are unchanged."
+}

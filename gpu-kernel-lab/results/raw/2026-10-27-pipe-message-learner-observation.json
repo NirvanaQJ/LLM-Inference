@@ -1,0 +1,28 @@
+{
+  "task_date": "2026-10-27",
+  "evidence_type": "本人文字报告运行与理解回答；助手只读核对源码，未代跑",
+  "working_directory": "<PROJECT_ROOT>",
+  "expected": {
+    "message_ascii": "hello pipe",
+    "message_bytes": 10,
+    "child_exit": 0,
+    "program_exit": 0
+  },
+  "actual_reported_text": "received=hello pipe\nbytes=10\nchild_exit=0\nexit=0",
+  "source_snapshot": "#include <unistd.h>\n#include <sys/wait.h>\n#include <cstdio>\n#include <cerrno>\n#include <string>\n\nbool write_all(int out_fd, const char* data, size_t total) {\n    size_t done = 0;\n\n    while (done < total) {\n        ssize_t written = write(out_fd, data + done, total - done);\n\n        if (written < 0) {\n            if (errno == EINTR) {\n                continue;\n            }\n            std::perror(\"write\");\n            return false;\n        }\n\n        if (written == 0) {\n            std::fprintf(stderr, \"write: no progress\\n\");\n            return false;\n        }\n\n        done += written;\n    }\n\n    return true;\n}\n\nint main() {\n    int p[2];\n    if (pipe(p) < 0) {\n        std::perror(\"pipe\");\n        return 1;\n    }\n\n    pid_t child = fork();\n    if (child < 0) {\n        std::perror(\"fork\");\n        close(p[0]);\n        close(p[1]);\n        return 1;\n    }\n\n    if (child == 0) {\n        int result = 0;\n\n        if (close(p[0]) < 0) {\n            std::perror(\"child close read end\");\n            result = 1;\n        }\n\n        const char message[] = \"hello pipe\";\n        if (!write_all(p[1], message, sizeof(message) - 1)) {\n            result = 1;\n        }\n\n        if (close(p[1]) < 0) {\n            std::perror(\"child close write end\");\n            result = 1;\n        }\n\n        _exit(result);\n    }\n\n    int result = 0;\n    if (close(p[1]) < 0) {\n        std::perror(\"parent close write end\");\n        result = 1;\n    }\n\n    std::string received;\n    char buf[4];\n\n    while (true) {\n        ssize_t n = read(p[0], buf, sizeof(buf));\n        if (n < 0) {\n            if (errno == EINTR) {\n                continue;\n            }\n            std::perror(\"read\");\n            result = 1;\n            break;\n        }\n        if (n == 0) {\n            break;\n        }\n        received.append(buf, static_cast<size_t>(n));\n    }\n\n    if (close(p[0]) < 0) {\n        std::perror(\"parent close read end\");\n        result = 1;\n    }\n\n    int status = 0;\n    pid_t reaped;\n    do {\n        reaped = waitpid(child, &status, 0);\n    } while (reaped < 0 && errno == EINTR);\n\n    if (reaped < 0) {\n        std::perror(\"waitpid\");\n        return 1;\n    }\n    if (!WIFEXITED(status)) {\n        std::fprintf(stderr, \"child terminated abnormally\\n\");\n        return 1;\n    }\n\n    int child_exit = WEXITSTATUS(status);\n    std::printf(\"received=%s\\n\", received.c_str());\n    std::printf(\"bytes=%zu\\n\", received.size());\n    std::printf(\"child_exit=%d\\n\", child_exit);\n\n    if (child_exit != 0 || received != \"hello pipe\") {\n        result = 1;\n    }\n    return result;\n}",
+  "run_assessment": "父子传递固定短消息、读至EOF及waitpid回收的正常路径通过（示例拼接指导下）；未实跑异常路径",
+  "EOF_question": "若父漏掉close(p[1])，子写完退出、父读尽消息后，read返回0还是等待？",
+  "learner_answer_verbatim": "会返回0,因为此时读段没有关闭，父进程会以为子进程没有关闭写端",
+  "EOF_assessment": "通过（纠正后变式复答）；初答错误及解释原样保留",
+  "correction": "剩余潜在写入者包含父进程自己；不是父进程猜测子进程状态。",
+  "retry_question": "父已关闭自己的p[1]，子仍保留p[1]，管道暂时无数据，read返回0还是等待？还持有写端的是谁？",
+  "retry_expected": {
+    "read_behavior": "等待",
+    "writer_holder": "子进程"
+  },
+  "retry_actual": {
+    "learner_answer_verbatim": "继续等待，子进程还持有写端",
+    "assessment": "正确，管道EOF理解经纠正后通过"
+  },
+  "public_archive_note": "Personal project path is rendered as <PROJECT_ROOT>; screenshot attachment paths are placeholders. Original records are retained locally. Experimental values and code snapshots are unchanged."
+}

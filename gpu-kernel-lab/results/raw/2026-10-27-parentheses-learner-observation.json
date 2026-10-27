@@ -1,0 +1,133 @@
+{
+  "task_date": "2026-10-27",
+  "evidence_type": "本人终端截图，助手只读核对修正源码，未代跑",
+  "attachment_path": "<LEARNER_SCREENSHOT_ATTACHMENT>",
+  "working_directory": "<PROJECT_ROOT>",
+  "run_command": "python3 gpu-kernel-lab/python-basics/valid_parentheses.py",
+  "actual_stdout_transcribed": "'' True\n'()' True\n'()[]{}' True\n'([])' True\n'{[()]}' True\n'(]' False\n'([)]' False\n')(' False\n'(' False\n')' False\n'(()' False\n'())' False\n12 cases passed",
+  "actual_shell_exit": 0,
+  "cases": [
+    {
+      "input": "",
+      "expected": true,
+      "reason": "没有待匹配括号",
+      "actual": {
+        "learner_screenshot_result": true,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "()",
+      "expected": true,
+      "reason": "一对圆括号",
+      "actual": {
+        "learner_screenshot_result": true,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "()[]{}",
+      "expected": true,
+      "reason": "三种括号顺序配对",
+      "actual": {
+        "learner_screenshot_result": true,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "([])",
+      "expected": true,
+      "reason": "正确嵌套",
+      "actual": {
+        "learner_screenshot_result": true,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "{[()]}",
+      "expected": true,
+      "reason": "三层嵌套",
+      "actual": {
+        "learner_screenshot_result": true,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "(]",
+      "expected": false,
+      "reason": "种类错配",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "([)]",
+      "expected": false,
+      "reason": "嵌套交叉",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": ")(",
+      "expected": false,
+      "reason": "先出现没有左括号的右括号",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "(",
+      "expected": false,
+      "reason": "左括号未关闭",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": ")",
+      "expected": false,
+      "reason": "右括号无对应左括号",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "(()",
+      "expected": false,
+      "reason": "末尾仍有未关闭左括号",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    },
+    {
+      "input": "())",
+      "expected": false,
+      "reason": "多余右括号",
+      "actual": {
+        "learner_screenshot_result": false,
+        "assessment": "通过"
+      }
+    }
+  ],
+  "source_snapshot": "def is_valid_parentheses(s):\n    pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\n    stack = []\n\n    for ch in s:\n        if ch in \"([{\":\n            stack.append(ch)\n        else:\n            if not stack:\n                return False\n            if stack.pop() != pairs[ch]:\n                return False\n\n    return not stack\n\ncases = [\n    (\"\", True),\n    (\"()\", True),\n    (\"()[]{}\", True),\n    (\"([])\", True),\n    (\"{[()]}\", True),\n    (\"(]\", False),\n    (\"([)]\", False),\n    (\")(\", False),\n    (\"(\", False),\n    (\")\", False),\n    (\"(()\", False),\n    (\"())\", False),\n]\n\nfor text, expected in cases:\n    actual = is_valid_parentheses(text)\n    print(repr(text), actual)\n    assert type(actual) is bool\n    assert actual == expected\n\nprint(\"12 cases passed\")",
+  "assessment": "12组独立预期、布尔类型、退出状态0及复杂度均通过（骨架/局部纠错，时间理由经导师补充），不计为全程无提示独立实现。",
+  "screenshot_context_note": "截图顶部File exists属于此前命令，不计作本脚本报错；当前命令输出从空串测试开始。",
+  "complexity_checkpoint": {
+    "question": "输入长n，最坏时间与额外空间复杂度分别是多少，各给一句理由？",
+    "actual": {
+      "learner_answer_verbatim": "O(n)\nO(n) n个",
+      "assessment": "两项复杂度及最坏栈长n正确；时间每字符一轮、固定次数操作的理由由导师补充，不表述为本人独立完整推导",
+      "time": "O(n)",
+      "extra_space": "O(n)",
+      "max_stack_elements": "n"
+    }
+  },
+  "public_archive_note": "Personal project path is rendered as <PROJECT_ROOT>; screenshot attachment paths are placeholders. Original records are retained locally. Experimental values and code snapshots are unchanged."
+}

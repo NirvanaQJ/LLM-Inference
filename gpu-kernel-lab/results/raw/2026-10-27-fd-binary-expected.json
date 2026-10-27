@@ -1,0 +1,66 @@
+{
+  "task_date": "2026-10-27",
+  "prepared_by": "助手准备固定输入，不计作本人实操",
+  "working_directory": "<PROJECT_ROOT>",
+  "cases": [
+    {
+      "description": "空文件",
+      "source_file": "2026-10-27-fd-empty.bin",
+      "destination_file": "2026-10-27-fd-empty-copy.bin",
+      "expected": {
+        "size_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "copy_exit": 0,
+        "cmp_exit": 0
+      },
+      "actual": {
+        "learner_reported_copy_exit": 0,
+        "learner_reported_cmp_exit": 0,
+        "learner_reported_sha256_matches_expected": true,
+        "assistant_readonly_check": {
+          "source": {
+            "file": "2026-10-27-fd-empty.bin",
+            "size_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "destination": {
+            "file": "2026-10-27-fd-empty-copy.bin",
+            "size_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "assessment": "通过"
+      }
+    },
+    {
+      "description": "包含全部256种字节值，跨越多个四字节缓冲区，末块三字节",
+      "source_file": "2026-10-27-fd-binary.bin",
+      "destination_file": "2026-10-27-fd-binary-copy.bin",
+      "expected": {
+        "size_bytes": 1027,
+        "sha256": "3e068741700d9e13698dde257187f8bdc9180dfa9b3b8dbe9e7ba5a73987f8f8",
+        "copy_exit": 0,
+        "cmp_exit": 0
+      },
+      "actual": {
+        "learner_reported_copy_exit": 0,
+        "learner_reported_cmp_exit": 0,
+        "learner_reported_sha256_matches_expected": true,
+        "assistant_readonly_check": {
+          "source": {
+            "file": "2026-10-27-fd-binary.bin",
+            "size_bytes": 1027,
+            "sha256": "3e068741700d9e13698dde257187f8bdc9180dfa9b3b8dbe9e7ba5a73987f8f8"
+          },
+          "destination": {
+            "file": "2026-10-27-fd-binary-copy.bin",
+            "size_bytes": 1027,
+            "sha256": "3e068741700d9e13698dde257187f8bdc9180dfa9b3b8dbe9e7ba5a73987f8f8"
+          }
+        },
+        "assessment": "通过"
+      }
+    }
+  ],
+  "public_archive_note": "Personal project path is rendered as <PROJECT_ROOT>; screenshot attachment paths are placeholders. Original records are retained locally. Experimental values and code snapshots are unchanged."
+}

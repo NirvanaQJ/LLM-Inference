@@ -1,0 +1,15 @@
+{
+  "task_date": "2026-10-27",
+  "evidence_type": "本人截图及保存的源码；助手只读核对，未运行",
+  "attachment_path": "<LEARNER_SCREENSHOT_ATTACHMENT>",
+  "source_snapshot": "def is_valid_parentheses(s):\n    pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\n    stack = []\n\n    for ch in s:\n        if ch in \"([{\":\n            stack.append(ch)\n        else:\n            if not stack:\n                return False\n            if stack.pop() != pairs[ch]:\n                return False\n\n    return not stack\n\ncases = [\n    (\"\", True),\n    (\"()\", True),\n    (\"()[]{}\", True),\n    (\"([])\", True),\n    (\"{[()]}\", True),\n    (\"(]\", False),\n    (\"([)]\", False),\n    (\")(\", False),\n    (\"(\", False),\n    (\")\", False),\n    (\"(()\", False),\n    (\"())\", False),\n]\n\nfor text, expected in cases:\n    actual = is_valid_parentheses(text)\n    print(repr(text), actual)\n    assert type(actual) is bool\n    assert actual == expected\n\nprint(\"12 cases passed\")",
+  "assessment": {
+    "A": "未通过：Python list无push方法，应为append(ch)",
+    "B": "未通过：将栈顶左括号与整段右括号字符串比较，应与pairs[ch]比较",
+    "C": "通过：return not stack正确判断最后无未匹配左括号",
+    "test_calls": "本人文件中已有完整12组测试调用，但尚无运行输出"
+  },
+  "actual_runtime_output": null,
+  "next_step": "本人局部修正A/B后保存并运行12组测试，再提供真实输出；随后检查复杂度",
+  "public_archive_note": "Personal project path is rendered as <PROJECT_ROOT>; screenshot attachment paths are placeholders. Original records are retained locally. Experimental values and code snapshots are unchanged."
+}

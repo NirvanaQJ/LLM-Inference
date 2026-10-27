@@ -1,0 +1,21 @@
+{
+  "task_date": "2026-10-27",
+  "evidence_type": "本人文字报告实际输出与理解回答；助手只读核对源码，未代跑",
+  "working_directory": "<PROJECT_ROOT>",
+  "input_path": "gpu-kernel-lab/results/raw/2026-10-27-fd-input.txt",
+  "expected": {
+    "read_counts": [
+      4,
+      2,
+      0
+    ],
+    "exit_code": 0
+  },
+  "actual_reported_text": "fd=3\nread=4\nread=2\nread=0\nexit=0",
+  "source_snapshot": "#include <fcntl.h>   // open、O_RDONLY\n#include <unistd.h>  // close\n#include <cstdio>    // printf、perror\n\nint main() {\n    int fd = open(\"gpu-kernel-lab/results/raw/2026-10-27-fd-input.txt\", O_RDONLY);\n    if (fd < 0) {\n        std::perror(\"open\");\n        return 1;\n    }\n\n    std::printf(\"fd=%d\\n\", fd);\n   char buf[4];\n\nwhile (true) {\n    ssize_t n = read(fd, buf, sizeof(buf));\n\n    if (n < 0) {\n        std::perror(\"read\");\n        close(fd);\n        return 1;\n    }\n\n    std::printf(\"read=%zd\\n\", n);\n\n    if (n == 0) {\n        break;\n    }\n}\n\n    if (close(fd) < 0) {\n        std::perror(\"close\");\n        return 1;\n    }\n\n    return 0;\n}",
+  "understanding_question": "如果删掉 n == 0 时的 break，读到文件末尾后这个循环会自己停止吗？",
+  "learner_answer_verbatim": "不会",
+  "assessment": "普通文件循环读至EOF实跑通过；本人正确判断不会自动停止，导师补充原因：无文件变化、无读取错误的情况下read继续返回0而while(true)仍成立。未计作独立完整解释。",
+  "limits": "受控短写、EINTR、管道与完整文件复制仍待验证",
+  "public_archive_note": "Personal project path is rendered as <PROJECT_ROOT>; screenshot attachment paths are placeholders. Original records are retained locally. Experimental values and code snapshots are unchanged."
+}

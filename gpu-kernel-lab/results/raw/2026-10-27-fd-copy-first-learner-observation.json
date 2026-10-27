@@ -1,0 +1,31 @@
+{
+  "task_date": "2026-10-27",
+  "evidence_type": "本人报告复制和cmp退出状态；助手只读核对源码及输入/目标文件，未代跑",
+  "working_directory": "<PROJECT_ROOT>",
+  "compile_command": "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/fd_copy.cpp -o /tmp/fd_copy_20261027",
+  "run_command": "/tmp/fd_copy_20261027 gpu-kernel-lab/results/raw/2026-10-27-fd-input.txt gpu-kernel-lab/results/raw/2026-10-27-fd-copy-first.txt",
+  "expected": {
+    "source_bytes_ascii": "ABCDEF",
+    "output_size_bytes": 6,
+    "copy_exit": 0,
+    "cmp_exit": 0
+  },
+  "actual_reported_text": "copy_exit=0\ncmp_exit=0",
+  "assistant_readonly_file_check": {
+    "source": {
+      "file": "2026-10-27-fd-input.txt",
+      "size_bytes": 6,
+      "sha256": "e9c0f8b575cbfcb42ab3b78ecc87efa3b011d9a5d10b09fa4e96f240bf6a82f5",
+      "content_ascii": "ABCDEF"
+    },
+    "destination": {
+      "file": "2026-10-27-fd-copy-first.txt",
+      "size_bytes": 6,
+      "sha256": "e9c0f8b575cbfcb42ab3b78ecc87efa3b011d9a5d10b09fa4e96f240bf6a82f5",
+      "content_ascii": "ABCDEF"
+    }
+  },
+  "source_snapshot": "#include <fcntl.h>   // open、O_RDONLY\n#include <unistd.h>  // close\n#include <cstdio>    // printf、perror\n#include <cerrno>\n\nbool write_all(int out_fd, const char* data, size_t total) {\n    size_t done = 0;\n\n    while (done < total) {\n        ssize_t written = write(out_fd, data + done, total - done);\n\n        if (written < 0) {\n            if (errno == EINTR) {\n                continue;\n            }\n            std::perror(\"write\");\n            return false;\n        }\n\n        if (written == 0) {\n            std::fprintf(stderr, \"write: no progress\\n\");\n            return false;\n        }\n\n        done += written;\n    }\n\n    return true;\n}\nint main(int argc, char* argv[]) {\n    if (argc != 3) {\n        std::fprintf(stderr, \"usage: %s SOURCE DEST\\n\", argv[0]);\n        return 2;\n    }\n\n    int in_fd = open(argv[1], O_RDONLY);\n    if (in_fd < 0) {\n        std::perror(\"open source\");\n        return 1;\n    }\n\n    int out_fd = open(argv[2], O_WRONLY | O_CREAT | O_EXCL, 0600);\n    if (out_fd < 0) {\n        std::perror(\"open destination\");\n        close(in_fd);\n        return 1;\n    }\n\n    char buf[4];\n    int result = 0;\n\n    while (true) {\n        ssize_t n = read(in_fd, buf, sizeof(buf));\n\n        if (n < 0) {\n            if (errno == EINTR) {\n                continue;\n            }\n            std::perror(\"read\");\n            result = 1;\n            break;\n        }\n\n        if (n == 0) {\n            break;\n        }\n\n        if (!write_all(out_fd, buf, static_cast<size_t>(n))) {\n            result = 1;\n            break;\n        }\n    }\n\n    if (close(in_fd) < 0) {\n        std::perror(\"close source\");\n        result = 1;\n    }\n\n    if (close(out_fd) < 0) {\n        std::perror(\"close destination\");\n        result = 1;\n    }\n\n    return result;\n}",
+  "assessment": "首次完整文本复制正常路径通过（拼接示例跟做）；未推定二进制、空文件、受控短写和其他错误路径通过",
+  "public_archive_note": "Personal project path is rendered as <PROJECT_ROOT>; screenshot attachment paths are placeholders. Original records are retained locally. Experimental values and code snapshots are unchanged."
+}

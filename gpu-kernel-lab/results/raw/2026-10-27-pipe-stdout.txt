@@ -1,0 +1,3 @@
+received=hello pipe
+bytes=10
+child_exit=0

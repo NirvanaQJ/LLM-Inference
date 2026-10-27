@@ -1,0 +1,236 @@
+{
+  "archive_date": "2026-10-27",
+  "operator": "assistant",
+  "task": "Archive verified Oct 27 learning and upload to the existing GitHub repository.",
+  "learning_status": "P0, routine and necessary understanding passed with guidance; P1 questions prepared, next-day no-notes recall pending.",
+  "learner_reported_total_minutes": 120,
+  "file_moves": [],
+  "experiment_reruns_during_archival": false,
+  "snapshot_hashes_verified": 14,
+  "snapshots_unchanged_from_local_originals": [
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-fd-binary-learner-observation.json",
+      "field": "source_snapshot",
+      "sha256": "39a5312317ad879bad5456000d40709f69c933293ccc2f1f859eeac7eac7cc7c"
+    },
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-fd-copy-first-learner-observation.json",
+      "field": "source_snapshot",
+      "sha256": "39a5312317ad879bad5456000d40709f69c933293ccc2f1f859eeac7eac7cc7c"
+    },
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-fd-faults-assistant.json",
+      "field": "source_snapshot",
+      "sha256": "39a5312317ad879bad5456000d40709f69c933293ccc2f1f859eeac7eac7cc7c"
+    },
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-fd-open-errors-expected.json",
+      "field": "source_snapshot",
+      "sha256": "39a5312317ad879bad5456000d40709f69c933293ccc2f1f859eeac7eac7cc7c"
+    },
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-open-close-learner-observation.json",
+      "field": "source_snapshot",
+      "sha256": "f83e359bb59a157a04a118f7171e4763bd233bc15c1bebd105da0c94567f4bc3"
+    },
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-open-missing-learner-observation.json",
+      "field": "source_snapshot",
+      "sha256": "7463de489e547a6a7d71b7ee7efbb29f49c0054e8402f4ff7f1c62773c78a4da"
+    },
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-parentheses-initial-observation.json",
+      "field": "source_snapshot",
+      "sha256": "ac3d24683add9de6fb4573b58dc8fe8b080be0e48263a1bf672facb88604f646"
+    },
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-parentheses-learner-observation.json",
+      "field": "source_snapshot",
+      "sha256": "ac3d24683add9de6fb4573b58dc8fe8b080be0e48263a1bf672facb88604f646"
+    },
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-pipe-create-learner-observation.json",
+      "field": "source_snapshot",
+      "sha256": "9243d50cef98c096087a03ad18f155bad4895b58b5ef415deee3683863d66ca2"
+    },
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-pipe-message-learner-observation.json",
+      "field": "source_snapshot",
+      "sha256": "bfe8570a23eaeaf19e29e42c89392dadb028a89cbffff26c25c3192359bada1e"
+    },
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-read-learner-observation.json",
+      "field": "source_snapshot",
+      "sha256": "1611a1eb98b033e15aae3addd2690a402f7ccdb3003e059346786b62c52b56ac"
+    },
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-read-loop-learner-observation.json",
+      "field": "source_snapshot",
+      "sha256": "610d1eb04a031b4b07a8de83dabfff194a4463755a60c1907f7102dae5de0ba1"
+    },
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-write-all-initial-observation.json",
+      "field": "source_snapshot",
+      "sha256": "05e39d76bb90a9ba66fe99ec10a9e764985ef05004972e2a51c752d012d0534a"
+    },
+    {
+      "record": "gpu-kernel-lab/results/raw/2026-10-27-write-all-initial-observation.json",
+      "field": "corrected_source_snapshot",
+      "sha256": "01d9cdcb02324d67cadcb422f89f359a2877e32f8229e2c09e0bebe7d141b792"
+    }
+  ],
+  "final_source_snapshots": [
+    {
+      "source": "gpu-kernel-lab/cpp-basics/fd_copy.cpp",
+      "record": "2026-10-27-fd-copy-first-learner-observation.json",
+      "sha256": "39a5312317ad879bad5456000d40709f69c933293ccc2f1f859eeac7eac7cc7c"
+    },
+    {
+      "source": "gpu-kernel-lab/cpp-basics/pipe_message.cpp",
+      "record": "2026-10-27-pipe-message-learner-observation.json",
+      "sha256": "bfe8570a23eaeaf19e29e42c89392dadb028a89cbffff26c25c3192359bada1e"
+    },
+    {
+      "source": "gpu-kernel-lab/python-basics/valid_parentheses.py",
+      "record": "2026-10-27-parentheses-learner-observation.json",
+      "sha256": "ac3d24683add9de6fb4573b58dc8fe8b080be0e48263a1bf672facb88604f646"
+    }
+  ],
+  "privacy": "Personal absolute project directories and temporary screenshot attachment paths replaced in public copies; originals retained locally in the ignored private area. Experimental values, code snapshots and binary fixtures are unchanged. No detected credential patterns in the upload scope.",
+  "local_link_check": {
+    "tool": "roadmap-daily-journal/scripts/check_local_links.py",
+    "files_checked": [
+      "README.md",
+      "日记/README.md",
+      "日记/2026-10-27.md",
+      "gpu-kernel-lab/tests/2026-10-27-fd-cases.md",
+      "gpu-kernel-lab/tests/2026-10-27-fd-selfcheck.md",
+      "gpu-kernel-lab/tests/2026-10-27-parentheses-cases.md",
+      "gpu-kernel-lab/tests/2026-10-27-pipe-cases.md",
+      "gpu-kernel-lab/tests/2026-10-27-redirection-cases.md"
+    ],
+    "automatic_counts": {
+      "ok": 316,
+      "needs_review": 10,
+      "external_unchecked": 8
+    },
+    "manual_anchor_reviews": [
+      {
+        "source": "README.md",
+        "target": "#%E4%B8%A4%E4%B8%AA%E6%A0%B8%E5%BF%83%E9%A1%B9%E7%9B%AE",
+        "heading": "两个核心项目",
+        "result": "verified heading anchor"
+      },
+      {
+        "source": "README.md",
+        "target": "#%E4%BB%A3%E8%A1%A8%E6%80%A7%E6%88%90%E6%9E%9C",
+        "heading": "代表性成果",
+        "result": "verified heading anchor"
+      },
+      {
+        "source": "README.md",
+        "target": "#%E5%AE%8C%E6%95%B4%E6%88%90%E6%9E%9C%E7%B4%A2%E5%BC%95",
+        "heading": "完整成果索引",
+        "result": "verified heading anchor"
+      },
+      {
+        "source": "README.md",
+        "target": "%E6%97%A5%E8%AE%B0/2026-10-27.md#%E5%A4%87%E6%B3%A8",
+        "heading": "备注",
+        "result": "verified heading anchor"
+      },
+      {
+        "source": "README.md",
+        "target": "%E6%97%A5%E8%AE%B0/2026-10-27.md#%E5%A4%8D%E7%8E%B0%E5%85%A5%E5%8F%A3%E4%B8%8E%E5%85%B3%E9%94%AE%E7%8E%AF%E5%A2%83",
+        "heading": "复现入口与关键环境",
+        "result": "verified heading anchor"
+      },
+      {
+        "source": "README.md",
+        "target": "gpu-kernel-lab/python-basics/README.md#pythonc-csv-%E7%BB%9F%E8%AE%A1%E5%AF%B9%E7%85%A7",
+        "heading": "Python/C++ CSV 统计对照",
+        "result": "verified heading anchor"
+      },
+      {
+        "source": "日记/2026-10-27.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-27-fd-cases.md#%E6%A3%80%E6%9F%A5%E7%82%B9-1open-%E8%BF%94%E5%9B%9E%E5%80%BC%E9%98%85%E8%AF%BB%E9%A2%98",
+        "heading": "检查点 1：open 返回值阅读题",
+        "result": "verified heading anchor"
+      },
+      {
+        "source": "日记/2026-10-27.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-27-fd-cases.md#%E6%A3%80%E6%9F%A5%E7%82%B9-6write-%E7%9A%84%E6%9C%89%E6%95%88%E6%95%B0%E6%8D%AE%E9%95%BF%E5%BA%A6%E9%80%9A%E8%BF%87",
+        "heading": "检查点 6：write 的有效数据长度（通过）",
+        "result": "verified heading anchor"
+      },
+      {
+        "source": "日记/2026-10-27.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-27-fd-cases.md#%E6%A3%80%E6%9F%A5%E7%82%B9-7%E7%9F%AD%E5%86%99%E6%8E%A8%E8%BF%9B%E9%80%9A%E8%BF%87",
+        "heading": "检查点 7：短写推进（通过）",
+        "result": "verified heading anchor"
+      },
+      {
+        "source": "日记/2026-10-27.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-27-pipe-cases.md#%E6%A3%80%E6%9F%A5%E7%82%B9-2fork-%E5%90%8E%E7%9A%84%E7%AB%AF%E7%82%B9%E5%88%86%E5%B7%A5%E9%80%9A%E8%BF%87",
+        "heading": "检查点 2：fork 后的端点分工（通过）",
+        "result": "verified heading anchor"
+      }
+    ],
+    "result": "All local targets and 10 reviewed Markdown heading anchors passed; external links were not re-fetched."
+  },
+  "limitations": [
+    "P1 next-day no-notes recall has not occurred.",
+    "Injected faults are controlled tests run by the assistant, not natural system failures.",
+    "Pipe abnormal branches were not executed.",
+    "External source URLs are not revalidated during archival.",
+    "Browser localStorage progress is not synchronized."
+  ],
+  "github_target": {
+    "repository": "NirvanaQJ/LLM-Inference",
+    "branch": "main",
+    "head_confirmed_before_upload": "3db0ef9cc390d503813fb0a6bc09a3488f8d4814"
+  },
+  "upload_scope": [
+    "gpu-kernel-lab/cpp-basics/fd_copy.cpp",
+    "gpu-kernel-lab/cpp-basics/pipe_message.cpp",
+    "gpu-kernel-lab/python-basics/valid_parentheses.py",
+    "gpu-kernel-lab/results/raw/2026-10-27-archive-audit.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-copy-stderr.txt",
+    "gpu-kernel-lab/results/raw/2026-10-27-copy-stdout.txt",
+    "gpu-kernel-lab/results/raw/2026-10-27-fd-binary-copy.bin",
+    "gpu-kernel-lab/results/raw/2026-10-27-fd-binary-expected.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-fd-binary-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-fd-binary.bin",
+    "gpu-kernel-lab/results/raw/2026-10-27-fd-copy-first-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-fd-copy-first.txt",
+    "gpu-kernel-lab/results/raw/2026-10-27-fd-empty-copy.bin",
+    "gpu-kernel-lab/results/raw/2026-10-27-fd-empty.bin",
+    "gpu-kernel-lab/results/raw/2026-10-27-fd-faults-assistant.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-fd-input.txt",
+    "gpu-kernel-lab/results/raw/2026-10-27-fd-open-errors-expected.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-fd-selfcheck-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-open-close-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-open-missing-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-parentheses-expected.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-parentheses-initial-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-parentheses-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-pipe-create-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-pipe-message-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-pipe-stdout.txt",
+    "gpu-kernel-lab/results/raw/2026-10-27-read-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-read-loop-learner-observation.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-redirection-expected.json",
+    "gpu-kernel-lab/results/raw/2026-10-27-write-all-initial-observation.json",
+    "gpu-kernel-lab/tests/2026-10-27-fd-cases.md",
+    "gpu-kernel-lab/tests/2026-10-27-fd-selfcheck.md",
+    "gpu-kernel-lab/tests/2026-10-27-parentheses-cases.md",
+    "gpu-kernel-lab/tests/2026-10-27-pipe-cases.md",
+    "gpu-kernel-lab/tests/2026-10-27-redirection-cases.md",
+    "gpu-kernel-lab/tests/fd_fault_driver.cpp",
+    "gpu-kernel-lab/tests/run_fd_faults.py",
+    "日记/2026-10-27.md",
+    "README.md",
+    "日记/README.md"
+  ],
+  "scope_file_count": 40
+}

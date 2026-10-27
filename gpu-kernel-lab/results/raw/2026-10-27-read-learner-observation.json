@@ -1,0 +1,39 @@
+{
+  "task_date": "2026-10-27",
+  "evidence_type": "本人文字报告实际运行与理解回答；助手只读核对源码和固定输入，未代跑",
+  "working_directory": "<PROJECT_ROOT>",
+  "input": {
+    "path": "gpu-kernel-lab/results/raw/2026-10-27-fd-input.txt",
+    "content_ascii": "ABCDEF",
+    "size_bytes": 6,
+    "trailing_newline": false
+  },
+  "buffer_size_bytes": 4,
+  "expected": {
+    "read_count": 4,
+    "exit_code": 0,
+    "fd": "非负整数，由运行时分配"
+  },
+  "actual_reported_text": "fd=3\nread=4\nexit=0",
+  "source_snapshot": "#include <fcntl.h>   // open、O_RDONLY\n#include <unistd.h>  // close\n#include <cstdio>    // printf、perror\n\nint main() {\n    int fd = open(\"gpu-kernel-lab/results/raw/2026-10-27-fd-input.txt\", O_RDONLY);\n    if (fd < 0) {\n        std::perror(\"open\");\n        return 1;\n    }\n\n    std::printf(\"fd=%d\\n\", fd);\n    char buf[4];\n\nssize_t n = read(fd, buf, sizeof(buf));\n\nif (n < 0) {\n    std::perror(\"read\");\n    close(fd);\n    return 1;\n}\n\nstd::printf(\"read=%zd\\n\", n);\n\n    if (close(fd) < 0) {\n        std::perror(\"close\");\n        return 1;\n    }\n\n    return 0;\n}",
+  "learner_answer_verbatim": "返回0,因为文件只有4个字节的内容，再多读4个字节，读取为空",
+  "assessment": {
+    "single_read_run": "通过（按局部示例跟做）",
+    "continued_read_understanding": "通过（纠正后复答）；保留初答错误，连续读取实跑尚待验证"
+  },
+  "correction": "固定输入共6字节；第一次取走ABCD，尚有EF。普通文件读取位置按实际读取字节数向后推进；仅剩余内容不足请求量时仍可返回正数。",
+  "retry_question": "对于同一未关闭的fd，文件不变且正常读取，第二、第三次分别请求最多4字节，各返回多少？",
+  "retry_expected": [
+    2,
+    0
+  ],
+  "retry_actual": {
+    "learner_answer_verbatim": "2\n第三次执行返回0",
+    "values": [
+      2,
+      0
+    ],
+    "assessment": "纠正后两项均正确，连续读取返回值理解通过；尚未实跑连续读取"
+  },
+  "public_archive_note": "Personal project path is rendered as <PROJECT_ROOT>; screenshot attachment paths are placeholders. Original records are retained locally. Experimental values and code snapshots are unchanged."
+}
