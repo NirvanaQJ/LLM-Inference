@@ -1,0 +1,29 @@
+{
+  "task_date": "2026-10-28",
+  "checkpoint": "open/fstat/close 获取文件大小",
+  "evidence_type": "本人文字报告运行输出；助手只读核对源码和输入，未代跑",
+  "working_directory": "<PROJECT_ROOT>",
+  "commands_provided": [
+    "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/mmap.cpp -o /tmp/llm-vm-2026-10-28",
+    "/tmp/llm-vm-2026-10-28 gpu-kernel-lab/results/raw/2026-10-28-vm-input.txt",
+    "echo \"exit=$?\""
+  ],
+  "commands_observed_directly": false,
+  "input": {
+    "path": "gpu-kernel-lab/results/raw/2026-10-28-vm-input.txt",
+    "expected_content": "ABCDEF",
+    "expected_bytes": 6,
+    "assistant_readonly_actual_bytes": 6,
+    "assistant_readonly_actual_hex": "41 42 43 44 45 46",
+    "assistant_readonly_sha256": "e9c0f8b575cbfcb42ab3b78ecc87efa3b011d9a5d10b09fa4e96f240bf6a82f5"
+  },
+  "expected": {
+    "stdout": "size=6\n",
+    "exit_code": 0,
+    "basis": "六个 ASCII 字符各占一字节，无换行"
+  },
+  "learner_report_verbatim": "size=6\nexit=0",
+  "assessment": "正常路径的文件大小获取检查点通过（按导师示例跟做）；尚未实现或实跑 mmap、普通读取对照及错误边界",
+  "source_path": "gpu-kernel-lab/cpp-basics/mmap.cpp",
+  "source_snapshot": "#include <cstdio>\n#include <fcntl.h>\n#include <iostream>\n#include <sys/stat.h>\n#include <unistd.h>\n\nint main(int argc, char* argv[]) {\n    if (argc != 2) {\n        std::cerr << \"usage: \" << argv[0] << \" <file>\\n\";\n        return 1;\n    }\n\n    int fd = open(argv[1], O_RDONLY);\n    if (fd < 0) {\n        std::perror(\"open\");\n        return 1;\n    }\n\n    struct stat info{};\n    if (fstat(fd, &info) == -1) {\n        std::perror(\"fstat\");\n        close(fd);\n        return 1;\n    }\n\n    std::cout << \"size=\" << info.st_size << '\\n';\n\n    if (close(fd) == -1) {\n        std::perror(\"close\");\n        return 1;\n    }\n    return 0;\n}"
+}

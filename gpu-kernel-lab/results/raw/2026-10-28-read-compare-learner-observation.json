@@ -1,0 +1,44 @@
+{
+  "task_date": "2026-10-28",
+  "checkpoint": "固定六字节文件的 mmap/read 对照",
+  "evidence_type": "本人文字报告运行输出与理解题回答；助手只读核对源码及输入，未代跑",
+  "working_directory": "<PROJECT_ROOT>",
+  "commands_provided": [
+    "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/mmap.cpp -o /tmp/llm-vm-2026-10-28",
+    "/tmp/llm-vm-2026-10-28 gpu-kernel-lab/results/raw/2026-10-28-vm-input.txt",
+    "echo \"exit=$?\""
+  ],
+  "commands_observed_directly": false,
+  "input": {
+    "path": "gpu-kernel-lab/results/raw/2026-10-28-vm-input.txt",
+    "expected_content": "ABCDEF",
+    "expected_bytes": 6,
+    "assistant_readonly_actual_bytes": 6,
+    "assistant_readonly_sha256": "e9c0f8b575cbfcb42ab3b78ecc87efa3b011d9a5d10b09fa4e96f240bf6a82f5"
+  },
+  "expected": {
+    "stdout": "size=6\nmmap_bytes=6\nmmap_sum=405\nread_bytes=6\nread_sum=405\nmatch=yes\n",
+    "exit_code": 0,
+    "basis": "独立手算：六个 ASCII 字节，65+66+67+68+69+70=405；两种读取使用同一固定输入与同一规则"
+  },
+  "learner_report_verbatim": "size=6\nmmap_bytes=6\nmmap_sum=405\nread_bytes=6\nread_sum=405\nmatch=yes\nexit=0\n3次，前两次会读取，第三次会退出",
+  "runtime_assessment": "固定六字节输入的 mmap/read 对照正常路径通过（局部示例指导下）",
+  "understanding_check": {
+    "question": "如果某次 read 只返回了 2，内层循环应该执行几次？为什么？",
+    "expected": "count=2，index 依次为 0、1，累加两次；内层 for 本身不调用 read",
+    "answer_verbatim": "3次，前两次会读取，第三次会退出",
+    "status": "未通过（混淆外层 read 循环与内层逐字节累加循环，待纠正复答）",
+    "retry": {
+      "question": "如果某轮 read 返回 3，count 是多少？内层循环访问哪些下标，执行几次累加？",
+      "answer_verbatim": "3 0 1 2 3,执行3次累加",
+      "assessment": "count=3 和累加三次正确；所列数字包含 3 的歧义已通过针对边界复答澄清",
+      "followup_question": "当 index=3 时，3<3 是否成立？会访问 buffer[3] 吗？",
+      "followup_answer": "不成立，不会执行",
+      "followup_assessment": "正确：index=3 时 3<3 不成立，不执行循环体，不访问 buffer[3]"
+    },
+    "latest_status": "通过（区分内外循环并经边界纠正后复答正确）；保留初答与纠正过程"
+  },
+  "scope_limits": "未实跑空/短/二进制文件及错误路径；当前程序仍要求至少 3 字节；未计时，不作性能结论",
+  "source_path": "gpu-kernel-lab/cpp-basics/mmap.cpp",
+  "source_snapshot": "#include <cstdio>\n#include <fcntl.h>\n#include <iostream>\n#include <sys/stat.h>\n#include <unistd.h>\n#include <cstddef>\n#include <sys/mman.h>\n#include <cstdint>\n#include <cerrno>\n\nint main(int argc, char* argv[]) {\n    if (argc != 2) {\n        std::cerr << \"usage: \" << argv[0] << \" <file>\\n\";\n        return 1;\n    }\n\n    int fd = open(argv[1], O_RDONLY);\n    if (fd < 0) {\n        std::perror(\"open\");\n        return 1;\n    }\n\n    struct stat info{};\n    if (fstat(fd, &info) == -1) {\n        std::perror(\"fstat\");\n        close(fd);\n        return 1;\n    }\n\n    std::cout << \"size=\" << info.st_size << '\\n';\n    if (info.st_size < 3) {\n    std::cerr << \"this step requires at least 3 bytes\\n\";\n    close(fd);\n    return 1;\n}\n\nstd::size_t length = static_cast<std::size_t>(info.st_size);\nvoid* mapping = mmap(nullptr, length, PROT_READ, MAP_PRIVATE, fd, 0);\nif (mapping == MAP_FAILED) {\n    std::perror(\"mmap\");\n    close(fd);\n    return 1;\n}\n\nconst unsigned char* bytes =\n    static_cast<const unsigned char*>(mapping);\n\nstd::uint64_t mmap_sum = 0;\nfor (std::size_t index = 0; index < length; ++index) {\n    mmap_sum += bytes[index];\n}\n\nstd::cout << \"mmap_bytes=\" << length << '\\n';\nstd::cout << \"mmap_sum=\" << mmap_sum << '\\n';\n\nif (munmap(mapping, length) == -1) {\n    std::perror(\"munmap\");\n    close(fd);\n    return 1;\n}\nunsigned char buffer[4];\nstd::size_t read_bytes = 0;\nstd::uint64_t read_sum = 0;\n\nwhile (true) {\n    ssize_t bytes_read = read(fd, buffer, sizeof(buffer));\n\n    if (bytes_read < 0) {\n        if (errno == EINTR) {\n            continue;\n        }\n        std::perror(\"read\");\n        close(fd);\n        return 1;\n    }\n\n    if (bytes_read == 0) {\n        break;\n    }\n\n    std::size_t count = static_cast<std::size_t>(bytes_read);\n    read_bytes += count;\n    for (std::size_t index = 0; index < count; ++index) {\n        read_sum += buffer[index];\n    }\n}\n\nstd::cout << \"read_bytes=\" << read_bytes << '\\n';\nstd::cout << \"read_sum=\" << read_sum << '\\n';\n\nbool matched = (read_bytes == length && read_sum == mmap_sum);\nstd::cout << \"match=\" << (matched ? \"yes\" : \"no\") << '\\n';\n\nif (!matched) {\n    close(fd);\n    return 1;\n}\n\n    if (close(fd) == -1) {\n        std::perror(\"close\");\n        return 1;\n    }\n    return 0;\n}"
+}

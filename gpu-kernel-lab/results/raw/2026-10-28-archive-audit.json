@@ -1,0 +1,257 @@
+{
+  "review_date": "2026-10-28",
+  "timezone": "Asia/Shanghai",
+  "evidence_type": "归档时助手运行的最终源码复核，不替代本人课堂实跑或理解回答",
+  "working_directory": "<PROJECT_ROOT>",
+  "cases": [
+    {
+      "name": "compile C++17 with warnings",
+      "expected": {
+        "stdout": "",
+        "exit_code": 0,
+        "stderr_contains": null
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "text",
+      "expected": {
+        "stdout": "size=6\nmmap_bytes=6\nmmap_sum=405\nread_bytes=6\nread_sum=405\nmatch=yes\n",
+        "exit_code": 0,
+        "stderr_contains": null
+      },
+      "actual": {
+        "stdout": "size=6\nmmap_bytes=6\nmmap_sum=405\nread_bytes=6\nread_sum=405\nmatch=yes\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "expected": {
+        "stdout": "size=0\nmmap_bytes=0\nmmap_sum=0\nread_bytes=0\nread_sum=0\nmatch=yes\n",
+        "exit_code": 0,
+        "stderr_contains": null
+      },
+      "actual": {
+        "stdout": "size=0\nmmap_bytes=0\nmmap_sum=0\nread_bytes=0\nread_sum=0\nmatch=yes\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "one",
+      "expected": {
+        "stdout": "size=1\nmmap_bytes=1\nmmap_sum=65\nread_bytes=1\nread_sum=65\nmatch=yes\n",
+        "exit_code": 0,
+        "stderr_contains": null
+      },
+      "actual": {
+        "stdout": "size=1\nmmap_bytes=1\nmmap_sum=65\nread_bytes=1\nread_sum=65\nmatch=yes\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "binary",
+      "expected": {
+        "stdout": "size=5\nmmap_bytes=5\nmmap_sum=575\nread_bytes=5\nread_sum=575\nmatch=yes\n",
+        "exit_code": 0,
+        "stderr_contains": null
+      },
+      "actual": {
+        "stdout": "size=5\nmmap_bytes=5\nmmap_sum=575\nread_bytes=5\nread_sum=575\nmatch=yes\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "missing argument",
+      "expected": {
+        "stdout": "",
+        "exit_code": 1,
+        "stderr_contains": "usage:"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "usage: <PROGRAM> <file>\n",
+        "exit_code": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "missing file",
+      "expected": {
+        "stdout": "",
+        "exit_code": 1,
+        "stderr_contains": "No such file or directory"
+      },
+      "actual": {
+        "stdout": "",
+        "stderr": "open: No such file or directory\n",
+        "exit_code": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "directory rejected",
+      "expected": {
+        "stdout": null,
+        "exit_code": 1,
+        "stderr_contains": "expected a regular file with nonnegative size"
+      },
+      "actual": {
+        "stdout": "size=4096\n",
+        "stderr": "expected a regular file with nonnegative size\n",
+        "exit_code": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "linked list four cases",
+      "expected": {
+        "stdout": "empty: passed\nsingle: passed\nnormal: passed\nduplicates: passed\n",
+        "exit_code": 0,
+        "stderr_contains": null
+      },
+      "actual": {
+        "stdout": "empty: passed\nsingle: passed\nnormal: passed\nduplicates: passed\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "parentheses five cases",
+      "expected": {
+        "stdout": "'' True\n')' False\n'([])' True\n'([)]' False\n'(' False\n5 cases passed\n",
+        "exit_code": 0,
+        "stderr_contains": null
+      },
+      "actual": {
+        "stdout": "'' True\n')' False\n'([])' True\n'([)]' False\n'(' False\n5 cases passed\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "passed": true
+    }
+  ],
+  "source_sha256": {
+    "gpu-kernel-lab/cpp-basics/mmap.cpp": "6418576a4a718edbbe97b3a4b09de150a4884cb8db6fee982f1a52acfddc4e27",
+    "gpu-kernel-lab/python-basics/linked_list_redo.py": "007af97eb6e298edbd223a1fdeecf20a95ac7f2cddbd7cf3df765e500d453069",
+    "gpu-kernel-lab/python-basics/valid_parentheses_redo.py": "3d22f86620d96298c2370e47940ac0ffdd4dadc99c52de089b48b43184078032"
+  },
+  "input_sha256": {
+    "gpu-kernel-lab/results/raw/2026-10-28-vm-input.txt": "e9c0f8b575cbfcb42ab3b78ecc87efa3b011d9a5d10b09fa4e96f240bf6a82f5",
+    "gpu-kernel-lab/results/raw/2026-10-28-vm-empty.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gpu-kernel-lab/results/raw/2026-10-28-vm-one.bin": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+    "gpu-kernel-lab/results/raw/2026-10-28-vm-binary.bin": "11194daef45d5ebbeae80af29a1f007917ce4a1a95d6ca8afa87abbbe80e869a"
+  },
+  "passed": true,
+  "timing_performed": false,
+  "link_review": {
+    "local_link_status": "passed_with_markdown_heading_review",
+    "counts_before_heading_review": {
+      "ok": 357,
+      "needs_review": 11,
+      "external_unchecked": 9
+    },
+    "markdown_heading_review": [
+      {
+        "source": "README.md",
+        "target": "#%E4%B8%A4%E4%B8%AA%E6%A0%B8%E5%BF%83%E9%A1%B9%E7%9B%AE",
+        "matched_heading": "两个核心项目",
+        "status": "verified_heading"
+      },
+      {
+        "source": "README.md",
+        "target": "#%E4%BB%A3%E8%A1%A8%E6%80%A7%E6%88%90%E6%9E%9C",
+        "matched_heading": "代表性成果",
+        "status": "verified_heading"
+      },
+      {
+        "source": "README.md",
+        "target": "#%E5%AE%8C%E6%95%B4%E6%88%90%E6%9E%9C%E7%B4%A2%E5%BC%95",
+        "matched_heading": "完整成果索引",
+        "status": "verified_heading"
+      },
+      {
+        "source": "README.md",
+        "target": "%E6%97%A5%E8%AE%B0/2026-10-28.md#%E5%A4%87%E6%B3%A8",
+        "matched_heading": "备注",
+        "status": "verified_heading"
+      },
+      {
+        "source": "README.md",
+        "target": "%E6%97%A5%E8%AE%B0/2026-10-28.md#%E5%A4%8D%E7%8E%B0%E5%85%A5%E5%8F%A3%E4%B8%8E%E5%85%B3%E9%94%AE%E7%8E%AF%E5%A2%83",
+        "matched_heading": "复现入口与关键环境",
+        "status": "verified_heading"
+      },
+      {
+        "source": "README.md",
+        "target": "gpu-kernel-lab/python-basics/README.md#pythonc-csv-%E7%BB%9F%E8%AE%A1%E5%AF%B9%E7%85%A7",
+        "matched_heading": "Python/C++ CSV 统计对照",
+        "status": "verified_heading"
+      },
+      {
+        "source": "日记/2026-10-27.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-27-fd-cases.md#%E6%A3%80%E6%9F%A5%E7%82%B9-1open-%E8%BF%94%E5%9B%9E%E5%80%BC%E9%98%85%E8%AF%BB%E9%A2%98",
+        "matched_heading": "检查点 1：open 返回值阅读题",
+        "status": "verified_heading"
+      },
+      {
+        "source": "日记/2026-10-27.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-27-fd-cases.md#%E6%A3%80%E6%9F%A5%E7%82%B9-6write-%E7%9A%84%E6%9C%89%E6%95%88%E6%95%B0%E6%8D%AE%E9%95%BF%E5%BA%A6%E9%80%9A%E8%BF%87",
+        "matched_heading": "检查点 6：write 的有效数据长度（通过）",
+        "status": "verified_heading"
+      },
+      {
+        "source": "日记/2026-10-27.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-27-fd-cases.md#%E6%A3%80%E6%9F%A5%E7%82%B9-7%E7%9F%AD%E5%86%99%E6%8E%A8%E8%BF%9B%E9%80%9A%E8%BF%87",
+        "matched_heading": "检查点 7：短写推进（通过）",
+        "status": "verified_heading"
+      },
+      {
+        "source": "日记/2026-10-27.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-27-pipe-cases.md#%E6%A3%80%E6%9F%A5%E7%82%B9-2fork-%E5%90%8E%E7%9A%84%E7%AB%AF%E7%82%B9%E5%88%86%E5%B7%A5%E9%80%9A%E8%BF%87",
+        "matched_heading": "检查点 2：fork 后的端点分工（通过）",
+        "status": "verified_heading"
+      },
+      {
+        "source": "gpu-kernel-lab/tests/2026-10-28-vm-cases.md",
+        "target": "../../%E6%97%A5%E8%AE%B0/2026-10-28.md#%E6%9C%80%E7%BB%88%E9%AA%8C%E6%94%B6",
+        "matched_heading": "最终验收",
+        "status": "verified_heading"
+      }
+    ],
+    "external_links": "9 links not re-fetched during this archive",
+    "source_files_checked": [
+      "README.md",
+      "日记/README.md",
+      "日记/2026-10-28.md",
+      "日记/2026-10-27.md",
+      "gpu-kernel-lab/cpp-basics/vm.md",
+      "gpu-kernel-lab/tests/2026-10-28-vm-cases.md",
+      "gpu-kernel-lab/tests/2026-10-28-linked-list-redo-cases.md",
+      "gpu-kernel-lab/tests/2026-10-28-parentheses-redo-cases.md",
+      "gpu-kernel-lab/tests/2026-10-27-fd-selfcheck.md"
+    ],
+    "initial_change_count": 26
+  },
+  "reported_study_minutes": 90,
+  "actual_duration_breakdown_reported": false,
+  "moves": [],
+  "privacy_review": {
+    "scope": "本次上传候选文件",
+    "result": "未发现私有目录文件、凭据或个人工作目录；/tmp 下的通用复现路径保留"
+  }
+}

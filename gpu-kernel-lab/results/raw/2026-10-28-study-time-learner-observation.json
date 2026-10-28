@@ -1,0 +1,16 @@
+{
+  "task_date": "2026-10-28",
+  "actual_study_date": "2026-10-28",
+  "timezone": "Asia/Shanghai",
+  "evidence_type": "本人文字报告当日总学习用时",
+  "learner_report_verbatim": "学了90分钟，整理今天的成果并上传github",
+  "reported_total_minutes": 90,
+  "reported_breakdown": null,
+  "original_budget_minutes": {
+    "p0_including_routine": 120,
+    "routine_within_p0": 20,
+    "p1": 30,
+    "total": 150
+  },
+  "scope": "90 分钟为本人报告的今日总学习用时；没有单独报告各任务或昨日次日复答用时，不擅自分摊，也不把预算当作实际用时"
+}

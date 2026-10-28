@@ -1,0 +1,27 @@
+{
+  "task_date": "2026-10-28",
+  "checkpoint": "链表反转复做源码提交",
+  "evidence_type": "本人贴出实现，助手只读核对已保存文件，未代写或运行",
+  "source_path": "gpu-kernel-lab/python-basics/linked_list_redo.py",
+  "source_snapshot": "class Node:\n    def __init__(self, val):\n        self.val=val\n        self.next=None\n\n\ndef reverse_list(head):\n    pre=None\n    curr=head\n    while curr is not None:\n        next=curr.next\n        curr.next=pre\n        pre=curr\n        curr=next\n\n    return pre\n",
+  "initial_assessment": "提交时已保存的缩进正确，反转逻辑正确：先保存原后继，再改 next、推进前驱和当前节点，最终返回原尾节点。当时尚无运行或复杂度解释证据，后续见下方实测记录",
+  "help_scope": "本轮此前只给出 Node 字段和函数规格，未展示反转函数完整答案；是否自行参考旧实现未独立核验。后续测试由导师提供，不记为本人独立设计测试",
+  "runtime_status": "通过（本人运行导师提供的四组边界及身份测试，助手只读核对源码，未代跑）",
+  "complexity_status": "通过：本人解释时间 O(n)、额外空间 O(1)，数量级及理由正确",
+  "learner_report_verbatim": "empty: passed\nsingle: passed\nnormal: passed\nduplicates: passed\nexit=0、\n时间复杂度O（n） ，因为要逐个修改每个节点的指向，空间复杂度O（1）,因为只用了常数级个变量\n为了不让节点丢失",
+  "expected": {
+    "stdout": "empty: passed\nsingle: passed\nnormal: passed\nduplicates: passed\n",
+    "exit_code": 0,
+    "basis": "按输入规格预存：空链返回 None，单节点返回原对象，三节点及重复值反转保留各对象且尾 next 为 None"
+  },
+  "actual_assessment": "四组输出符合独立预期；用户 exit=0 后的顿号按文字标点保留，退出数值报告为 0。助手只读确认四组 assert 已保存，未代跑",
+  "understanding": {
+    "time": "O(n)，每个节点一轮固定次数引用操作",
+    "extra_space": "O(1)，只使用固定数量引用变量，不随节点数增长",
+    "save_successor_answer": "为了不让节点丢失",
+    "save_successor_assessment": "抓住保留后继的目的；导师精确补充为避免覆盖 curr.next 后丢失访问原后续链表的入口，不表示节点对象立即消失"
+  },
+  "final_source_snapshot": "class Node:\n    def __init__(self, val):\n        self.val=val\n        self.next=None\n\n\ndef reverse_list(head):\n    pre=None\n    curr=head\n    while curr is not None:\n        next=curr.next\n        curr.next=pre\n        pre=curr\n        curr=next\n\n    return pre\n\nassert reverse_list(None) is None\nprint(\"empty: passed\")\n\nsingle = Node(7)\nresult = reverse_list(single)\nassert result is single\nassert result.next is None\nprint(\"single: passed\")\n\nfirst = Node(1)\nsecond = Node(2)\nthird = Node(3)\nfirst.next = second\nsecond.next = third\n\nresult = reverse_list(first)\nassert result is third\nassert result.next is second\nassert result.next.next is first\nassert first.next is None\nprint(\"normal: passed\")\n\nduplicate_first = Node(4)\nduplicate_second = Node(4)\nduplicate_last = Node(9)\nduplicate_first.next = duplicate_second\nduplicate_second.next = duplicate_last\n\nresult = reverse_list(duplicate_first)\nassert result is duplicate_last\nassert result.next is duplicate_second\nassert result.next.next is duplicate_first\nassert duplicate_first.next is None\nprint(\"duplicates: passed\")\n",
+  "reported_actual_duration": null,
+  "latest_status": "固定练习通过（本人提交反转函数，导师提供测试及局部措辞补充）；20 分钟为预算，实际用时未报告"
+}

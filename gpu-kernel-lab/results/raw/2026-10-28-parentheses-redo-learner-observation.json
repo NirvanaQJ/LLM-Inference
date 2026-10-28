@@ -1,0 +1,51 @@
+{
+  "task_date": "2026-10-28",
+  "checkpoint": "P1 有效括号从空文件复做：函数提交",
+  "evidence_type": "本人贴出函数，助手只读核对保存文件，未代写或运行",
+  "source_path": "gpu-kernel-lab/python-basics/valid_parentheses_redo.py",
+  "source_snapshot": "def is_valid_parentheses(text):\n    par={\")\":\"(\",\"]\":\"[\",\"}\":\"{\"}\n    ch=[]\n\n    for s in text:\n        if s in \"({[\":\n            ch.append(s)\n        else:\n            if not ch:\n                return False\n            if ch.pop() !=par[s]:\n                return False\n    return not ch",
+  "input_contract": "仅含 ()[]{} 的有限字符串，可为空，返回 bool",
+  "initial_assessment": "在约定输入范围内逻辑正确，先判断空栈再弹出匹配，遍历结束检查无剩余左括号；尚无本人边界实跑或复杂度解释",
+  "help_scope": "开始前确认文件不存在，本人按给出的规格在新文件提交函数，本轮导师未提供函数答案；随后测试由导师提供",
+  "runtime_status": "通过：本人运行五组测试，实际输出与独立预期一致，退出状态 0；助手只读核对源码，未代跑",
+  "complexity_status": "通过：本人回答最坏时间 O(n)、额外空间 O(n)，栈最多 n 个元素、全左括号可达到；导师精确补充时间理由为每字符一轮、总入栈/出栈次数为 O(n)",
+  "expected_cases": [
+    {
+      "input": "",
+      "expected": true,
+      "basis": "空串没有未配对括号"
+    },
+    {
+      "input": ")",
+      "expected": false,
+      "basis": "首字符为右括号，没有左括号可匹配"
+    },
+    {
+      "input": "([])",
+      "expected": true,
+      "basis": "方括号在圆括号内正确闭合"
+    },
+    {
+      "input": "([)]",
+      "expected": false,
+      "basis": "第三字符右圆括号不能匹配栈顶左方括号"
+    },
+    {
+      "input": "(",
+      "expected": false,
+      "basis": "结束时有未匹配左括号"
+    }
+  ],
+  "learner_report_verbatim": "'' True\n')' False\n'([])' True\n'([)]' False\n'(' False\n5 cases passed\nexit=0\n时间复杂度O（n），因为最坏情况下会存入n个括号，空间复杂度也为O（n），最坏情况下会存储n个括号\nn个，全都是左括号",
+  "expected_stdout": "'' True\n')' False\n'([])' True\n'([)]' False\n'(' False\n5 cases passed\n",
+  "expected_exit_code": 0,
+  "complexity_answer_verbatim": "时间复杂度O（n），因为最坏情况下会存入n个括号，空间复杂度也为O（n），最坏情况下会存储n个括号\nn个，全都是左括号",
+  "assessment": "五组结果、bool 类型断言、复杂度结论及最坏栈输入符合预期；从新文件提交函数，保存超过两组边界测试和复杂度，P1 通过。时间操作次数的完整理由由导师精确补充；测试由导师提供，不记为本人独立设计测试",
+  "commands_provided": [
+    "python3 gpu-kernel-lab/python-basics/valid_parentheses_redo.py",
+    "echo \"exit=$?\""
+  ],
+  "final_source_snapshot": "def is_valid_parentheses(text):\n    par={\")\":\"(\",\"]\":\"[\",\"}\":\"{\"}\n    ch=[]\n\n    for s in text:\n        if s in \"({[\":\n            ch.append(s)\n        else:\n            if not ch:\n                return False\n            if ch.pop() !=par[s]:\n                return False\n    return not ch\n\ncases = [\n    (\"\", True),\n    (\")\", False),\n    (\"([])\", True),\n    (\"([)]\", False),\n    (\"(\", False),\n]\n\nfor text, expected in cases:\n    actual = is_valid_parentheses(text)\n    print(repr(text), actual)\n    assert type(actual) is bool\n    assert actual == expected\n\nprint(\"5 cases passed\")",
+  "reported_actual_duration": null,
+  "latest_status": "P1 通过（导师给规格与测试，本人提交函数并实跑，复杂度理由有补充）"
+}

@@ -1,0 +1,57 @@
+{
+  "task_date": "2026-10-28",
+  "checkpoint": "参数缺失、文件不存在、目录输入三条错误路径",
+  "evidence_type": "本人文字报告错误信息与退出状态；助手未代跑，本轮没有新增源码修改",
+  "working_directory": "<PROJECT_ROOT>",
+  "source_path": "gpu-kernel-lab/cpp-basics/mmap.cpp",
+  "previous_source_snapshot": "gpu-kernel-lab/results/raw/2026-10-28-vm-boundaries-learner-observation.json",
+  "cases": [
+    {
+      "name": "missing_argument",
+      "command": "/tmp/llm-vm-2026-10-28",
+      "expected": {
+        "message": "usage: ... <file>",
+        "exit_code": 1,
+        "basis": "argc!=2 分支"
+      },
+      "learner_reported_actual": {
+        "message": "usage: /tmp/llm-vm-2026-10-28 <file>",
+        "exit_code": 1
+      },
+      "assessment": "通过"
+    },
+    {
+      "name": "missing_file",
+      "command": "/tmp/llm-vm-2026-10-28 gpu-kernel-lab/results/raw/2026-10-28-vm-missing.bin",
+      "precondition": "助手在布置测试前只读确认该路径不存在",
+      "expected": {
+        "message": "open 报文件不存在",
+        "exit_code": 1,
+        "basis": "open 不存在且未使用 O_CREAT 的路径应失败"
+      },
+      "learner_reported_actual": {
+        "message": "open: No such file or directory",
+        "exit_code": 1
+      },
+      "assessment": "通过"
+    },
+    {
+      "name": "directory",
+      "command": "/tmp/llm-vm-2026-10-28 gpu-kernel-lab/cpp-basics",
+      "expected": {
+        "message": "expected a regular file with nonnegative size",
+        "exit_code": 1,
+        "directory_size": "不要求固定",
+        "basis": "已有目录，S_ISREG 判断不成立"
+      },
+      "learner_reported_actual": {
+        "size": 4096,
+        "message": "expected a regular file with nonnegative size",
+        "exit_code": 1
+      },
+      "assessment": "通过"
+    }
+  ],
+  "learner_report_verbatim": "usage: /tmp/llm-vm-2026-10-28 <file>\nexit=1\nopen: No such file or directory\nexit=1\nsize=4096\nexpected a regular file with nonnegative size\nexit=1",
+  "scope_limits": "只覆盖所列可触发错误，不作为 fstat/mmap/read/munmap/close 任意失败或 EINTR 分支实跑证据；没有计时或性能结论"
+}

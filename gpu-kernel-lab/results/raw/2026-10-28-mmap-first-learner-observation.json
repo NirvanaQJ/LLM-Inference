@@ -1,0 +1,28 @@
+{
+  "task_date": "2026-10-28",
+  "checkpoint": "非空文件只读 mmap、第三字节访问与 munmap",
+  "evidence_type": "本人文字报告运行输出；助手只读核对源码及输入，未代跑",
+  "working_directory": "<PROJECT_ROOT>",
+  "commands_provided": [
+    "g++ -std=c++17 -Wall -Wextra gpu-kernel-lab/cpp-basics/mmap.cpp -o /tmp/llm-vm-2026-10-28",
+    "/tmp/llm-vm-2026-10-28 gpu-kernel-lab/results/raw/2026-10-28-vm-input.txt",
+    "echo \"exit=$?\""
+  ],
+  "commands_observed_directly": false,
+  "input": {
+    "path": "gpu-kernel-lab/results/raw/2026-10-28-vm-input.txt",
+    "expected_content": "ABCDEF",
+    "expected_bytes": 6,
+    "assistant_readonly_actual_bytes": 6,
+    "assistant_readonly_sha256": "e9c0f8b575cbfcb42ab3b78ecc87efa3b011d9a5d10b09fa4e96f240bf6a82f5"
+  },
+  "expected": {
+    "stdout": "size=6\nthird=C\n",
+    "exit_code": 0,
+    "basis": "固定六字节 ABCDEF，索引从 0 开始，第三字节为 C"
+  },
+  "learner_report_verbatim": "size=6\nthird=C\nexit=0",
+  "assessment": "六字节固定输入的只读映射正常路径通过（局部示例指导下）；源码包含 MAP_FAILED 判断及 munmap，未实跑其失败分支；完整读取对照、空文件和短文件仍待验证",
+  "source_path": "gpu-kernel-lab/cpp-basics/mmap.cpp",
+  "source_snapshot": "#include <cstdio>\n#include <fcntl.h>\n#include <iostream>\n#include <sys/stat.h>\n#include <unistd.h>\n#include <cstddef>\n#include <sys/mman.h>\n\nint main(int argc, char* argv[]) {\n    if (argc != 2) {\n        std::cerr << \"usage: \" << argv[0] << \" <file>\\n\";\n        return 1;\n    }\n\n    int fd = open(argv[1], O_RDONLY);\n    if (fd < 0) {\n        std::perror(\"open\");\n        return 1;\n    }\n\n    struct stat info{};\n    if (fstat(fd, &info) == -1) {\n        std::perror(\"fstat\");\n        close(fd);\n        return 1;\n    }\n\n    std::cout << \"size=\" << info.st_size << '\\n';\n    if (info.st_size < 3) {\n    std::cerr << \"this step requires at least 3 bytes\\n\";\n    close(fd);\n    return 1;\n}\n\nstd::size_t length = static_cast<std::size_t>(info.st_size);\nvoid* mapping = mmap(nullptr, length, PROT_READ, MAP_PRIVATE, fd, 0);\nif (mapping == MAP_FAILED) {\n    std::perror(\"mmap\");\n    close(fd);\n    return 1;\n}\n\nconst unsigned char* bytes =\n    static_cast<const unsigned char*>(mapping);\n\nstd::cout << \"third=\" << static_cast<char>(bytes[2]) << '\\n';\n\nif (munmap(mapping, length) == -1) {\n    std::perror(\"munmap\");\n    close(fd);\n    return 1;\n}\n\n    if (close(fd) == -1) {\n        std::perror(\"close\");\n        return 1;\n    }\n    return 0;\n}"
+}
