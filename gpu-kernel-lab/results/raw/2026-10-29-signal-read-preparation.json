@@ -1,0 +1,22 @@
+{
+  "task_date": "2026-10-29",
+  "learner_message": "已保存",
+  "inspection": "助手只读核对已保存源码，未修改、编译或运行",
+  "source_snapshot": "#include <signal.h>   // 信号相关：SIGINT、sigaction、sig_atomic_t\n#include <unistd.h>   // sleep（等待）、close（关闭文件）\n#include <fcntl.h>    // open（打开文件）、O_WRONLY（只写）\n#include <cstdio>     // perror（输出错误原因）\n#include <iostream>   // cout（输出文字）\n#include <cerrno>  // errno 保存错误原因；EINTR 表示被信号打断\n\n// 退出标志，放在函数外，让 main 和信号处理函数都能访问。\n// 0：继续运行；1：请求退出。\n//\n// sig_atomic_t：适合在信号处理函数与普通代码之间\n//              进行简单读写的整数类型。\n// volatile：要求编译器保留对这个变量的实际读取，\n//           因为它可能被信号处理函数修改。\nvolatile sig_atomic_t stop_requested = 0;\n\n\n// 信号处理函数：收到 SIGINT 时，系统会调用它。\n//\n// int 参数用于接收信号编号。\n// 这里不使用这个编号，因此没有给参数起名字。\nvoid handle_sigint(int) {\n    // 这里只发出退出请求，不打印、不关闭文件。\n    stop_requested = 1;\n}\n\n\nint main() {\n    // 创建一份“收到信号后怎么办”的配置。\n    // {} 表示先把各成员初始化为零值。\n    struct sigaction action{};\n\n    // 指定处理函数。\n    // 这里没有括号：是在登记函数，而不是立刻调用函数。\n    action.sa_handler = handle_sigint;\n\n    // 清空“处理期间要额外屏蔽哪些信号”的集合。\n    // 今天先照着用，不需要深入信号屏蔽机制。\n    sigemptyset(&action.sa_mask);\n\n    // 暂时不启用额外选项。\n    action.sa_flags = 0;\n\n    // 正式注册：\n    // SIGINT：要处理的信号，通常由 Ctrl+C 触发。\n    // &action：把上面的配置交给系统。\n    // nullptr：不需要保存此前的处理配置。\n    //\n    // 注册失败时返回 -1。\n    if (sigaction(SIGINT, &action, nullptr) == -1) {\n        std::perror(\"sigaction\");  // 输出错误原因\n        return 1;                 // 用非零状态表示失败\n    }\n\n    // 打开 /dev/null，只写模式。\n    // /dev/null 是 Linux 的特殊文件，写进去的数据会被丢弃。\n    // 这里用它来练习“打开资源 → 使用 → 关闭”。\n    //\n    // 成功：返回一个非负整数，也就是文件描述符。\n    // 失败：返回 -1。\n    int fd = open(\"/dev/null\", O_WRONLY);\n\n    if (fd == -1) {\n        std::perror(\"open\");\n        return 1;\n    }\n\n    // 提示程序已经准备好。\n    // endl 输出换行，并让这条提示立即显示出来。\n    std::cout << \"ready: press Ctrl+C\" << std::endl;\n\n    // ! 表示逻辑取反：\n    // stop_requested 为 0 → !0 为 true  → 继续循环。\n    // stop_requested 为 1 → !1 为 false → 结束循环。\n    char buffer[64];  // 准备一块最多容纳 64 字节的存储空间\n\nwhile (!stop_requested) {\n    std::cout << \"waiting for input...\" << std::endl;\n\n    // 从标准输入读取数据，放进 buffer，最多读取 64 字节。\n    // STDIN_FILENO 的值是 0，在当前终端中对应键盘输入。\n    // ssize_t 是带符号的整数类型，可以保存字节数，也能保存 -1。\n    ssize_t count = read(STDIN_FILENO, buffer, sizeof(buffer));\n\n    if (count > 0) {\n        // 成功读到了数据，count 是本次实际读取的字节数。\n        std::cout << \"read_bytes=\" << count << std::endl;\n    } else if (count == 0) {\n        // 输入结束，跳出循环，继续执行后面的清理代码。\n        std::cout << \"input ended\" << std::endl;\n        break;\n    } else if (errno == EINTR) {\n        // read 返回 -1，并且原因是“被信号打断”。\n        // 这里仍然在 main 中，可以正常输出。\n        std::cout << \"read interrupted\" << std::endl;\n\n        // 回到循环条件，重新检查退出标志。\n        // 如果 SIGINT 处理函数已把标志设成 1，就结束循环。\n        continue;\n    } else {\n        // 其他读取错误：输出原因，尝试关闭资源，以失败状态退出。\n        std::perror(\"read\");\n        close(fd);\n        return 1;\n    }\n}\n\n    // 能走到这里，说明循环已经结束。\n    // 清理工作放在 main 的普通执行流程中。\n    if (close(fd) == -1) {\n        std::perror(\"close\");\n        return 1;\n    }\n\n    // close 已经成功，输出清理完成的信息。\n    std::cout << \"cleanup: fd closed\\n\";\n\n    return 0;  // 正常结束\n}",
+  "source_sha256": "be7fc8336bbe264ce55b3bbdcb0267fd26894bc4130bfe0f4692d0d74b9589ba",
+  "static_findings": [
+    "已包含 cerrno",
+    "sa_flags=0",
+    "处理函数仅赋值退出标志",
+    "read 使用 STDIN_FILENO 和 64 字节缓冲区",
+    "区分正数、0、-1/EINTR 与其他错误",
+    "EINTR 后 continue 回到循环条件",
+    "正常路径在循环后关闭 /dev/null"
+  ],
+  "assessment": "与给定局部示例的逻辑一致，静态检查通过；缩进不齐不影响此处 C++ 语法，编译和运行仍待本人验证。",
+  "next_expected_before_run": "重新编译并在 strace 下运行；终端无输入时停在 read 等待，尚不预先认定实测通过。",
+  "commands_planned_not_executed_by_assistant": [
+    "g++ -std=c++17 -Wall -Wextra -g -O0 gpu-kernel-lab/cpp-basics/signal.cpp -o /tmp/llm-signal-read-demo",
+    "strace -I 3 -yy -e trace=read,close,rt_sigreturn -o gpu-kernel-lab/profiles/2026-10-29/blocking-read-trace.txt /tmp/llm-signal-read-demo"
+  ]
+}

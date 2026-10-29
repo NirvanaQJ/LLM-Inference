@@ -1,0 +1,70 @@
+{
+  "task_date": "2026-10-29",
+  "evidence_origin": "本人终端截图与本人 strace 文件；助手人工观察截图并只读核对日志，未代跑、未发送输入或信号",
+  "terminal_observation": "截图显示编译和 strace 命令，ready、waiting for input 后出现 ^C^C，未显示 read interrupted、cleanup 或新的终端提示符。",
+  "signal_count_observed": 2,
+  "trace_path": "gpu-kernel-lab/profiles/2026-10-29/restart-trace.txt",
+  "waiting_trace_snapshot": "close(3</etc/ld.so.cache>)              = 0\nread(3</usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.35>, \"\\177ELF\\2\\1\\1\\3\\0\\0\\0\\0\\0\\0\\0\\0\\3\\0>\\0\\1\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\"..., 832) = 832\nclose(3</usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.35>) = 0\nread(3</usr/lib/x86_64-linux-gnu/libc.so.6>, \"\\177ELF\\2\\1\\1\\3\\0\\0\\0\\0\\0\\0\\0\\0\\3\\0>\\0\\1\\0\\0\\0 \\250\\2\\0\\0\\0\\0\\0\"..., 832) = 832\nclose(3</usr/lib/x86_64-linux-gnu/libc.so.6>) = 0\nread(3</usr/lib/x86_64-linux-gnu/libm.so.6>, \"\\177ELF\\2\\1\\1\\3\\0\\0\\0\\0\\0\\0\\0\\0\\3\\0>\\0\\1\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\"..., 832) = 832\nclose(3</usr/lib/x86_64-linux-gnu/libm.so.6>) = 0\nread(3</usr/lib/x86_64-linux-gnu/libgcc_s.so.1>, \"\\177ELF\\2\\1\\1\\0\\0\\0\\0\\0\\0\\0\\0\\0\\3\\0>\\0\\1\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\"..., 832) = 832\nclose(3</usr/lib/x86_64-linux-gnu/libgcc_s.so.1>) = 0\nrt_sigaction(SIGINT, {sa_handler=0x5c32fc8ca289, sa_mask=[], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7882ce645cb0}, NULL, 8) = 0\nread(0</dev/pts/0<char 136:0>>, 0x7ffe2fdace50, 64) = ? ERESTARTSYS (To be restarted if SA_RESTART is set)\n--- SIGINT {si_signo=SIGINT, si_code=SI_KERNEL} ---\nrt_sigreturn({mask=[]})                 = 0\nread(0</dev/pts/0<char 136:0>>, 0x7ffe2fdace50, 64) = ? ERESTARTSYS (To be restarted if SA_RESTART is set)\n--- SIGINT {si_signo=SIGINT, si_code=SI_KERNEL} ---\nrt_sigreturn({mask=[]})                 = 0\nread(0</dev/pts/0<char 136:0>>",
+  "waiting_trace_sha256": "08b18b75b2d921e032d08e180d03b33ff904ffc7e4040203dd68e80446ea8f49",
+  "variant_source_snapshot": "#include <signal.h>   // 信号相关：SIGINT、sigaction、sig_atomic_t\n#include <unistd.h>   // sleep（等待）、close（关闭文件）\n#include <fcntl.h>    // open（打开文件）、O_WRONLY（只写）\n#include <cstdio>     // perror（输出错误原因）\n#include <iostream>   // cout（输出文字）\n#include <cerrno>  // errno 保存错误原因；EINTR 表示被信号打断\n\n// 退出标志，放在函数外，让 main 和信号处理函数都能访问。\n// 0：继续运行；1：请求退出。\n//\n// sig_atomic_t：适合在信号处理函数与普通代码之间\n//              进行简单读写的整数类型。\n// volatile：要求编译器保留对这个变量的实际读取，\n//           因为它可能被信号处理函数修改。\nvolatile sig_atomic_t stop_requested = 0;\n\n\n// 信号处理函数：收到 SIGINT 时，系统会调用它。\n//\n// int 参数用于接收信号编号。\n// 这里不使用这个编号，因此没有给参数起名字。\nvoid handle_sigint(int) {\n    // 这里只发出退出请求，不打印、不关闭文件。\n    stop_requested = 1;\n}\n\n\nint main() {\n    // 创建一份“收到信号后怎么办”的配置。\n    // {} 表示先把各成员初始化为零值。\n    struct sigaction action{};\n\n    // 指定处理函数。\n    // 这里没有括号：是在登记函数，而不是立刻调用函数。\n    action.sa_handler = handle_sigint;\n\n    // 清空“处理期间要额外屏蔽哪些信号”的集合。\n    // 今天先照着用，不需要深入信号屏蔽机制。\n    sigemptyset(&action.sa_mask);\n\n    // P1 对照：启用可重启调用选项。\n    // 本例终端 read 被 SIGINT 打断后会在处理函数返回时自动重启。\n    // 即使退出标志已为 1，主流程仍需等 read 返回后才能检查它。\n    action.sa_flags = SA_RESTART;\n\n    // 正式注册：\n    // SIGINT：要处理的信号，通常由 Ctrl+C 触发。\n    // &action：把上面的配置交给系统。\n    // nullptr：不需要保存此前的处理配置。\n    //\n    // 注册失败时返回 -1。\n    if (sigaction(SIGINT, &action, nullptr) == -1) {\n        std::perror(\"sigaction\");  // 输出错误原因\n        return 1;                 // 用非零状态表示失败\n    }\n\n    // 打开 /dev/null，只写模式。\n    // /dev/null 是 Linux 的特殊文件，写进去的数据会被丢弃。\n    // 这里用它来练习“打开资源 → 使用 → 关闭”。\n    //\n    // 成功：返回一个非负整数，也就是文件描述符。\n    // 失败：返回 -1。\n    int fd = open(\"/dev/null\", O_WRONLY);\n\n    if (fd == -1) {\n        std::perror(\"open\");\n        return 1;\n    }\n\n    // 提示程序已经准备好。\n    // endl 输出换行，并让这条提示立即显示出来。\n    std::cout << \"ready: press Ctrl+C\" << std::endl;\n\n    // ! 表示逻辑取反：\n    // stop_requested 为 0 → !0 为 true  → 继续循环。\n    // stop_requested 为 1 → !1 为 false → 结束循环。\n    char buffer[64];  // 准备一块最多容纳 64 字节的存储空间\n\nwhile (!stop_requested) {\n    std::cout << \"waiting for input...\" << std::endl;\n\n    // 从标准输入读取数据，放进 buffer，最多读取 64 字节。\n    // STDIN_FILENO 的值是 0，在当前终端中对应键盘输入。\n    // ssize_t 是带符号的整数类型，可以保存字节数，也能保存 -1。\n    ssize_t count = read(STDIN_FILENO, buffer, sizeof(buffer));\n\n    if (count > 0) {\n        // 成功读到了数据，count 是本次实际读取的字节数。\n        std::cout << \"read_bytes=\" << count << std::endl;\n    } else if (count == 0) {\n        // 输入结束，跳出循环，继续执行后面的清理代码。\n        std::cout << \"input ended\" << std::endl;\n        break;\n    } else if (errno == EINTR) {\n        // read 返回 -1，并且原因是“被信号打断”。\n        // 这里仍然在 main 中，可以正常输出。\n        std::cout << \"read interrupted\" << std::endl;\n\n        // 回到循环条件，重新检查退出标志。\n        // 如果 SIGINT 处理函数已把标志设成 1，就结束循环。\n        continue;\n    } else {\n        // 其他读取错误：输出原因，尝试关闭资源，以失败状态退出。\n        std::perror(\"read\");\n        close(fd);\n        return 1;\n    }\n}\n\n    // 能走到这里，说明循环已经结束。\n    // 清理工作放在 main 的普通执行流程中。\n    if (close(fd) == -1) {\n        std::perror(\"close\");\n        return 1;\n    }\n\n    // close 已经成功，输出清理完成的信息。\n    std::cout << \"cleanup: fd closed\\n\";\n\n    return 0;  // 正常结束\n}",
+  "variant_source_sha256": "57a565f19c0737772ef41a82faef32ecdbdeba72725a5d28da1a1fa3b7613537",
+  "observed": [
+    "rt_sigaction 的实际标志含 SA_RESTART",
+    "两次 SIGINT 后均 rt_sigreturn，然后再次 read",
+    "末尾 read 仍未显示返回值"
+  ],
+  "assessment": "SA_RESTART 对照中，Ctrl+C 后终端 read 重启且仍等待的现象符合预先给出的预期；实际发生两次 Ctrl+C，不伪记成只按一次。",
+  "flag_value_evidence_limit": "本次未用调试器直接查看退出标志，处理函数将其设为 1 的解释依据保存源码及信号处理返回路径。",
+  "next_action_not_done": "本人在当前终端输入 abc 加 Enter，返回终端提示符后立即 echo $?",
+  "next_expected_not_actual": [
+    "read_bytes=4",
+    "cleanup: fd closed",
+    "exit status 0"
+  ],
+  "pending": [],
+  "completion_checkpoint": {
+    "evidence_origin": "本人提交的新终端截图，助手人工转录并只读核对最终 strace 文件；未代跑",
+    "terminal_transcription": [
+      "ready: press Ctrl+C",
+      "waiting for input...",
+      "^C^Cabc",
+      "read_bytes=4",
+      "cleanup: fd closed",
+      "echo $/",
+      "$/",
+      "echo $?",
+      "0"
+    ],
+    "final_trace_snapshot": "close(3</etc/ld.so.cache>)              = 0\nread(3</usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.35>, \"\\177ELF\\2\\1\\1\\3\\0\\0\\0\\0\\0\\0\\0\\0\\3\\0>\\0\\1\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\"..., 832) = 832\nclose(3</usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.35>) = 0\nread(3</usr/lib/x86_64-linux-gnu/libc.so.6>, \"\\177ELF\\2\\1\\1\\3\\0\\0\\0\\0\\0\\0\\0\\0\\3\\0>\\0\\1\\0\\0\\0 \\250\\2\\0\\0\\0\\0\\0\"..., 832) = 832\nclose(3</usr/lib/x86_64-linux-gnu/libc.so.6>) = 0\nread(3</usr/lib/x86_64-linux-gnu/libm.so.6>, \"\\177ELF\\2\\1\\1\\3\\0\\0\\0\\0\\0\\0\\0\\0\\3\\0>\\0\\1\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\"..., 832) = 832\nclose(3</usr/lib/x86_64-linux-gnu/libm.so.6>) = 0\nread(3</usr/lib/x86_64-linux-gnu/libgcc_s.so.1>, \"\\177ELF\\2\\1\\1\\0\\0\\0\\0\\0\\0\\0\\0\\0\\3\\0>\\0\\1\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\"..., 832) = 832\nclose(3</usr/lib/x86_64-linux-gnu/libgcc_s.so.1>) = 0\nrt_sigaction(SIGINT, {sa_handler=0x642f89ff8289, sa_mask=[], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7cee3c245cb0}, NULL, 8) = 0\nread(0</dev/pts/0<char 136:0>>, 0x7fff490cd350, 64) = ? ERESTARTSYS (To be restarted if SA_RESTART is set)\n--- SIGINT {si_signo=SIGINT, si_code=SI_KERNEL} ---\nrt_sigreturn({mask=[]})                 = 0\nread(0</dev/pts/0<char 136:0>>, 0x7fff490cd350, 64) = ? ERESTARTSYS (To be restarted if SA_RESTART is set)\n--- SIGINT {si_signo=SIGINT, si_code=SI_KERNEL} ---\nrt_sigreturn({mask=[]})                 = 0\nread(0</dev/pts/0<char 136:0>>, \"abc\\n\", 64) = 4\nclose(3</dev/null<char 1:3>>)           = 0\n+++ exited with 0 +++\n",
+    "final_trace_sha256": "5f6797278bf759a31db73b86b7fed48aa6962a52dcbad73ff13b382c64e13f30",
+    "actual_from_trace": [
+      "SIGINT 两次后 read 重启",
+      "read 标准输入 abc 加换行返回 4",
+      "close(3</dev/null>) 返回 0",
+      "+++ exited with 0 +++"
+    ],
+    "exit_status_evidence": "最终 strace 的 exited with 0 直接证明被跟踪程序退出状态为 0；截图中 echo $? 在 echo $/ 之后，仅证明前一条 echo 命令成功，不当作程序退出状态证据。无需因该输入错误重跑实验。",
+    "assessment": "SA_RESTART 反例的等待、输入后清理及退出路径符合预先给出的预期；本人对原因和适用范围的解释尚待验收。"
+  },
+  "understanding_checkpoint": {
+    "learner_answer_verbatim": "因为会在处理函数返回时自动重启，主流程需要在read返回后才能检查他\n0 不重新启动read",
+    "reason_assessment": "通过：正确解释处理函数返回后 read 自动重启，主流程要等 read 返回才能检查退出标志。",
+    "scope_configuration_assessment": "通过：明确原例 sa_flags=0，不启用自动重启。",
+    "scope_read_state_assessment": "通过（纠错后）：本人复答等待输入，没有返回。原错答及讲解范围见 scope_state_followups。"
+  },
+  "scope_state_followups": [
+    {
+      "question": "原版实验收到 SIGINT 时，read 是 A 正在等待终端输入尚未返回，还是 B 已经读取完并返回？",
+      "learner_answer_verbatim": "B",
+      "assessment": "未通过：正确答案为 A。原版跟踪显示 read 先阻塞，SIGINT 到达后处理返回，read 才以 -1/EINTR 返回。",
+      "correction_planned": "根据 waiting for input -> Ctrl+C -> read interrupted 的实际顺序，解释先后关系，再请本人用自己的话说明信号到达时 read 正在做什么及是否已返回。"
+    },
+    {
+      "question": "SIGINT 到达的那一刻，read 正在做什么，是否已经返回？",
+      "learner_answer_verbatim": "等待输入，没有返回",
+      "assessment": "纠正讲解后复答通过：正确说明信号到达时 read 正在阻塞等待、尚未返回；此前 B 的错答保留。"
+    }
+  ],
+  "final_status": "P1 通过（导师提供对照源码、命令指导及信号时机纠错后本人实操/复答），完整保留错误与帮助范围。",
+  "final_scope": "本日 Linux 终端实验中，SIGINT 在 read 已阻塞等待且尚未传输数据时到达，sa_flags=0 得到 EINTR 后可检查退出标志；启用 SA_RESTART 的对照重启终端 read，直到输入使 read 返回后才检查标志并清理。不能推广为任意调用、配置或信号时机。"
+}

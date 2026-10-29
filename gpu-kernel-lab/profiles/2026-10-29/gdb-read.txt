@@ -1,0 +1,15 @@
+Breakpoint 1 at 0x13d6: file gpu-kernel-lab/cpp-basics/signal.cpp, line 83.
+Starting program: /tmp/llm-signal-read-demo 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/usr/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main () at gpu-kernel-lab/cpp-basics/signal.cpp:83
+83	    ssize_t count = read(STDIN_FILENO, buffer, sizeof(buffer));
+$1 = 0
+85	    if (count > 0) {
+❌️ A syntax error in expression, near `bt'.
+$2 = 4
+#0  main () at gpu-kernel-lab/cpp-basics/signal.cpp:85
+❌️ Undefined command: "contiue".  Try "help".
+Continuing.
+[Inferior 1 (process 18373) exited normally]

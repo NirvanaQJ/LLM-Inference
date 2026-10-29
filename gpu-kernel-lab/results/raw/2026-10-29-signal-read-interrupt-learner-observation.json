@@ -1,0 +1,42 @@
+{
+  "task_date": "2026-10-29",
+  "evidence_origin": "本人终端截图及本人生成的 strace 文件；助手人工转录截图并只读核对跟踪，未代跑",
+  "learner_terminal_transcription": [
+    "ready: press Ctrl+C",
+    "waiting for input...",
+    "abc",
+    "read_bytes=4",
+    "waiting for input...",
+    "^Cread interrupted",
+    "cleanup: fd closed",
+    "echo $?",
+    "0"
+  ],
+  "expected_before_action": {
+    "program_output": [
+      "read interrupted",
+      "cleanup: fd closed"
+    ],
+    "exit_status": 0
+  },
+  "actual": {
+    "program_output": [
+      "read interrupted",
+      "cleanup: fd closed"
+    ],
+    "exit_status": 0
+  },
+  "trace_path": "gpu-kernel-lab/profiles/2026-10-29/blocking-read-trace.txt",
+  "trace_snapshot": "close(3</etc/ld.so.cache>)              = 0\nread(3</usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.35>, \"\\177ELF\\2\\1\\1\\3\\0\\0\\0\\0\\0\\0\\0\\0\\3\\0>\\0\\1\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\"..., 832) = 832\nclose(3</usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.35>) = 0\nread(3</usr/lib/x86_64-linux-gnu/libc.so.6>, \"\\177ELF\\2\\1\\1\\3\\0\\0\\0\\0\\0\\0\\0\\0\\3\\0>\\0\\1\\0\\0\\0 \\250\\2\\0\\0\\0\\0\\0\"..., 832) = 832\nclose(3</usr/lib/x86_64-linux-gnu/libc.so.6>) = 0\nread(3</usr/lib/x86_64-linux-gnu/libm.so.6>, \"\\177ELF\\2\\1\\1\\3\\0\\0\\0\\0\\0\\0\\0\\0\\3\\0>\\0\\1\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\"..., 832) = 832\nclose(3</usr/lib/x86_64-linux-gnu/libm.so.6>) = 0\nread(3</usr/lib/x86_64-linux-gnu/libgcc_s.so.1>, \"\\177ELF\\2\\1\\1\\0\\0\\0\\0\\0\\0\\0\\0\\0\\3\\0>\\0\\1\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\"..., 832) = 832\nclose(3</usr/lib/x86_64-linux-gnu/libgcc_s.so.1>) = 0\nread(0</dev/pts/0<char 136:0>>, \"abc\\n\", 64) = 4\nread(0</dev/pts/0<char 136:0>>, 0x7ffdf2df4fc0, 64) = ? ERESTARTSYS (To be restarted if SA_RESTART is set)\n--- SIGINT {si_signo=SIGINT, si_code=SI_KERNEL} ---\nrt_sigreturn({mask=[]})                 = -1 EINTR (被中断的系统调用)\nclose(3</dev/null<char 1:3>>)           = 0\n+++ exited with 0 +++\n",
+  "trace_sha256": "7eaf05c736fc77c8e2be422d0e71f281041a235591ad60cc4d04e40efd75a623",
+  "assessment": "在 read 已阻塞且 sa_flags=0 的本次场景中，SIGINT 后程序观察到 EINTR，清理关闭 /dev/null 成功并正常退出，符合预期。",
+  "trace_interpretation": "read 行先显示内核临时 ERESTARTSYS 状态；SIGINT 处理返回时 rt_sigreturn 显示 -1 EINTR。不能把 ERESTARTSYS 当作本人程序 errno 的实测值。",
+  "assistance": "导师提供完整注释示例、命令、输入及预期；本人操作，助手检查源码和原始记录。理解题仍单独待检查。",
+  "not_yet_verified": [
+    "EOF",
+    "其他 read 错误",
+    "gdb 及工具分工理解",
+    "固定练习",
+    "P1 反例或限制条件"
+  ]
+}

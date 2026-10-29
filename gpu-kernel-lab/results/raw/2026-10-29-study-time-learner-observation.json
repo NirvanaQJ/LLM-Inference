@@ -1,0 +1,16 @@
+{
+  "task_date": "2026-10-29",
+  "actual_study_date": "2026-10-29",
+  "timezone": "Asia/Shanghai",
+  "learner_statement_verbatim": "120分钟,整理今天的成果并上传github",
+  "reported_total_minutes": 120,
+  "reported_breakdown_minutes": null,
+  "planned_budget_minutes": {
+    "p0_including_routine": 120,
+    "routine_within_p0": 20,
+    "p1": 30,
+    "total": 150
+  },
+  "interpretation": "本人报告全日实际 120 分钟，P0/P1/固定项分项未报告；比全日预算少 30 分钟，不推断分项、休息或归档用时。",
+  "evidence_type": "本人文字报告，不是工具测量"
+}

@@ -1,0 +1,12 @@
+close(3</etc/ld.so.cache>)              = 0
+read(3</usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.35>, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+close(3</usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.35>) = 0
+read(3</usr/lib/x86_64-linux-gnu/libc.so.6>, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0 \250\2\0\0\0\0\0"..., 832) = 832
+close(3</usr/lib/x86_64-linux-gnu/libc.so.6>) = 0
+read(3</usr/lib/x86_64-linux-gnu/libm.so.6>, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+close(3</usr/lib/x86_64-linux-gnu/libm.so.6>) = 0
+read(3</usr/lib/x86_64-linux-gnu/libgcc_s.so.1>, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+close(3</usr/lib/x86_64-linux-gnu/libgcc_s.so.1>) = 0
+read(0</dev/null<char 1:3>>, "", 64)    = 0
+close(3</dev/null<char 1:3>>)           = 0
++++ exited with 0 +++

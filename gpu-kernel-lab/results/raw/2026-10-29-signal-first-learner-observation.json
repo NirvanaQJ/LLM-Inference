@@ -1,0 +1,35 @@
+{
+  "task_date": "2026-10-29",
+  "evidence_origin": "本人在当前聊天提供的终端截图；助手人工转录，截图未复制为本地文件",
+  "working_directory": "/home/bestqjj/桌面/LLM Inference",
+  "compile_command": "g++ -std=c++17 -Wall -Wextra -g -O0 gpu-kernel-lab/cpp-basics/signal.cpp -o /tmp/llm-signal-demo",
+  "run_command": "/tmp/llm-signal-demo",
+  "learner_action": "提示 ready 后按 Ctrl+C，返回终端后执行 echo $?",
+  "expected": {
+    "program_output": [
+      "ready: press Ctrl+C",
+      "cleanup: fd closed"
+    ],
+    "exit_status": 0
+  },
+  "actual_transcribed": {
+    "terminal_lines": [
+      "ready: press Ctrl+C",
+      "^Ccleanup: fd closed",
+      "echo $?",
+      "0"
+    ],
+    "exit_status": 0
+  },
+  "assessment": "当前最小示例的 Ctrl+C 正常清理路径通过；处理器仅赋值由源码静态核对。",
+  "source_snapshot": "#include <signal.h>\n#include <unistd.h>\n#include <fcntl.h>\n#include <cstdio>\n#include <iostream>\n\nvolatile sig_atomic_t stop_requested = 0;\n\nvoid handle_sigint(int) {\n    stop_requested = 1;\n}\n\nint main() {\n    struct sigaction action{};\n    action.sa_handler = handle_sigint;\n    sigemptyset(&action.sa_mask);\n    action.sa_flags = 0;\n\n    if (sigaction(SIGINT, &action, nullptr) == -1) {\n        std::perror(\"sigaction\");\n        return 1;\n    }\n\n    int fd = open(\"/dev/null\", O_WRONLY);\n    if (fd == -1) {\n        std::perror(\"open\");\n        return 1;\n    }\n\n    std::cout << \"ready: press Ctrl+C\" << std::endl;\n\n    while (!stop_requested) {\n        sleep(1);\n    }\n\n    if (close(fd) == -1) {\n        std::perror(\"close\");\n        return 1;\n    }\n\n    std::cout << \"cleanup: fd closed\\n\";\n    return 0;\n}",
+  "source_sha256": "f86ab11e459215f330b9cb2236cb6d58629f5b8e6edeaca9938749c4328ef18a",
+  "assistance": "导师提供完整示例、注释、编译运行命令；本人保存源码并运行。助手未代编译或代跑。",
+  "not_yet_verified": [
+    "系统调用跟踪中的 close 返回值",
+    "阻塞 read 调试",
+    "strace/gdb 分工理解",
+    "固定算法变式",
+    "P1 反例或适用范围"
+  ]
+}

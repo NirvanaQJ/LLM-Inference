@@ -1,0 +1,128 @@
+{
+  "review_date": "2026-10-29",
+  "review_timezone": "Asia/Shanghai",
+  "reviewer": "助手归档只读复核",
+  "method": "比较最终源码与本人课堂结果中保存的源码 SHA-256，并核对原始日志的退出记录；没有重跑程序，不把完整性核对当成新增运行测试或本人独立掌握。",
+  "source_integrity_checks": [
+    {
+      "file": "gpu-kernel-lab/cpp-basics/signal.cpp",
+      "evidence": "gpu-kernel-lab/results/raw/2026-10-29-signal-read-preparation.json",
+      "snapshot_sha256": "be7fc8336bbe264ce55b3bbdcb0267fd26894bc4130bfe0f4692d0d74b9589ba",
+      "current_sha256": "be7fc8336bbe264ce55b3bbdcb0267fd26894bc4130bfe0f4692d0d74b9589ba",
+      "match": true
+    },
+    {
+      "file": "gpu-kernel-lab/cpp-basics/signal_restart.cpp",
+      "evidence": "gpu-kernel-lab/results/raw/2026-10-29-signal-restart-learner-observation.json",
+      "snapshot_sha256": "57a565f19c0737772ef41a82faef32ecdbdeba72725a5d28da1a1fa3b7613537",
+      "current_sha256": "57a565f19c0737772ef41a82faef32ecdbdeba72725a5d28da1a1fa3b7613537",
+      "match": true
+    },
+    {
+      "file": "gpu-kernel-lab/python-basics/valid_parentheses_ignore_text.py",
+      "evidence": "gpu-kernel-lab/results/raw/2026-10-29-parentheses-variant-learner-observation.json",
+      "snapshot_sha256": "37989945daadaa904776bcf647ecdf3a82ff9431b1c2c108f125f2f487c66bb3",
+      "current_sha256": "37989945daadaa904776bcf647ecdf3a82ff9431b1c2c108f125f2f487c66bb3",
+      "match": true
+    }
+  ],
+  "log_exit_checks": [
+    {
+      "file": "gpu-kernel-lab/profiles/2026-10-29/signal-trace.txt",
+      "sha256": "996d4fbca7d7606a0928bcdfbbb9e43f0b9c8961e74c0b8c03fa9e6379dce52e",
+      "normal_exit_observed": true
+    },
+    {
+      "file": "gpu-kernel-lab/profiles/2026-10-29/blocking-read-trace.txt",
+      "sha256": "7eaf05c736fc77c8e2be422d0e71f281041a235591ad60cc4d04e40efd75a623",
+      "normal_exit_observed": true
+    },
+    {
+      "file": "gpu-kernel-lab/profiles/2026-10-29/eof-trace.txt",
+      "sha256": "37e3cfd80a9c6f4e64e02acbfc8e86e78e13396d3958c0ca713e854f3002f45e",
+      "normal_exit_observed": true
+    },
+    {
+      "file": "gpu-kernel-lab/profiles/2026-10-29/restart-trace.txt",
+      "sha256": "5f6797278bf759a31db73b86b7fed48aa6962a52dcbad73ff13b382c64e13f30",
+      "normal_exit_observed": true
+    },
+    {
+      "file": "gpu-kernel-lab/profiles/2026-10-29/gdb-read.txt",
+      "sha256": "b4d9945fa2c06a6484d64ec706be46f679208bd783c40105dbad2cf396ba937a",
+      "normal_exit_observed": true
+    }
+  ],
+  "file_moves": [],
+  "classification": "源码、测试、原始记录与 profiles 已在正确目录，无需移动。",
+  "link_check": {
+    "tool": "roadmap-daily-journal/scripts/check_local_links.py",
+    "files_checked": [
+      "README.md",
+      "日记/README.md",
+      "日记/2026-10-29.md",
+      "gpu-kernel-lab/cpp-basics/debug-map.md",
+      "gpu-kernel-lab/tests/2026-10-29-signal-cases.md",
+      "gpu-kernel-lab/tests/2026-10-29-signal-restart-limits.md",
+      "gpu-kernel-lab/tests/2026-10-29-parentheses-variant-cases.md"
+    ],
+    "raw_checker_counts": {
+      "ok": 355,
+      "needs_review": 7,
+      "external_unchecked": 2
+    },
+    "raw_checker_exit_code": 2,
+    "note": "脚本退出 2 表示需人工核对 Markdown 锚点，非全通过；随后七个锚点逐一按实际标题核对匹配。",
+    "reviewed_markdown_fragments": [
+      {
+        "source": "README.md",
+        "target": "#%E4%B8%A4%E4%B8%AA%E6%A0%B8%E5%BF%83%E9%A1%B9%E7%9B%AE",
+        "actual_heading": "两个核心项目",
+        "assessment": "按实际 Markdown 标题核对，锚点匹配"
+      },
+      {
+        "source": "README.md",
+        "target": "#%E4%BB%A3%E8%A1%A8%E6%80%A7%E6%88%90%E6%9E%9C",
+        "actual_heading": "代表性成果",
+        "assessment": "按实际 Markdown 标题核对，锚点匹配"
+      },
+      {
+        "source": "README.md",
+        "target": "#%E5%AE%8C%E6%95%B4%E6%88%90%E6%9E%9C%E7%B4%A2%E5%BC%95",
+        "actual_heading": "完整成果索引",
+        "assessment": "按实际 Markdown 标题核对，锚点匹配"
+      },
+      {
+        "source": "README.md",
+        "target": "%E6%97%A5%E8%AE%B0/2026-10-29.md#%E5%A4%87%E6%B3%A8",
+        "actual_heading": "备注",
+        "assessment": "按实际 Markdown 标题核对，锚点匹配"
+      },
+      {
+        "source": "README.md",
+        "target": "%E6%97%A5%E8%AE%B0/2026-10-29.md#%E5%A4%8D%E7%8E%B0%E5%85%A5%E5%8F%A3%E4%B8%8E%E5%85%B3%E9%94%AE%E7%8E%AF%E5%A2%83",
+        "actual_heading": "复现入口与关键环境",
+        "assessment": "按实际 Markdown 标题核对，锚点匹配"
+      },
+      {
+        "source": "README.md",
+        "target": "gpu-kernel-lab/python-basics/README.md#pythonc-csv-%E7%BB%9F%E8%AE%A1%E5%AF%B9%E7%85%A7",
+        "actual_heading": "Python/C++ CSV 统计对照",
+        "assessment": "按实际 Markdown 标题核对，锚点匹配"
+      },
+      {
+        "source": "日记/2026-10-29.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-29-signal-restart-limits.md#%E5%A4%8D%E7%8E%B0%E5%85%A5%E5%8F%A3",
+        "actual_heading": "复现入口",
+        "assessment": "按实际 Markdown 标题核对，锚点匹配"
+      }
+    ],
+    "missing_or_private_or_absolute_link_errors": 0,
+    "external_links": "两条外部引用沿用课堂已核对来源，本次归档未重新逐一联网验证。"
+  },
+  "whitespace_review": {
+    "original_log_exception": "gdb-read.txt 第 2 行 Starting program 的输出末尾有一个空格；完整 diff --check 报告该原始日志格式。",
+    "decision": "原始日志保持字节不变，不为满足格式检查篡改历史记录。",
+    "source_and_document_check": "git diff --cached --check 排除当天 profiles 原始文本日志后通过，源码、JSON、Markdown 无空白错误。"
+  }
+}

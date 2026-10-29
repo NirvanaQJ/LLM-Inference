@@ -1,0 +1,57 @@
+{
+  "task_date": "2026-10-29",
+  "learner_message": "已保存",
+  "source_path": "gpu-kernel-lab/python-basics/valid_parentheses_ignore_text.py",
+  "source_snapshot": "def is_valid_parentheses_ignore_text(text):\n    par={\")\":\"(\",\"]\":\"[\",\"}\":\"{\"}\n    ch=[]\n\n    for s in text:\n        if s in \"({[\":\n            ch.append(s)\n        else:\n            if s in \")}]\":\n              if not ch:\n                return False\n              if ch.pop()!=par[s]:\n                return False\n    return not ch",
+  "source_sha256": "d66c6e2f7a62697876c07c54b832b4539c2b843dad0c8efb14edca87061e93e8",
+  "inspection": "助手只读核对函数，未修改或运行",
+  "assessment": "逻辑静态检查通过：左括号入栈；非左括号中仅右括号检查空栈与匹配；普通字符忽略；结束检查栈空。else 内嵌 if 与本规格相符。",
+  "assistance": "导师提供新规格、示例及分支提示，未在本轮展示完整函数；本人保存实现。是否参考旧实现未独立核验，不记为无提示独立完成。",
+  "expected_cases_not_run": [
+    [
+      "",
+      true
+    ],
+    [
+      "hello",
+      true
+    ],
+    [
+      "a(b[c]d)e",
+      true
+    ],
+    [
+      "a([)]b",
+      false
+    ],
+    [
+      "(abc",
+      false
+    ],
+    [
+      "abc]",
+      false
+    ],
+    [
+      "a{}b[]c()",
+      true
+    ],
+    [
+      "a{b[c(d)e]f}g",
+      true
+    ]
+  ],
+  "pending": [
+    "P1"
+  ],
+  "runtime_checkpoint": {
+    "learner_output_verbatim": "'' True\n'hello' True\n'a(b[c]d)e' True\n'a([)]b' False\n'(abc' False\n'abc]' False\n'a{}b[]c()' True\n'a{b[c(d)e]f}g' True\n8 cases passed\n0",
+    "learner_complexity_verbatim": "都是O（n）,因为最坏情况下要检查n个，存下n个括号",
+    "source_snapshot": "def is_valid_parentheses_ignore_text(text):\n    par={\")\":\"(\",\"]\":\"[\",\"}\":\"{\"}\n    ch=[]\n\n    for s in text:\n        if s in \"({[\":\n            ch.append(s)\n        else:\n            if s in \")}]\":\n              if not ch:\n                return False\n              if ch.pop()!=par[s]:\n                return False\n    return not ch\n\ncases = [\n    (\"\", True),\n    (\"hello\", True),\n    (\"a(b[c]d)e\", True),\n    (\"a([)]b\", False),\n    (\"(abc\", False),\n    (\"abc]\", False),\n    (\"a{}b[]c()\", True),\n    (\"a{b[c(d)e]f}g\", True),\n]\n\nfor text, expected in cases:\n    actual = is_valid_parentheses_ignore_text(text)\n    print(repr(text), actual)\n\n    assert type(actual) is bool  # 检查返回类型\n    assert actual == expected    # 检查结果\n\nprint(\"8 cases passed\")",
+    "source_sha256": "37989945daadaa904776bcf647ecdf3a82ff9431b1c2c108f125f2f487c66bb3",
+    "assessment": "八组实际结果均符合预存预期；本人输出 8 cases passed 与 exit=0，保存源码含逐组 bool 类型和结果断言。时间/额外空间最坏 O(n) 及理由正确，导师补充全左括号可使栈含 n 个元素。",
+    "assistance": "函数由本人保存，导师给规格与分支提示；八组测试由导师提供，本人运行；助手只读核对，未代跑。",
+    "actual_time": "未报告，20 分钟是预算"
+  },
+  "current_assessment": "固定练习通过；初始静态检查记录保留，最终以 runtime_checkpoint 为准。"
+}
