@@ -1,0 +1,11 @@
+--- gpu-kernel-lab/tests/2026-10-31-echo-buf4.cpp
++++ gpu-kernel-lab/cpp-basics/echo.cpp
+@@ -50,7 +50,7 @@
+                 sock_fd, conn_fd);
+ 
+     std::string received;  // 累计保存完整数据
+-    char buf[4];           // 每次接收时复用的小缓冲区
++    char buf[3];           // 每次接收时复用的小缓冲区
+ 
+     while (true) {
+         ssize_t n = recv(conn_fd, buf, sizeof(buf), 0);

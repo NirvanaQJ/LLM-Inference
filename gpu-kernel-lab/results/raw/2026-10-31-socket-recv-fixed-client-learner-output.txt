@@ -1,0 +1,5 @@
+expected_payload=b'hello socket!'
+expected_bytes=13
+sent_bytes=13
+send direction closed
+client closed

@@ -1,0 +1,4 @@
+expected_payload=b'hello socket!'
+expected_bytes=13
+sent_bytes=13
+OSError: [Errno 107] Transport endpoint is not connected

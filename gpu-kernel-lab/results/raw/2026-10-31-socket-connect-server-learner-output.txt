@@ -1,0 +1,5 @@
+socket_fd=3
+listening on 127.0.0.1:39031
+waiting for client...
+accepted: listen_fd=3, conn_fd=4
+socket closed

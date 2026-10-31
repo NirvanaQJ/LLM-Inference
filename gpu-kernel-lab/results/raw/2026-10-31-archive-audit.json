@@ -1,0 +1,140 @@
+{
+  "date": "2026-10-31",
+  "actor": "assistant archive review",
+  "scope": "Existing study evidence and document links; no runtime experiment rerun during archive",
+  "learner_evidence_cases": [
+    {
+      "buffer_capacity": 4,
+      "expected_bytes": 2,
+      "actual_receive_sizes": [
+        2
+      ],
+      "content_matches": true
+    },
+    {
+      "buffer_capacity": 4,
+      "expected_bytes": 13,
+      "actual_receive_sizes": [
+        4,
+        4,
+        4,
+        1
+      ],
+      "content_matches": true
+    },
+    {
+      "buffer_capacity": 3,
+      "expected_bytes": 2,
+      "actual_receive_sizes": [
+        2
+      ],
+      "content_matches": true
+    },
+    {
+      "buffer_capacity": 3,
+      "expected_bytes": 13,
+      "actual_receive_sizes": [
+        3,
+        3,
+        3,
+        3,
+        1
+      ],
+      "content_matches": true
+    }
+  ],
+  "p1_source_diff": "Only char buf[4] changed to char buf[3]",
+  "link_check": {
+    "tool": "roadmap-daily-journal/scripts/check_local_links.py",
+    "counts": {
+      "ok": 365,
+      "needs_review": 12,
+      "external_unchecked": 11
+    },
+    "markdown_fragments": "12 headings independently matched against actual destination headings",
+    "external_urls": "Not individually fetched during archive",
+    "markdown_fragment_review": [
+      {
+        "source": "README.md",
+        "target": "#两个核心项目",
+        "line": 23,
+        "heading": "两个核心项目"
+      },
+      {
+        "source": "README.md",
+        "target": "#代表性成果",
+        "line": 32,
+        "heading": "代表性成果"
+      },
+      {
+        "source": "README.md",
+        "target": "#完整成果索引",
+        "line": 75,
+        "heading": "完整成果索引"
+      },
+      {
+        "source": "README.md",
+        "target": "日记/2026-10-31.md#备注",
+        "line": 55,
+        "heading": "备注"
+      },
+      {
+        "source": "README.md",
+        "target": "gpu-kernel-lab/cpp-basics/systems.md#最终结果与复现入口",
+        "line": 7,
+        "heading": "最终结果与复现入口"
+      },
+      {
+        "source": "README.md",
+        "target": "gpu-kernel-lab/python-basics/README.md#pythonc-csv-统计对照",
+        "line": 22,
+        "heading": "Python/C++ CSV 统计对照"
+      },
+      {
+        "source": "日记/2026-10-31.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-31-socket-cases.md#本人初答与核对",
+        "line": 59,
+        "heading": "本人初答与核对"
+      },
+      {
+        "source": "日记/2026-10-31.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-31-socket-cases.md#第一次纠正复答与核对",
+        "line": 76,
+        "heading": "第一次纠正复答与核对"
+      },
+      {
+        "source": "日记/2026-10-31.md",
+        "target": "../gpu-kernel-lab/tests/2026-10-31-socket-cases.md#第二次纠正复答与核对",
+        "line": 95,
+        "heading": "第二次纠正复答与核对"
+      },
+      {
+        "source": "日记/2026-10-31.md",
+        "target": "../gpu-kernel-lab/cpp-basics/systems.md#第-9-步初答与纠错",
+        "line": 262,
+        "heading": "第 9 步初答与纠错"
+      },
+      {
+        "source": "日记/2026-10-31.md",
+        "target": "../gpu-kernel-lab/cpp-basics/systems.md#tcp-原文解释与结束规则本人复答通过",
+        "line": 293,
+        "heading": "TCP 原文解释与结束规则：本人复答通过"
+      },
+      {
+        "source": "日记/2026-10-31.md",
+        "target": "../gpu-kernel-lab/cpp-basics/systems.md#本人收尾反馈与最终记录",
+        "line": 312,
+        "heading": "本人收尾反馈与最终记录"
+      }
+    ],
+    "all_local_targets_and_reviewed_fragments_pass": true
+  },
+  "file_moves": [],
+  "private_materials_included": false,
+  "actual_study_minutes": {
+    "P0": 90,
+    "P1": 20,
+    "total": 110
+  },
+  "browser_progress_synchronized": false
+}

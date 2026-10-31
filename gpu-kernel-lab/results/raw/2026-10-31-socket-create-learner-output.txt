@@ -1,0 +1,2 @@
+socket_fd=3
+socket closed

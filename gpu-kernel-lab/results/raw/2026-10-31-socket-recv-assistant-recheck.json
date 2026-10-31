@@ -1,0 +1,39 @@
+{
+  "actor": "assistant integration recheck; not learner execution",
+  "expected_payload": "hello socket!",
+  "expected_bytes": 13,
+  "address": "127.0.0.1:39031",
+  "server_command": [
+    "/tmp/llm-echo-step4-assistant"
+  ],
+  "client_command": [
+    "/usr/bin/python3",
+    "/home/bestqjj/桌面/LLM Inference/gpu-kernel-lab/tests/socket_send.py",
+    "hello socket!"
+  ],
+  "client_returncode": 0,
+  "client_stdout": "expected_payload=b'hello socket!'\nexpected_bytes=13\nsent_bytes=13\nsend direction closed\nclient closed\n",
+  "client_stderr": "",
+  "server_returncode": 0,
+  "server_stdout": "socket_fd=3\nlistening on 127.0.0.1:39031\nwaiting for client...\naccepted: listen_fd=3, conn_fd=4\nrecv_bytes=4, total=4\nrecv_bytes=4, total=8\nrecv_bytes=4, total=12\nrecv_bytes=1, total=13\npeer send EOF\nreceived=hello socket!\ntotal_bytes=13\nsocket closed\n",
+  "server_stderr": "",
+  "actual_chunks": [
+    [
+      4,
+      4
+    ],
+    [
+      4,
+      8
+    ],
+    [
+      4,
+      12
+    ],
+    [
+      1,
+      13
+    ]
+  ],
+  "passed": true
+}

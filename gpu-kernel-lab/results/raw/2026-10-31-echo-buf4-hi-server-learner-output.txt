@@ -1,0 +1,10 @@
+socket_fd=3
+listening on 127.0.0.1:39031
+waiting for client...
+accepted: listen_fd=3, conn_fd=4
+recv_bytes=2, total=2
+peer send EOF
+received=hi
+total_bytes=2
+echoed_bytes=2
+socket closed

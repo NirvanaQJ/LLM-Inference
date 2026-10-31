@@ -1,0 +1,5 @@
+expected_payload=b'hello socket!'
+expected_bytes=13
+actual_payload=b'hello socket!'
+actual_bytes=13
+echo_match=True
