@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-01",
+  "source_kind": "assistant_read_of_learner_saved_file",
+  "learner_message": "已保存",
+  "source_path": "gpu-kernel-lab/python-basics/valid_parentheses_week04.py",
+  "source_before_assistant_added_tests": "\"\"\"2026-11-01 W04 有效括号复做；函数占位由导师提供，函数体待本人完成。\"\"\"\n\n\ndef is_valid_parentheses(text):\n    par={\")\":\"(\",\"]\":\"[\",\"}\":\"{\"}\n    stack=[]\n    for i in text:\n        if i in \"([{\":\n            stack.append(i)\n        else:\n            if not stack:\n                return False\n            if stack.pop()!=par[i]:\n                return False\n    return not stack\n",
+  "sha256_before_tests": "80e3b0814f921992a4197a98a2f1ca36b66f2d8f92035d2bc264ee7160a30bd9",
+  "static_review": "Correct for the specified six bracket characters and empty string; uses list append/pop, checks empty stack and kind mismatch, and returns whether stack is empty.",
+  "assistance": "Tutor supplied function signature, placeholder, specification and examples. Learner saved body; no assistant edits to body. Reference use was not independently checked.",
+  "execution_status": "not_run_by_assistant; learner runtime and complexity explanation pending"
+}

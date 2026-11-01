@@ -1,0 +1,18 @@
+# 2026-11-01 本人终端截图转录：echo hello socket! 服务端
+# 来源：本轮用户提供的第一张截图；非助手执行输出，原图未另存本地。
+# 只转录本轮 /tmp/llm-echo-week04 启动后的输出，不重复收录截图顶部上一轮状态。
+socket_fd=3
+listening on 127.0.0.1:39031
+waiting for client...
+accepted: listen_fd=3, conn_fd=4
+recv_bytes=3, total=3
+recv_bytes=3, total=6
+recv_bytes=3, total=9
+recv_bytes=3, total=12
+recv_bytes=1, total=13
+peer send EOF
+received=hello socket!
+total_bytes=13
+echoed_bytes=13
+socket closed
+server_exit=0

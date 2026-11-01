@@ -1,0 +1,10 @@
+# 2026-11-01 本人终端截图转录：echo hello socket! 客户端
+# 来源：本轮用户提供的第二张截图；非助手执行输出，原图未另存本地。
+# 只收录本轮长输入输出，截图上半部的 hi 属上一轮，已另存。
+# 可见命令：python3 gpu-kernel-lab/tests/socket_echo.py 'hello socket!'
+expected_payload=b'hello socket!'
+expected_bytes=13
+actual_payload=b'hello socket!'
+actual_bytes=13
+echo_match=True
+client_exit=0

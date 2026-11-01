@@ -1,0 +1,10 @@
+# 2026-11-01 本人终端截图转录：echo hi 客户端
+# 来源：本轮用户提供的第二张截图；并非助手执行输出，原图未另存本地。
+# 截图显示已激活 .venv；其 Python 精确版本本轮未测。
+# 可见运行命令：python3 gpu-kernel-lab/tests/socket_echo.py 'hi'
+expected_payload=b'hi'
+expected_bytes=2
+actual_payload=b'hi'
+actual_bytes=2
+echo_match=True
+client_exit=0

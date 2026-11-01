@@ -1,0 +1,9 @@
+# 2026-11-01 本人终端截图转录：链表反转四组测试
+# 来源：用户本轮截图下半部；上半部旧 echo 输出不重复收录。
+# 原图留在对话，未另存本地；以下为本人执行结果，非助手代跑。
+# 可见命令：python3 gpu-kernel-lab/python-basics/linked_list_week04.py
+empty: passed
+single: passed
+normal: passed
+duplicates: passed
+exit=0

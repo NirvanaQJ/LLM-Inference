@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-01",
+  "source_kind": "assistant_read_of_learner_saved_file",
+  "learner_message": "已保存",
+  "source_path": "gpu-kernel-lab/python-basics/linked_list_week04.py",
+  "source_before_assistant_added_tests": "\"\"\"2026-11-01 W04 链表反转复做；Node 由导师提供，函数体待本人完成。\"\"\"\n\n\nclass Node:\n    def __init__(self, val):\n        self.val = val\n        self.next = None\n\n\ndef reverse_list(head):\n    prev=None\n    current=head\n    while current:\n        next_code=current.next\n        current.next=prev\n        prev=current\n        current=next_code\n    return prev",
+  "sha256_before_tests": "0d4d46b18ebcd5737b8e613d35eb5fa0da68250930208287eddbd63b25a1e136",
+  "static_review": "Correct iterative in-place reversal for the specified finite acyclic Node chain; empty input returns None.",
+  "assistance": "Tutor supplied Node and function placeholder; learner saved the function body. Use of older reference code was not independently checked.",
+  "execution_status": "not_run_by_assistant; learner runtime and explanation pending"
+}
