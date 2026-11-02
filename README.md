@@ -8,14 +8,14 @@
 
 ## 当前进度
 
-> **最近学习：2026-11-01「W04 周验收、错题与恢复」**。完成本机 echo 2/13 字节复跑、链表反转四组与有效括号八组测试及必要理解，核对周证据并更新私有日历；P0/P1/固定项全部通过，包含导师测试与解释细化。实际约 60 分钟，其中复做/周复盘约 20 分钟已含在总时长内。[查看当日成果与状态](日记/2026-11-01.md)
+> **最近学习：2026-11-02「thread 与 mutex、二分模板」**。完成无锁/加锁计数器比较，加锁版 20 轮全部为 200000 且正常退出，零次边界为 0；二分模板 8 组测试与复杂度解释通过。P0/P1/固定项及必要理解全部通过，包含导师示例、骨架、测试与纠错；实际用时尚未报告。[查看当日成果与状态](日记/2026-11-02.md)
 
 | 项目 | 当前状态 |
 | --- | --- |
-| 所处阶段 | A 阶段 · W04：Linux、进程与第一版简历 |
-| 已有成果 | Python 数据处理与算法、C++ 内存与工具链、Linux 进程、文件/管道/映射、信号调试与本机 TCP echo；首版求职简历已生成（本地私有） |
+| 所处阶段 | A 阶段 · W05：并发、体系结构与 Python 过渡 |
+| 已有成果 | Python 数据处理与算法、C++ 内存与工具链、Linux 进程/文件/网络基础；新增 mutex 计数器与二分模板；首版求职简历已生成（本地私有） |
 | 最近周验收 | [W04：Linux 复跑与链表/栈复做](week-04-review.md)通过；历史 [W01](week-01-review.md)、[W02](week-02-review.md)、[W03](week-03-review.md)记录保留；不补算 10 月 30 日跳过的岗位任务 |
-| 当前学习 | [2026-11-01 周验收](日记/2026-11-01.md)全部通过；下次从 11 月 2 日 thread 与 mutex 开始，固定算法转为二分查找，尚未开课 |
+| 当前学习 | [2026-11-02 计数器与二分模板](日记/2026-11-02.md)全部通过；下次开始 11 月 3 日 condition variable（条件变量）与有界阻塞队列，尚未开课 |
 | 待验证范围 | CUDA / Triton 算子性能、模型推理服务性能及多卡通信性能尚无实测成果 |
 
 通过记录包含骨架、示例指导与纠错，具体帮助程度见各次验收。10 月 9 日的 P1 与岗位核查固定项仍待验证；10 月 30 日岗位清单与资格核查按本人要求跳过、未完成，后续完成记录不补算历史欠账。
@@ -35,6 +35,7 @@
 
 | 方向 | 实现 / 数据 | 验证内容 |
 | --- | --- | --- |
+| 线程计数器与二分模板 | [mutex 计数器](gpu-kernel-lab/cpp-basics/counter.cpp) · [零次边界](gpu-kernel-lab/cpp-basics/counter_zero.cpp) · [二分模板](gpu-kernel-lab/python-basics/binary_search.py) | [计数器验收](gpu-kernel-lab/tests/2026-11-02-counter-cases.md)：20 轮与零次边界通过；[二分验收](gpu-kernel-lab/tests/2026-11-02-binary-search-cases.md)：8 组及 O(log n)/O(1) 理解通过，含指导与纠错 |
 | W04 周验收与算法复做 | [周验收](week-04-review.md) · [链表反转](gpu-kernel-lab/python-basics/linked_list_week04.py) · [有效括号](gpu-kernel-lab/python-basics/valid_parentheses_week04.py) | 本日 echo 2/13 字节、链表四组身份/边界、括号八组类型/值与复杂度通过；[11 月 1 日收尾](日记/2026-11-01.md)，60 分钟含复做/复盘 20 分钟 |
 | 本机 TCP echo 与接收容量变式 | [echo.cpp](gpu-kernel-lab/cpp-basics/echo.cpp) · [系统记录与复现入口](gpu-kernel-lab/cpp-basics/systems.md) | [2/13 字节、部分读取与理解检查](gpu-kernel-lab/tests/2026-10-31-socket-cases.md) · [只改接收容量 4→3 的 P1](gpu-kernel-lab/tests/2026-10-31-socket-buffer-variant.md)；无性能结论 |
 | 信号退出与阻塞读取调试 | [signal.cpp](gpu-kernel-lab/cpp-basics/signal.cpp) · [strace/gdb 记录](gpu-kernel-lab/cpp-basics/debug-map.md) | [Ctrl+C 清理、数据/EOF、工具分工](gpu-kernel-lab/tests/2026-10-29-signal-cases.md) · [SA_RESTART 反例与适用范围](gpu-kernel-lab/tests/2026-10-29-signal-restart-limits.md) |
@@ -55,7 +56,7 @@
 | 目的 | 从这里进入 |
 | --- | --- |
 | 查看每天的任务、预算和验收标准 | [交互式学习路线图](LLM-Inference-GPU-Systems-Roadmap-2026-2028.html)，下载后用浏览器打开 |
-| 接着上次进度学习 | [日记索引](日记/README.md) → [11 月 1 日收尾](日记/2026-11-01.md#备注)；当天全部验收通过，下次开始 11 月 2 日 thread 与 mutex |
+| 接着上次进度学习 | [日记索引](日记/README.md) → [11 月 2 日收尾](日记/2026-11-02.md#备注)；当天全部验收通过，下次开始 11 月 3 日条件变量与有界阻塞队列 |
 | 重跑已有练习 | 对应日记中的复现命令 → 源码与测试 → 原始 expected/actual；[最近实验复现入口](gpu-kernel-lab/cpp-basics/systems.md#最终结果与复现入口) |
 | 查看周总结与能力边界 | [W01](week-01-review.md) · [W02](week-02-review.md) · [W03](week-03-review.md) · [W04](week-04-review.md) |
 | 了解起点与路线审核 | [基线技能](baseline-skills.md) · [路线图审核](Red-Team-Audit-2026-10-03.md) |
@@ -80,6 +81,8 @@
 
 | 主题 | 实现与数据 | 验收和日期 |
 | --- | --- | --- |
+| 线程、mutex 与零次累加边界 | [计数器](gpu-kernel-lab/cpp-basics/counter.cpp) · [边界版本](gpu-kernel-lab/cpp-basics/counter_zero.cpp) · [20 轮本人输出](gpu-kernel-lab/results/raw/2026-11-02-counter-mutex-20-runs.txt) | [逐项验收](gpu-kernel-lab/tests/2026-11-02-counter-cases.md) · [11 月 2 日日记](日记/2026-11-02.md)；20 轮、P1 边界与必要理解通过，含示例和纠错，无性能测量 |
+| 二分查找闭区间模板 | [本人补全的模板与导师测试](gpu-kernel-lab/python-basics/binary_search.py) · [本人输出](gpu-kernel-lab/results/raw/2026-11-02-binary-search-learner-output.txt) | [8 组测试及复杂度](gpu-kernel-lab/tests/2026-11-02-binary-search-cases.md)通过，O(log n) 时间、O(1) 额外空间；[原答与边界纠错](gpu-kernel-lab/results/raw/2026-11-02-binary-search-understanding.md) |
 | 本机 TCP echo、部分读取与单配置变式 | [服务端](gpu-kernel-lab/cpp-basics/echo.cpp) · [系统记录与复现命令](gpu-kernel-lab/cpp-basics/systems.md) | [逐项验收](gpu-kernel-lab/tests/2026-10-31-socket-cases.md) · [P1 预测、实测与局限](gpu-kernel-lab/tests/2026-10-31-socket-buffer-variant.md) · [10 月 31 日日记](日记/2026-10-31.md)；指导及纠错后通过，无性能结论 |
 | 求职简历 v1 与项目证据核对 | 简历 PDF、文字稿及事实说明本地私有；公开仓库仅保留进度说明 | [10 月 30 日成果与逐项状态](日记/2026-10-30.md)；一页 PDF 已检查，[P1 复测通过](gpu-kernel-lab/tests/2026-10-30-earliest-failure-recheck.md)，岗位清单/固定核查已跳过、未完成 |
 | signal、阻塞读取与调试 | [signal.cpp](gpu-kernel-lab/cpp-basics/signal.cpp) · [debug-map.md](gpu-kernel-lab/cpp-basics/debug-map.md) · [SA_RESTART 对照](gpu-kernel-lab/cpp-basics/signal_restart.cpp) | [主实验](gpu-kernel-lab/tests/2026-10-29-signal-cases.md) · [P1 反例与纠正复答](gpu-kernel-lab/tests/2026-10-29-signal-restart-limits.md) · [10 月 29 日日记](日记/2026-10-29.md) |

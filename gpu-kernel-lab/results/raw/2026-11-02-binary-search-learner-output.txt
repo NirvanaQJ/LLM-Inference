@@ -1,0 +1,10 @@
+ordinary: expected=(4,), actual=4 passed
+not_found: expected=(-1,), actual=-1 passed
+empty: expected=(-1,), actual=-1 passed
+single_found: expected=(0,), actual=0 passed
+single_missing: expected=(-1,), actual=-1 passed
+first: expected=(0,), actual=0 passed
+last: expected=(2,), actual=2 passed
+duplicate: expected=(1, 2), actual=1 passed
+8 cases passed
+0
